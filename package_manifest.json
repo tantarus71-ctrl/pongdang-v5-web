@@ -1,0 +1,17 @@
+{
+  "version": "v4.4.5",
+  "title": "Object slots created baseline",
+  "html": "app_assets/index.html",
+  "app_asset": "app_assets/index.html",
+  "auto_patch": "patches/latest.generated.patch.js",
+  "background": "assets/backgrounds/upper_day_underwater_real_v1.png",
+  "object_slots": {
+    "back": "aquariumBackObjectsV445",
+    "mid": "aquariumMidObjectsV445",
+    "front": "aquariumFrontObjectsV445"
+  },
+  "base_backup": "backup/index_gonjiam_stable_v4_3_9_future_feature_guard_backup.html",
+  "viewer": "00_열어서확인.html",
+  "updated_viewer_at": "2026-04-24 01:29:45",
+  "next_step": "v4.4.6 back-object single plant"
+}
