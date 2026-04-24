@@ -2,28 +2,34 @@
   "project": "pongdang-v5-web",
   "repository": "tantarus71-ctrl/pongdang-v5-web",
   "branch": "main",
-  "version": "v4.4.6",
-  "status": "back objects single plant applied package generated",
+  "version": "v4.4.7",
+  "status": "final upper day underwater background locked",
   "source_of_truth": "github + codex package",
   "entrypoints": {
     "root": "index.html",
     "viewer": "00_열어서확인.html",
     "app": "app_assets/index.html"
   },
-  "latest_package": "pongdang4_v4_4_6_back_objects_plant_applied.zip",
+  "latest_package": "pongdang4_v4_4_7_final_background_locked.zip",
+  "final_background": {
+    "slot": "upper.day",
+    "file": "assets/backgrounds/upper_day_underwater_real_v2.png",
+    "description": "realistic underwater riverbed background with integrated rock depth layout"
+  },
   "rules": [
     "Preserve aquarium frame structure",
     "Patch elements only unless explicitly rebaselining",
     "Keep GitHub main as latest reference",
     "Advance objects one slot at a time",
-    "BackObjects/MidObjects/FrontObjects must remain pointer-events none"
+    "BackObjects/MidObjects/FrontObjects must remain pointer-events none",
+    "Root entry must remain index.html and app entry must remain app_assets/index.html"
   ],
   "completed_step": {
-    "version": "v4.4.6",
-    "task": "Applied one back plant object only"
+    "version": "v4.4.7",
+    "task": "Locked final upper day background and aligned filenames"
   },
   "next_step": {
-    "version": "v4.4.7",
-    "task": "Apply one MidObjects rock or aquatic plant only"
+    "version": "v4.4.8",
+    "task": "Recalibrate fish z-depth and hiding route behind rocks"
   }
 }
