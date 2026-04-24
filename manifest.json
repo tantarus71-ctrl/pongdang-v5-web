@@ -1,1 +1,24 @@
-{"project":"pongdang4","version":"v4.4.5","repo_role":"github_latest_baseline","web_entry":"index.html","viewer":"00_열어서확인.html","next_step":"v4.4.6_back_objects_single_plant"}
+{
+  "project": "pongdang-v5-web",
+  "repository": "tantarus71-ctrl/pongdang-v5-web",
+  "branch": "main",
+  "version": "v4.4.5",
+  "status": "object slots created baseline",
+  "source_of_truth": "github",
+  "entrypoints": {
+    "root": "index.html",
+    "viewer": "00_열어서확인.html",
+    "app": "app_assets/index.html",
+    "patch": "patches/latest.generated.patch.js"
+  },
+  "rules": [
+    "Preserve aquarium frame structure",
+    "Patch elements only unless explicitly rebaselining",
+    "Keep GitHub main as latest reference",
+    "Advance objects one slot at a time"
+  ],
+  "next_step": {
+    "version": "v4.4.6",
+    "task": "Apply one back plant object only"
+  }
+}
