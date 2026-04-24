@@ -2,23 +2,28 @@
   "project": "pongdang-v5-web",
   "repository": "tantarus71-ctrl/pongdang-v5-web",
   "branch": "main",
-  "version": "v4.4.5",
-  "status": "object slots created baseline",
-  "source_of_truth": "github",
+  "version": "v4.4.6",
+  "status": "back objects single plant applied package generated",
+  "source_of_truth": "github + codex package",
   "entrypoints": {
     "root": "index.html",
     "viewer": "00_열어서확인.html",
-    "app": "app_assets/index.html",
-    "patch": "patches/latest.generated.patch.js"
+    "app": "app_assets/index.html"
   },
+  "latest_package": "pongdang4_v4_4_6_back_objects_plant_applied.zip",
   "rules": [
     "Preserve aquarium frame structure",
     "Patch elements only unless explicitly rebaselining",
     "Keep GitHub main as latest reference",
-    "Advance objects one slot at a time"
+    "Advance objects one slot at a time",
+    "BackObjects/MidObjects/FrontObjects must remain pointer-events none"
   ],
-  "next_step": {
+  "completed_step": {
     "version": "v4.4.6",
-    "task": "Apply one back plant object only"
+    "task": "Applied one back plant object only"
+  },
+  "next_step": {
+    "version": "v4.4.7",
+    "task": "Apply one MidObjects rock or aquatic plant only"
   }
 }
