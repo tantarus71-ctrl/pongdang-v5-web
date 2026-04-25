@@ -2,35 +2,35 @@
   "project": "pongdang-v5-web",
   "repository": "tantarus71-ctrl/pongdang-v5-web",
   "branch": "main",
-  "version": "v4.5.5-doc-standard",
-  "status": "integrated development standard with camera VR GPS registered",
+  "version": "v4.8.28",
+  "status": "beodeulchi now swim with more realistic varied speeds while preserving smooth aquarium movement",
   "source_of_truth": "github + codex package",
   "entrypoints": {
     "root": "index.html",
-    "viewer": "00_열어서확인.html",
-    "app": "app_assets/index.html"
-  },
-  "latest_package": "pongdang4_v4_5_5_quality_stability_optimized.zip",
-  "latest_standard_doc": {
-    "markdown": "docs/PONGDANG_V5_AFTER_v4_5_5_INTEGRATED_STANDARD_CAMERA_VR_GPS.md",
-    "docx_local": "퐁당퐁당_V5_v4.5.5이후_통합개발기준서_카메라VRGPS포함.docx",
-    "pdf_local": "퐁당퐁당_V5_v4.5.5이후_통합개발기준서_카메라VRGPS포함.pdf"
+    "viewer": "viewer.html",
+    "app": "app_assets/index.html",
+    "patch": "patches/latest.generated.patch.js"
   },
   "rules": [
+    "Preserve aquarium frame structure",
+    "Patch elements only unless explicitly rebaselining",
     "Keep GitHub main as latest reference",
-    "Keep Codex and ChatGPT filenames identical",
-    "After v4.5.5, pause species expansion until mobile QA",
-    "Camera, GPS, and VR/cinema mode must be designed with permission fallback",
-    "Child safety and observation-first UX are required",
-    "Fish visual image must keep pointer-events none",
-    "Root entry must remain index.html and app entry must remain app_assets/index.html"
+    "Advance objects one slot at a time",
+    "Run structure validation before future releases",
+    "Do not merge auto patches directly to main without PR review"
   ],
+  "latest_package": "pongdang4_v4_8_28_realistic_varied_beodeulchi_speed.zip",
+  "final_background": {
+    "slot": "upper.day",
+    "file": "assets/backgrounds/upper_day_underwater_real_v2.png",
+    "description": "realistic underwater riverbed background with integrated rock depth layout"
+  },
   "completed_step": {
-    "version": "v4.5.5-doc-standard",
-    "task": "Registered integrated development standard including camera, VR/cinema, GPS, child psychology, Gonjiamcheon zones, and future nature expansion"
+    "version": "v4.8.28",
+    "task": "Increased per-fish speed variation and reduced overly slow cruise durations for more realistic beodeulchi motion"
   },
   "next_step": {
-    "version": "v4.5.6",
-    "task": "Mobile real-device QA package before camera/GPS/VR implementation"
+    "version": "v4.8.29",
+    "task": "Browser-observe beodeulchi motion and tune only small speed increments if any fish feels too fast"
   }
 }

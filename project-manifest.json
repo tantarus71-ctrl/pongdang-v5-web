@@ -1,0 +1,25 @@
+{
+  "version": "v4.8.28",
+  "title": "Realistic varied beodeulchi swim speeds",
+  "html": "app_assets/index.html",
+  "app_asset": "app_assets/index.html",
+  "auto_patch": "patches/latest.generated.patch.js",
+  "background": "assets/backgrounds/upper_day_underwater_real_v2.png",
+  "latest_package": "pongdang4_v4_8_28_realistic_varied_beodeulchi_speed.zip",
+  "final_background": {
+    "slot": "upper.day",
+    "file": "assets/backgrounds/upper_day_underwater_real_v2.png",
+    "description": "realistic underwater riverbed background with integrated rock depth layout"
+  },
+  "object_slots": {
+    "back": "aquariumBackObjectsV445",
+    "mid": "aquariumMidObjectsV445",
+    "front": "aquariumFrontObjectsV445"
+  },
+  "viewer": "viewer.html",
+  "completed_step": {
+    "version": "v4.8.28",
+    "task": "Increased per-fish speed variation and reduced overly slow cruise durations for more realistic beodeulchi motion"
+  },
+  "next_step": "v4.8.29 browser-observe beodeulchi motion and tune only small speed increments if any fish feels too fast"
+}
