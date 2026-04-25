@@ -1,11 +1,11 @@
 {
-  "version": "v4.8.30",
-  "title": "Phone zone label fit optimization",
+  "version": "v4.8.31",
+  "title": "Viewer entrypoint recovery and safety audit",
   "html": "app_assets/index.html",
   "app_asset": "app_assets/index.html",
   "auto_patch": "patches/latest.generated.patch.js",
   "background": "assets/backgrounds/upper_day_underwater_real_v2.png",
-  "latest_package": "pongdang4_v4_8_30_phone_zone_label_fit.zip",
+  "latest_package": "pongdang4_v4_8_31_viewer_entry_recovery.zip",
   "final_background": {
     "slot": "upper.day",
     "file": "assets/backgrounds/upper_day_underwater_real_v2.png",
@@ -18,10 +18,10 @@
   },
   "base_backup": "backup/index_gonjiam_stable_v4_3_9_future_feature_guard_backup.html",
   "viewer": "viewer.html",
-  "updated_viewer_at": "2026-04-24 01:29:45",
+  "updated_viewer_at": "2026-04-26 07:00:00 Asia/Seoul",
   "completed_step": {
-    "version": "v4.8.30",
-    "task": "Optimized phone zone labels so 물모이 does not shift or overflow"
+    "version": "v4.8.31",
+    "task": "Restored viewer.html as safe redirect entrypoint to app_assets/index.html without touching aquarium engine"
   },
-  "next_step": "v4.8.31 browser-observe phone menu fit on real device widths and tune only minor spacing if needed"
+  "next_step": "v4.8.32 browser-observe phone menu fit on real device widths and tune only minor spacing if needed"
 }
