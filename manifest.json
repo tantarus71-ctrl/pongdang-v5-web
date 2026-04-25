@@ -1,9 +1,9 @@
 {
   "project": "pongdang-v5-web",
   "repository": "tantarus71-ctrl/pongdang-v5-web",
-  "branch": "main",
-  "version": "v4.8.30",
-  "status": "phone zone labels optimized so confluence text fits cleanly",
+  "branch": "recovery/v4.8.31-safety-audit",
+  "version": "v4.8.31",
+  "status": "viewer entrypoint restored and recovery branch prepared for phone menu fit validation",
   "source_of_truth": "github + codex package",
   "entrypoints": {
     "root": "index.html",
@@ -19,22 +19,23 @@
   "rules": [
     "Preserve aquarium frame structure",
     "Patch elements only unless explicitly rebaselining",
-    "Keep GitHub main as latest reference",
+    "Keep GitHub main as latest reference until recovery branch is merged",
     "Advance objects one slot at a time",
-    "Run structure validation before future releases"
+    "Run structure validation before future releases",
+    "Do not change aquarium engine during entrypoint recovery"
   ],
-  "latest_package": "pongdang4_v4_8_30_phone_zone_label_fit.zip",
+  "latest_package": "pongdang4_v4_8_31_viewer_entry_recovery.zip",
   "final_background": {
     "slot": "upper.day",
     "file": "assets/backgrounds/upper_day_underwater_real_v2.png",
     "description": "realistic underwater riverbed background with integrated rock depth layout"
   },
   "completed_step": {
-    "version": "v4.8.30",
-    "task": "Optimized phone zone labels so 물모이 does not shift or overflow"
+    "version": "v4.8.31",
+    "task": "Restored viewer.html as a safe redirect entrypoint to app_assets/index.html"
   },
   "next_step": {
-    "version": "v4.8.31",
+    "version": "v4.8.32",
     "task": "Browser-observe phone menu fit on real device widths and tune only minor spacing if needed"
   }
 }
