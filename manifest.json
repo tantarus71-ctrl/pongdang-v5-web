@@ -2,38 +2,35 @@
   "project": "pongdang-v5-web",
   "repository": "tantarus71-ctrl/pongdang-v5-web",
   "branch": "main",
-  "version": "v4.5.0",
-  "status": "beodeulchi 5-view 2.5D PNG applied package generated",
+  "version": "v4.5.5-doc-standard",
+  "status": "integrated development standard with camera VR GPS registered",
   "source_of_truth": "github + codex package",
   "entrypoints": {
     "root": "index.html",
     "viewer": "00_열어서확인.html",
     "app": "app_assets/index.html"
   },
-  "latest_package": "pongdang4_v4_5_0_beodeulchi_5view_25d_applied.zip",
-  "fish_assets": {
-    "beodeulchi": {
-      "left": "assets/fish/beodeulchi/left.png",
-      "right": "assets/fish/beodeulchi/right.png",
-      "frontLeft": "assets/fish/beodeulchi/front_left.png",
-      "frontRight": "assets/fish/beodeulchi/front_right.png",
-      "back": "assets/fish/beodeulchi/back.png"
-    }
+  "latest_package": "pongdang4_v4_5_5_quality_stability_optimized.zip",
+  "latest_standard_doc": {
+    "markdown": "docs/PONGDANG_V5_AFTER_v4_5_5_INTEGRATED_STANDARD_CAMERA_VR_GPS.md",
+    "docx_local": "퐁당퐁당_V5_v4.5.5이후_통합개발기준서_카메라VRGPS포함.docx",
+    "pdf_local": "퐁당퐁당_V5_v4.5.5이후_통합개발기준서_카메라VRGPS포함.pdf"
   },
   "rules": [
     "Keep GitHub main as latest reference",
     "Keep Codex and ChatGPT filenames identical",
-    "Apply 5-view fish system one species at a time",
-    "Do not change popup, book, camera, or GPS during fish-view testing",
+    "After v4.5.5, pause species expansion until mobile QA",
+    "Camera, GPS, and VR/cinema mode must be designed with permission fallback",
+    "Child safety and observation-first UX are required",
     "Fish visual image must keep pointer-events none",
     "Root entry must remain index.html and app entry must remain app_assets/index.html"
   ],
   "completed_step": {
-    "version": "v4.5.0",
-    "task": "Applied 5-view 2.5D PNG system to beodeulchi only"
+    "version": "v4.5.5-doc-standard",
+    "task": "Registered integrated development standard including camera, VR/cinema, GPS, child psychology, Gonjiamcheon zones, and future nature expansion"
   },
   "next_step": {
-    "version": "v4.5.1",
-    "task": "Tune beodeulchi swim route and tail motion frames"
+    "version": "v4.5.6",
+    "task": "Mobile real-device QA package before camera/GPS/VR implementation"
   }
 }
