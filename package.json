@@ -1,0 +1,12 @@
+{
+  "name": "pongdang-v5-web-autopatch-bridge",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "patch:generate": "node ./bridge/generate-patch.mjs",
+    "patch:generate:dry": "node ./bridge/generate-patch.mjs --dry-run",
+    "validate:structure": "node ./bridge/validate-structure.mjs",
+    "diagnose:stability": "node ./bridge/diagnose-stability.mjs"
+  }
+}
