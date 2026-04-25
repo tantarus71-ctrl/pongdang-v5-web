@@ -1,0 +1,183 @@
+/*
+  퐁당퐁당 v4.8.32 모바일 메뉴 폭 안정화 후보 CSS
+  적용 대상: 핸드폰 세로 화면
+  주의: 이 파일은 후보 패치다. app_assets/index.html 또는 latest.generated.patch.js에 반영하기 전 중복 여부를 먼저 확인한다.
+*/
+
+@media (max-width: 680px) and (orientation: portrait) {
+  :root {
+    --hero-h: clamp(48px, 12.4vw, 58px) !important;
+    --dock-h: clamp(58px, 15.2vw, 70px) !important;
+    --bottom-nav-h: clamp(64px, 17vw, 76px) !important;
+    --gap-1: 5px !important;
+    --gap-2: 5px !important;
+    --aquarium-card-top: calc(var(--safe-top) + var(--hero-h) + var(--gap-2) + var(--dock-h) + 2px) !important;
+    --aquarium-card-bottom: calc(var(--safe-bottom) + var(--bottom-nav-h) + 7px) !important;
+    --fish-top-bound: calc(var(--aquarium-card-top) + 8px) !important;
+    --fish-bottom-bound: calc(var(--aquarium-card-bottom) + 8px) !important;
+  }
+
+  .topHud {
+    left: max(8px, env(safe-area-inset-left)) !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+  }
+
+  .heroCard {
+    height: var(--hero-h) !important;
+    min-height: var(--hero-h) !important;
+    padding: 6px 11px !important;
+    border-radius: 16px !important;
+  }
+
+  .heroLabel {
+    font-size: 9.5px !important;
+    line-height: 1 !important;
+    opacity: .84 !important;
+  }
+
+  .heroTitle {
+    font-size: clamp(17px, 5.1vw, 23px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -.035em !important;
+    margin-top: 1px !important;
+  }
+
+  .heroSub {
+    display: none !important;
+  }
+
+  .aquaControlDock {
+    height: var(--dock-h) !important;
+    min-height: var(--dock-h) !important;
+    top: calc(var(--safe-top) + var(--hero-h) + var(--gap-2)) !important;
+    gap: 5px !important;
+    grid-template-rows: repeat(2, minmax(26px, 1fr)) !important;
+  }
+
+  .zoneBar,
+  .modeBar {
+    min-height: 26px !important;
+    max-height: 31px !important;
+    padding: 3px !important;
+    gap: 4px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .zoneBar::-webkit-scrollbar,
+  .modeBar::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .zoneBtn,
+  .modeBtn {
+    min-height: 23px !important;
+    height: 25px !important;
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    flex: 0 0 auto !important;
+  }
+
+  .zoneBtn {
+    min-width: 48px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    letter-spacing: -.04em !important;
+  }
+
+  .zoneBtn[data-zone="confluence"] {
+    min-width: 54px !important;
+  }
+
+  .zoneBtn .zoneEmojiPhone {
+    display: none !important;
+  }
+
+  .zoneBtn .zoneLabelPhone {
+    display: inline-block !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+  }
+
+  .bottomNav {
+    height: var(--bottom-nav-h) !important;
+    min-height: var(--bottom-nav-h) !important;
+    max-height: var(--bottom-nav-h) !important;
+    left: max(8px, env(safe-area-inset-left)) !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+    bottom: var(--safe-bottom) !important;
+    gap: 5px !important;
+    padding: 6px !important;
+    border-radius: 18px !important;
+  }
+
+  .navBtn {
+    height: calc(var(--bottom-nav-h) - 12px) !important;
+    min-height: calc(var(--bottom-nav-h) - 12px) !important;
+    padding: 4px 2px !important;
+    gap: 2px !important;
+    border-radius: 14px !important;
+  }
+
+  .navBtn .navEmoji {
+    font-size: clamp(18px, 5.2vw, 21px) !important;
+  }
+
+  .navBtn .navText {
+    font-size: clamp(10px, 2.85vw, 11px) !important;
+    letter-spacing: -.035em !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 390px) and (orientation: portrait) {
+  :root {
+    --hero-h: 48px !important;
+    --dock-h: 58px !important;
+    --bottom-nav-h: 66px !important;
+  }
+
+  .heroLabel {
+    display: none !important;
+  }
+
+  .heroTitle {
+    font-size: clamp(16px, 5vw, 20px) !important;
+  }
+
+  .zoneBtn,
+  .modeBtn {
+    height: 23px !important;
+    min-height: 23px !important;
+    padding: 3px 7px !important;
+    font-size: 10.5px !important;
+  }
+
+  .zoneBtn {
+    min-width: 44px !important;
+  }
+
+  .zoneBtn[data-zone="confluence"] {
+    min-width: 50px !important;
+    font-size: 10px !important;
+  }
+
+  .navBtn {
+    height: 54px !important;
+    min-height: 54px !important;
+  }
+
+  .navBtn .navEmoji {
+    font-size: 18px !important;
+  }
+
+  .navBtn .navText {
+    font-size: 10px !important;
+  }
+}
