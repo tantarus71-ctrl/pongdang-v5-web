@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071722">
+  <title>퐁당퐁당 v4.8.44 화면 검수 매트릭스</title>
+  <style>
+    /* 한글 주석: 핸드폰·태블릿·PC 화면을 한 번에 비교하는 검수 전용 페이지 */
+    :root{--bg:#071722;--panel:#0c2638;--line:rgba(180,245,255,.2);--text:#ecfbff;--muted:#aad9e8;--accent:#4fd8f3}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif}
+    body{padding:18px;overflow:auto}
+    .header{max-width:1420px;margin:0 auto 16px;display:grid;gap:8px}
+    .eyebrow{font-size:13px;color:#9fefff;font-weight:900;letter-spacing:.02em}
+    h1{margin:0;font-size:clamp(24px,3vw,42px);letter-spacing:-.05em;line-height:1.05}
+    .lead{margin:0;color:var(--muted);font-size:15px;line-height:1.55;font-weight:750}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .btn{appearance:none;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;padding:9px 12px;font-weight:900;cursor:pointer;text-decoration:none}
+    .btn.primary{background:linear-gradient(180deg,#2bdff0,#0a94c4);border-color:rgba(220,255,255,.36)}
+    .grid{max-width:1420px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+    .device{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border:1px solid var(--line);border-radius:24px;padding:14px;box-shadow:0 18px 44px rgba(0,0,0,.28)}
+    .deviceHead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .deviceTitle{font-size:16px;font-weight:950;letter-spacing:-.03em}.deviceSub{font-size:12px;color:var(--muted);font-weight:800;margin-top:3px}
+    .badge{border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900;color:#dffaff;background:rgba(0,0,0,.16);white-space:nowrap}
+    .frameWrap{margin:auto;border-radius:26px;background:#020d14;padding:10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.09),0 12px 28px rgba(0,0,0,.34);overflow:hidden}
+    iframe{display:block;border:0;background:#061722;border-radius:18px;transform-origin:top left}
+    .phone .frameWrap{width:min(100%,390px)}.phone iframe{width:390px;height:844px;max-width:100%}
+    .tablet .frameWrap{width:min(100%,520px)}.tablet iframe{width:768px;height:1024px;transform:scale(.651);margin-bottom:-357px}
+    .desktop .frameWrap{width:100%}.desktop iframe{width:1280px;height:720px;transform:scale(var(--desktop-scale, .36));margin-bottom:calc(720px * (var(--desktop-scale, .36) - 1))}
+    .checklist{max-width:1420px;margin:16px auto 0;padding:14px;border-radius:22px;background:var(--panel);border:1px solid var(--line)}
+    .checklist h2{margin:0 0 10px;font-size:18px}.checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.check{padding:10px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:13px;line-height:1.38;color:#d7f6ff;font-weight:800}
+    @media(max-width:1180px){.grid{grid-template-columns:1fr}.tablet .frameWrap{width:min(100%,768px)}.tablet iframe{transform:scale(var(--tablet-scale, .78));margin-bottom:calc(1024px * (var(--tablet-scale, .78) - 1))}.desktop iframe{transform:scale(var(--desktop-scale, .62));margin-bottom:calc(720px * (var(--desktop-scale, .62) - 1))}.checks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){body{padding:12px}.checks{grid-template-columns:1fr}.device{padding:10px;border-radius:20px}.phone iframe{height:812px}.tablet,.desktop{display:none}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="eyebrow">Pongdang v4.8.44 · Visual QA Matrix</div>
+    <h1>퐁당퐁당 경량 실행본 화면 검수</h1>
+    <p class="lead">핸드폰 세로형, 태블릿, PC 전시형 화면을 한 번에 비교합니다. 각 프레임 오른쪽 상단의 v4.8.43 점검 패널이 “전체 1차 점검 통과 · 원본 교체 후보 가능”을 표시하면 1차 승격 조건을 충족합니다.</p>
+    <div class="toolbar">
+      <a class="btn primary" href="index_v4_8_40.html" target="_blank" rel="noopener">경량 실행본 새 창 열기</a>
+      <a class="btn" href="index.html" target="_blank" rel="noopener">기존 원본 비교</a>
+      <button class="btn" type="button" onclick="location.reload()">검수 페이지 새로고침</button>
+    </div>
+  </header>
+
+  <section class="grid" aria-label="기기별 화면 비교">
+    <article class="device phone">
+      <div class="deviceHead"><div><div class="deviceTitle">핸드폰 세로형</div><div class="deviceSub">390 × 844 기준 · 메뉴 4개 한 줄 확인</div></div><span class="badge">Mobile</span></div>
+      <div class="frameWrap"><iframe src="index_v4_8_40.html" title="핸드폰 세로형 검수"></iframe></div>
+    </article>
+    <article class="device tablet">
+      <div class="deviceHead"><div><div class="deviceTitle">태블릿 세로형</div><div class="deviceSub">768 × 1024 기준 · 시네마형 수족관 확인</div></div><span class="badge">Tablet</span></div>
+      <div class="frameWrap"><iframe src="index_v4_8_40.html" title="태블릿 검수"></iframe></div>
+    </article>
+    <article class="device desktop">
+      <div class="deviceHead"><div><div class="deviceTitle">PC 전시형</div><div class="deviceSub">1280 × 720 기준 · 중앙 배치 확인</div></div><span class="badge">Desktop</span></div>
+      <div class="frameWrap"><iframe src="index_v4_8_40.html" title="PC 검수"></iframe></div>
+    </article>
+  </section>
+
+  <section class="checklist" aria-label="원본 교체 후보 체크리스트">
+    <h2>원본 교체 후보 승격 체크리스트</h2>
+    <div class="checks">
+      <div class="check">✅ 점검 패널: 전체 1차 점검 통과</div>
+      <div class="check">✅ 하단 메뉴: 탐험·도감·반짝·카메라 4개 유지</div>
+      <div class="check">✅ 수족관: 메뉴와 겹치지 않고 충분한 높이 확보</div>
+      <div class="check">✅ 이미지: 버들치 수조·카드·팝업 이미지 표시</div>
+      <div class="check">✅ 도감: 카드 클릭 시 상세 모달 표시</div>
+      <div class="check">✅ 작은 화면: 텍스트 겹침 없이 이모지 중심 유지</div>
+      <div class="check">✅ 태블릿/PC: 중앙 정렬과 전시형 비율 유지</div>
+      <div class="check">✅ 원본: index.html은 아직 보존 상태</div>
+    </div>
+  </section>
+</body>
+</html>
