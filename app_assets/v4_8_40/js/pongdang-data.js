@@ -1,5 +1,6 @@
-// 퐁당퐁당 v4.8.40 경량 데이터 모듈
+// 퐁당퐁당 v4.8.41 경량 데이터 모듈
 // 한글 주석: 화면 데이터와 어종 데이터를 HTML에서 분리해 index 파일을 가볍게 유지한다.
+// 한글 주석: app_assets/index_v4_8_40.html 기준에서 assets 경로가 깨지지 않도록 상대경로를 보정했다.
 
 export const ZONES = [
   { id: 'upper', name: '웃물', emoji: '💧', title: '웃물 민물 친구 탐험', desc: '맑은 물이 시작되는 곳에서 작은 친구들을 찾아요.' },
@@ -24,9 +25,9 @@ export const FISH = [
     summary: '맑은 물을 좋아하는 빠른 민물 친구',
     kid: '버들치는 맑은 물에서 빠르게 헤엄치는 작은 민물 친구예요. 물살이 있는 곳에서도 몸을 살짝 틀며 잘 움직여요.',
     teacher: '버들치는 하천 상류와 여울에서 관찰되는 소형 어류로, 빠른 유영과 민첩한 방향 전환을 학습 요소로 활용할 수 있습니다.',
-    img: '../assets/fish/beodeulchi/swim.svg',
-    cardImg: '../assets/fish/beodeulchi/card.svg',
-    popupImg: '../assets/fish/beodeulchi/popup.svg',
+    img: 'assets/fish/beodeulchi/swim.svg',
+    cardImg: 'assets/fish/beodeulchi/card.svg',
+    popupImg: 'assets/fish/beodeulchi/popup.svg',
     x: 48,
     y: 46,
     speed: 1,
