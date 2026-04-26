@@ -61,6 +61,7 @@
     "external_demo_package": "docs/demo_package_v4_8_51.md",
     "qr_helper_candidate": "app_assets/qr_helper_v4_8_52.html",
     "qr_helper_plan": "docs/qr_helper_v4_8_52.md",
+    "child_friendly_scale_candidate": "app_assets/v4_8_40/css/pongdang-ui-v4_8_57.css",
     "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css"
   },
   "compatibility_aliases": {

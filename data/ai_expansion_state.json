@@ -104,6 +104,15 @@
       "nextCodexAction": "verify QR helper is an optional helper and does not alter stable runtime entry"
     },
     {
+      "id": "v4857_child_friendly_scale",
+      "level": "level_1_candidate_doc_or_data",
+      "files": [
+        "app_assets/v4_8_40/css/pongdang-ui-v4_8_57.css",
+        "app_assets/v4_8_40/js/pongdang-data.js"
+      ],
+      "nextCodexAction": "verify child-friendly text and fish scale changes in the modular candidate without changing v4.8.30 stable runtime"
+    },
+    {
       "id": "pirami_candidate_assets",
       "level": "level_1_candidate_doc_or_data",
       "files": [
