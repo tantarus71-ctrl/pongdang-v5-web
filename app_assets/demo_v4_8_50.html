@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#061722">
+  <title>퐁당퐁당 v4.8.50 외부 시연 안내</title>
+  <style>
+    /* 한글 주석: 외부 시연자에게 QR/링크/검수 경로를 한 화면에서 안내하는 페이지 */
+    :root{--bg:#061722;--panel:rgba(255,255,255,.08);--text:#eefbff;--muted:#b9e8f5;--line:rgba(180,245,255,.22);--accent:#23dff0;--ok:#9fffc7}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif}
+    body{padding:clamp(14px,3vw,28px);background:radial-gradient(circle at 50% 0%,rgba(72,215,244,.24),transparent 30%),linear-gradient(180deg,#0a314b,#061722)}
+    .wrap{max-width:1040px;margin:0 auto;display:grid;gap:18px}
+    .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;align-items:stretch}
+    .card{border:1px solid var(--line);border-radius:28px;background:var(--panel);box-shadow:0 20px 48px rgba(0,0,0,.24);backdrop-filter:blur(12px);padding:clamp(18px,3vw,28px)}
+    .eyebrow{font-size:13px;color:#9fefff;font-weight:950;letter-spacing:.02em}.title{margin:8px 0 0;font-size:clamp(31px,6vw,58px);line-height:.98;letter-spacing:-.065em;font-weight:950}.lead{margin:14px 0 0;color:var(--muted);font-size:clamp(15px,2.2vw,18px);line-height:1.58;font-weight:750}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:0 16px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:#fff;font-weight:950;background:rgba(255,255,255,.08)}.btn.primary{background:linear-gradient(180deg,#2bdff0,#0a94c4);border-color:rgba(220,255,255,.38)}.btn.ok{background:linear-gradient(180deg,#7fedb0,#28a45e);border-color:rgba(214,255,225,.38)}
+    .qrBox{display:grid;place-items:center;text-align:center}.qrIcon{width:140px;height:140px;border-radius:34px;display:grid;place-items:center;font-size:76px;background:rgba(255,255,255,.11);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}.qrBox h2{margin:14px 0 0;font-size:22px}.qrBox p{margin:8px 0 0;color:var(--muted);line-height:1.5;font-weight:750}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.mini h3{margin:0 0 8px;font-size:17px}.mini p{margin:0;color:var(--muted);line-height:1.5;font-size:14px;font-weight:750}.path{margin-top:12px;padding:10px;border-radius:14px;background:rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.10);font:800 12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#ddfbff;word-break:break-all}
+    .steps{display:grid;gap:9px;margin-top:8px}.step{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start}.num{width:34px;height:34px;border-radius:999px;display:grid;place-items:center;background:rgba(35,223,240,.18);border:1px solid rgba(35,223,240,.28);font-weight:950}.step strong{display:block}.step span{display:block;margin-top:2px;color:var(--muted);font-size:14px;line-height:1.45;font-weight:750}
+    .footer{color:#9fcdda;font-size:12px;line-height:1.5;text-align:center;padding:4px}
+    @media(max-width:820px){.hero,.grid{grid-template-columns:1fr}.qrIcon{width:120px;height:120px;font-size:64px}.actions .btn{width:100%}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <article class="card">
+        <div class="eyebrow">Pongdang v4.8.50 · Demo Entry</div>
+        <h1 class="title">퐁당퐁당<br>외부 시연 링크</h1>
+        <p class="lead">기존 원본을 건드리지 않고, 검수된 경량 실행본으로 안전하게 연결하는 시연용 안내 페이지입니다. QR 코드는 아래 안전 진입점 주소로 만들면 됩니다.</p>
+        <div class="actions">
+          <a class="btn primary" href="start_v4_8_49.html">시연 바로 열기</a>
+          <a class="btn" href="index_candidate_v4_8_46.html">후보 실행본 직접 열기</a>
+          <a class="btn ok" href="test_matrix_v4_8_44.html">검수 매트릭스 확인</a>
+        </div>
+      </article>
+      <aside class="card qrBox">
+        <div class="qrIcon" aria-hidden="true">▦</div>
+        <h2>QR 생성 기준</h2>
+        <p>배포 주소 뒤에<br><strong>/app_assets/start_v4_8_49.html</strong><br>을 붙인 링크로 QR을 만드세요.</p>
+      </aside>
+    </section>
+
+    <section class="grid">
+      <article class="card mini">
+        <h3>1. 외부 시연용</h3>
+        <p>원본을 보존한 채 검수 후보 실행본으로 자동 이동합니다.</p>
+        <div class="path">/app_assets/start_v4_8_49.html</div>
+      </article>
+      <article class="card mini">
+        <h3>2. 직접 실행용</h3>
+        <p>자가 점검 패널 없는 깨끗한 후보 실행본입니다.</p>
+        <div class="path">/app_assets/index_candidate_v4_8_46.html</div>
+      </article>
+      <article class="card mini">
+        <h3>3. 검수 확인용</h3>
+        <p>핸드폰·태블릿·PC 화면 상태를 한 화면에서 확인합니다.</p>
+        <div class="path">/app_assets/test_matrix_v4_8_44.html</div>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="eyebrow">시연 준비 순서</div>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div><strong>Netlify 또는 GitHub Pages 배포 주소 확인</strong><span>예: https://도메인명/</span></div></div>
+        <div class="step"><div class="num">2</div><div><strong>안전 진입점 경로 붙이기</strong><span>/app_assets/start_v4_8_49.html</span></div></div>
+        <div class="step"><div class="num">3</div><div><strong>그 주소로 QR 코드 생성</strong><span>외부 사람에게는 이 QR만 보여주면 됩니다.</span></div></div>
+        <div class="step"><div class="num">4</div><div><strong>검수 매트릭스에서 최종 확인</strong><span>현장 시연 전 /app_assets/test_matrix_v4_8_44.html에서 화면을 확인합니다.</span></div></div>
+      </div>
+    </section>
+    <div class="footer">JOHN CHOI · Pongdang lightweight demo entry · v4.8.50</div>
+  </main>
+</body>
+</html>
