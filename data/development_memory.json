@@ -81,6 +81,11 @@
             "date":  "2026-04-26",
             "fact":  "피라미 테스트 어종의 첫 자산 swim.svg가 추가되었다.",
             "evidence":  "assets/fish/pirami/swim.svg"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "피라미 테스트 어종의 카드 후보 자산 card.svg가 추가되었다.",
+            "evidence":  "assets/fish/pirami/card.svg"
         }
                      ],
     "nextLearningTargets":  [

@@ -79,6 +79,11 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.fish_design_style_guide) {
       Test-File $manifest.planning.fish_design_style_guide 'Fish design style guide'
     }
+    if ($manifest.planning.pirami_candidate_assets) {
+      foreach ($candidateAsset in $manifest.planning.pirami_candidate_assets) {
+        Test-File $candidateAsset 'Pirami candidate asset'
+      }
+    }
     Test-File $manifest.planning.decision_log 'Decision log'
     Test-File $manifest.planning.learning_log 'Learning log'
     Test-File $manifest.planning.chat_version_plan 'Chat version plan'
@@ -188,8 +193,15 @@ if ($manifest -and $project -and $package) {
     }
   }
   $piramiSwim = Join-Path $Root 'assets/fish/pirami/swim.svg'
-  if (Test-Path -LiteralPath $piramiSwim) {
-    Add-Warn "Pirami swim.svg exists; keep it as candidate asset until card.svg and data mapping are ready."
+  $piramiCard = Join-Path $Root 'assets/fish/pirami/card.svg'
+  if ((Test-Path -LiteralPath $piramiSwim) -or (Test-Path -LiteralPath $piramiCard)) {
+    if (!(Test-Path -LiteralPath $piramiSwim)) {
+      Add-Warn "Pirami card.svg exists but swim.svg is missing; keep pirami out of runtime data."
+    } elseif (!(Test-Path -LiteralPath $piramiCard)) {
+      Add-Warn "Pirami swim.svg exists; keep it as candidate asset until card.svg and data mapping are ready."
+    } else {
+      Add-Warn "Pirami swim.svg and card.svg exist; keep them as candidate assets until species data mapping and runtime behavior are ready."
+    }
   }
 }
 
