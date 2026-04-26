@@ -31,6 +31,7 @@
   "ai_mutual_expansion_loop": "docs/AI_MUTUAL_EXPANSION_LOOP.md",
   "ai_expansion_state": "data/ai_expansion_state.json",
   "gemini_account_setup": "docs/GEMINI_ACCOUNT_SETUP.md",
+  "set_gemini_user_key": "tools/set-gemini-user-key.ps1",
   "check_gemini_config": "tools/check-gemini-config.ps1",
   "exchange_channels": "data/exchange_channels.json",
   "self_expansion_tech_radar": "docs/SELF_EXPANSION_TECH_RADAR.md",

@@ -4,20 +4,43 @@ Codex는 사용자의 Google/Gemini 계정에 직접 로그인하지 않는다. 
 
 대신 사용자가 직접 Gemini API 키를 만들고 로컬 환경변수에 넣으면, Codex는 그 키가 준비되어 있는지만 확인하고 프로젝트 협업 흐름에 연결한다.
 
-## 사용자가 직접 할 일
+## 가장 쉬운 설정 방법
 
-1. Google AI Studio 또는 Google AI for Developers에서 Gemini API 키를 만든다.
-2. 키를 저장소 파일에 쓰지 않는다.
-3. PowerShell에서 현재 세션용으로만 환경변수를 설정한다.
+1. Google AI Studio 또는 Google AI for Developers에서 새 Gemini API 키를 만든다.
+2. 이미 채팅에 노출된 키가 있다면 먼저 삭제하거나 비활성화한다.
+3. PowerShell에서 프로젝트 폴더로 이동한다.
+
+```powershell
+cd C:\Users\tanta\Documents\Codex\2026-04-25\pongdang-v5-web-github
+```
+
+4. 아래 스크립트를 실행하고, 화면에 `New GEMINI_API_KEY`가 나오면 새 키를 붙여넣는다.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\set-gemini-user-key.ps1
+```
+
+이 스크립트는 키를 화면에 다시 출력하지 않고 Windows 사용자 환경변수 `GEMINI_API_KEY`에 저장한 뒤 바로 점검한다.
+
+## 현재 PowerShell 창에서만 쓰는 방법
 
 ```powershell
 $env:GEMINI_API_KEY="여기에_사용자_API_키"
+powershell -ExecutionPolicy Bypass -File .\tools\check-gemini-config.ps1
 ```
 
-4. 준비 상태를 확인한다.
+## 준비 상태 확인
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\check-gemini-config.ps1
+```
+
+정상 연결이면 다음처럼 표시된다.
+
+```text
+GEMINI_API_KEY is present.
+Secret value: hidden
+OK: Gemini account access can be used by tools that read GEMINI_API_KEY.
 ```
 
 ## Codex가 할 일

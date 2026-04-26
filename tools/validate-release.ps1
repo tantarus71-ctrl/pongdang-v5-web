@@ -114,6 +114,7 @@ if ($manifest -and $project -and $package) {
   }
 
   Test-File 'tools/check-gemini-config.ps1' 'Gemini config checker'
+  Test-File 'tools/set-gemini-user-key.ps1' 'Gemini user key setup helper'
 
   $appPath = Join-Path $Root $manifest.entrypoints.app
   $patchPath = Join-Path $Root $manifest.entrypoints.patch
