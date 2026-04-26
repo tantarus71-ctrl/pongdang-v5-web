@@ -73,6 +73,8 @@
       modes: document.querySelectorAll('#modeBar .chip').length,
       menu: document.querySelectorAll('#bottomNav .navBtn').length,
       fish: document.querySelectorAll('#fishLayer .fish').length,
+      depths: new Set(Array.from(document.querySelectorAll('#fishLayer .fish')).map((fish) => fish.dataset.depth || '')).size,
+      decor: document.querySelectorAll('.aquaBackPlants, .aquaCaustics, .aquaParticles').length,
       cards: document.querySelectorAll('#cardGrid .card').length
     };
   }
@@ -126,7 +128,7 @@
 
     const domOk = domResults.every((item) => item.ok);
     const assetOk = assetResults.every((item) => item.ok);
-    const renderOk = rendered.zones >= 5 && rendered.modes >= 2 && rendered.menu >= 4 && rendered.fish >= 1 && rendered.cards >= 1;
+    const renderOk = rendered.zones >= 5 && rendered.modes >= 2 && rendered.menu >= 4 && rendered.fish >= 5 && rendered.depths >= 3 && rendered.decor >= 3 && rendered.cards >= 1;
     const imageOk = image.ok;
     const layoutOk = layout.ok;
     const allOk = domOk && assetOk && renderOk && imageOk && layoutOk;
@@ -140,7 +142,7 @@
       </div>
       ${row(domOk, 'DOM 구조', domOk ? '필수 요소 모두 존재' : domResults.filter((x) => !x.ok).map((x) => x.selector).join(', '))}
       ${row(assetOk, '파일 경로', assetOk ? '필수 CSS/JS/SVG 응답 확인' : assetResults.filter((x) => !x.ok).map((x) => `${x.asset} (${x.status}/${x.method})`).join(', '))}
-      ${row(renderOk, '렌더링', `구간 ${rendered.zones} · 모드 ${rendered.modes} · 메뉴 ${rendered.menu} · 물고기 ${rendered.fish} · 카드 ${rendered.cards}`)}
+      ${row(renderOk, '렌더링', `구간 ${rendered.zones} · 모드 ${rendered.modes} · 메뉴 ${rendered.menu} · 물고기 ${rendered.fish} · 깊이 ${rendered.depths} · 수조레이어 ${rendered.decor} · 카드 ${rendered.cards}`)}
       ${row(imageOk, '이미지 로드', imageOk ? '표시 이미지 로드 정상' : image.detail)}
       ${row(layoutOk, '배치 안정성', layout.detail)}
       <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.14);color:${allOk ? '#b9ffdf' : '#ffe0a8'};">

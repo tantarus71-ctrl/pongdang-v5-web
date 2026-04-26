@@ -33,6 +33,13 @@ export const FISH = [
     speed: 1,
     scale: 0.86,
     depth: 0.72,
+    aquariumInstances: [
+      { instanceId: 'lead', x: 47, y: 48, depth: 0.78, scale: 0.92, speed: 1.02, swim: { phase: 0.3, xAmp: 20, yAmp: 9, roll: 3.6, tailRate: 8, idleEvery: 8.5, idleHold: 1.05, avoidRadius: 132 } },
+      { instanceId: 'back-left', x: 27, y: 34, depth: 0.34, scale: 0.72, speed: 0.82, swim: { phase: 2.4, xAmp: 14, yAmp: 6, roll: 2.4, tailRate: 6, idleEvery: 10.2, idleHold: 1.35, avoidRadius: 118 } },
+      { instanceId: 'mid-right', x: 68, y: 42, depth: 0.56, scale: 0.8, speed: 0.94, swim: { phase: 4.1, xAmp: 17, yAmp: 7, roll: 3, tailRate: 7, idleEvery: 9.2, idleHold: 1.2, avoidRadius: 126 } },
+      { instanceId: 'front-pass', x: 57, y: 68, depth: 0.92, scale: 1.02, speed: 1.18, swim: { phase: 5.7, xAmp: 24, yAmp: 10, roll: 4.2, tailRate: 9, idleEvery: 7.8, idleHold: 0.85, avoidRadius: 150 } },
+      { instanceId: 'bottom-scout', x: 35, y: 72, depth: 0.48, scale: 0.76, speed: 0.76, swim: { phase: 7.6, xAmp: 12, yAmp: 5, roll: 2.2, tailRate: 5, idleEvery: 11.5, idleHold: 1.55, avoidRadius: 110 } }
+    ],
     swim: {
       phase: 0.3,
       xAmp: 18,

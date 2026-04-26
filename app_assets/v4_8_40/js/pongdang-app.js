@@ -9,7 +9,8 @@ const state = {
   selectedFish: null,
   raf: null,
   tick: 0,
-  fishRuntime: new Map()
+  fishRuntime: new Map(),
+  fishViews: new Map()
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -46,7 +47,7 @@ function seededUnit(text) {
 }
 
 function runtimeForFish(fish, index = 0) {
-  const key = fish.id;
+  const key = fish.instanceKey || fish.id;
   if (!state.fishRuntime.has(key)) {
     const seed = seededUnit(`${fish.id}:${index}`);
     state.fishRuntime.set(key, {
@@ -58,6 +59,28 @@ function runtimeForFish(fish, index = 0) {
     });
   }
   return state.fishRuntime.get(key);
+}
+
+function aquariumFishViews(fishes) {
+  return fishes.flatMap((fish) => {
+    const instances = Array.isArray(fish.aquariumInstances) && fish.aquariumInstances.length ? fish.aquariumInstances : [{}];
+    return instances.map((instance, index) => ({
+      ...fish,
+      ...instance,
+      id: fish.id,
+      speciesId: fish.id,
+      name: fish.name,
+      summary: fish.summary,
+      kid: fish.kid,
+      teacher: fish.teacher,
+      img: fish.img,
+      cardImg: fish.cardImg,
+      popupImg: fish.popupImg,
+      sprites: fish.sprites,
+      swim: { ...(fish.swim || {}), ...(instance.swim || {}) },
+      instanceKey: `${fish.id}:${instance.instanceId || index}`
+    }));
+  });
 }
 
 function spriteAt(sprite, frame = 0) {
@@ -154,16 +177,18 @@ function updateHero() {
 function renderFish() {
   const layer = $('#fishLayer');
   if (!layer) return;
-  const visible = FISH.filter((fish) => fish.zone === state.zone);
+  const visible = aquariumFishViews(FISH.filter((fish) => fish.zone === state.zone));
   state.fishRuntime.clear();
+  state.fishViews.clear();
   layer.innerHTML = visible.map((fish, index) => `
-    <button type="button" class="fish" data-fish="${fish.id}" data-depth="${fish.depth ?? 0.55}" style="left:${fish.x}%;top:${fish.y}%" aria-label="${fish.name} 보기">
+    <button type="button" class="fish" data-fish="${fish.speciesId}" data-instance="${fish.instanceKey}" data-depth="${fish.depth ?? 0.55}" style="left:${fish.x}%;top:${fish.y}%" aria-label="${fish.name} 보기">
       <img class="fishSprite" src="${initialFishSprite(fish)}" alt="${fish.name}" loading="eager" decoding="async">
       ${fish.sprites?.fins ? `<img class="fishFinLayer" src="${spriteAt(fish.sprites.fins, index)}" alt="" aria-hidden="true" loading="eager" decoding="async">` : ''}
     </button>
   `).join('');
   $$('.fish', layer).forEach((btn, index) => {
-    const fish = fishById(btn.dataset.fish);
+    const fish = visible[index] || fishById(btn.dataset.fish);
+    state.fishViews.set(btn.dataset.instance || btn.dataset.fish, fish);
     runtimeForFish(fish, index);
     const img = $('.fishSprite', btn);
     if (img) applyFishDepth(btn, img, fish);
@@ -177,7 +202,7 @@ function animateFish() {
   const fishes = $$('.fish');
   state.tick += 0.01;
   fishes.forEach((btn, index) => {
-    const fish = fishById(btn.dataset.fish);
+    const fish = state.fishViews.get(btn.dataset.instance || btn.dataset.fish) || fishById(btn.dataset.fish);
     const runtime = runtimeForFish(fish, index);
     const swim = fish.swim || {};
     const depth = fishDepth(fish);
