@@ -54,6 +54,12 @@
       "nextCodexAction": "fix encoding, verify mobile layout, compare against v4.8.30 runtime before promotion"
     },
     {
+      "id": "v4837_discovery_card_ux",
+      "level": "level_1_candidate_doc_or_data",
+      "file": "app_assets/v4837_discovery_card_ux_quality.html",
+      "nextCodexAction": "audit encoding and UX behavior before treating root redirect as the stable runtime"
+    },
+    {
       "id": "pirami_candidate_assets",
       "level": "level_1_candidate_doc_or_data",
       "files": [
@@ -64,12 +70,14 @@
     },
     {
       "id": "gemini_account_bridge",
-      "level": "level_1_candidate_doc_or_data",
+      "level": "level_2_isolated_candidate_patch",
       "files": [
         "docs/GEMINI_ACCOUNT_SETUP.md",
-        "tools/check-gemini-config.ps1"
+        "tools/check-gemini-config.ps1",
+        "tools/invoke-gemini-bridge.ps1",
+        "GEMINI_CODEX_BRIDGE_TEST.cmd"
       ],
-      "nextCodexAction": "wait for user-provided GEMINI_API_KEY before live Gemini calls"
+      "nextCodexAction": "use the bridge from an environment that can read the saved user key; do not expose the key value"
     }
   ],
   "guardrails": [

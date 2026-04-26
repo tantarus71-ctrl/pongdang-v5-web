@@ -45,6 +45,7 @@
     "sync_prompt": "docs/CODEX_CHATGPT_SYNC.md",
     "fish_catalog_draft": "data/fish_catalog_option2.json",
     "child_quality_layout_candidate": "app_assets/v4831_child_quality_layout.html",
+    "discovery_card_ux_candidate": "app_assets/v4837_discovery_card_ux_quality.html",
     "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css"
   },
   "compatibility_aliases": {

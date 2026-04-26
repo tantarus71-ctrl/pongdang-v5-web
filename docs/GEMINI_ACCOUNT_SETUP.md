@@ -8,8 +8,10 @@ Codex는 사용자의 Google/Gemini 계정에 직접 로그인하지 않는다. 
 
 1. Google AI Studio 또는 Google AI for Developers에서 새 Gemini API 키를 만든다.
 2. 이미 채팅에 노출된 키가 있다면 먼저 삭제하거나 비활성화한다.
-3. `GEMINI_KEY_SETUP_EASY.cmd`를 실행한다.
+3. `GEMINI_KEY_SETUP_VISIBLE.cmd`를 실행한다. 이 방법이 가장 단순하다.
 4. `New GEMINI_API_KEY`가 나오면 새 키를 붙여넣고 Enter를 누른다. 붙여넣은 키가 화면에 안 보여도 정상이다.
+
+숨김 입력이 잘 안 되면 `GEMINI_KEY_SETUP_VISIBLE.cmd`를 사용한다. 키가 콘솔에 보일 수 있으니 화면 공유나 캡처를 하지 않는다.
 
 또는 PowerShell에서 프로젝트 폴더로 이동한다.
 
@@ -37,6 +39,16 @@ powershell -ExecutionPolicy Bypass -File .\tools\check-gemini-config.ps1
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\check-gemini-config.ps1
 ```
+
+## Codex/Gemini 브리지 테스트
+
+기본 Codex 샌드박스가 새 Windows 사용자 환경변수를 바로 못 읽을 수 있다. 이때는 `GEMINI_CODEX_BRIDGE_TEST.cmd` 또는 `tools/invoke-gemini-bridge.ps1`를 사용한다.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\invoke-gemini-bridge.ps1 -Prompt "Reply with exactly: Gemini bridge ready"
+```
+
+정상이라면 Gemini 응답이 출력된다. 키 값 자체는 출력하지 않는다.
 
 정상 연결이면 다음처럼 표시된다.
 

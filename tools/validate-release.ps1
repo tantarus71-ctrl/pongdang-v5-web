@@ -110,12 +110,18 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.child_quality_layout_candidate) {
       Test-File $manifest.planning.child_quality_layout_candidate 'Child quality layout candidate'
     }
+    if ($manifest.planning.discovery_card_ux_candidate) {
+      Test-File $manifest.planning.discovery_card_ux_candidate 'Discovery card UX candidate'
+    }
     Test-File $manifest.planning.mobile_menu_candidate 'Mobile menu candidate CSS'
   }
 
   Test-File 'tools/check-gemini-config.ps1' 'Gemini config checker'
   Test-File 'tools/set-gemini-user-key.ps1' 'Gemini user key setup helper'
   Test-File 'GEMINI_KEY_SETUP_EASY.cmd' 'Gemini easy key setup launcher'
+  Test-File 'GEMINI_KEY_SETUP_VISIBLE.cmd' 'Gemini visible key setup launcher'
+  Test-File 'tools/invoke-gemini-bridge.ps1' 'Gemini Codex bridge'
+  Test-File 'GEMINI_CODEX_BRIDGE_TEST.cmd' 'Gemini Codex bridge launcher'
 
   $appPath = Join-Path $Root $manifest.entrypoints.app
   $patchPath = Join-Path $Root $manifest.entrypoints.patch
