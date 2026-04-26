@@ -67,6 +67,12 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.ai_collaboration_matrix) {
       Test-File $manifest.planning.ai_collaboration_matrix 'AI collaboration matrix'
     }
+    if ($manifest.planning.ai_mutual_expansion_loop) {
+      Test-File $manifest.planning.ai_mutual_expansion_loop 'AI mutual expansion loop'
+    }
+    if ($manifest.planning.ai_expansion_state) {
+      Test-File $manifest.planning.ai_expansion_state 'AI expansion state'
+    }
     if ($manifest.planning.gemini_account_setup) {
       Test-File $manifest.planning.gemini_account_setup 'Gemini account setup'
     }
@@ -223,6 +229,30 @@ if ($manifest -and $project -and $package) {
       }
       if (!$aiMatrix.securityRules -or $aiMatrix.securityRules.Count -lt 4) {
         Add-Err "AI collaboration matrix must include security rules."
+      }
+    }
+  }
+  $aiExpansionPath = Join-Path $Root 'data/ai_expansion_state.json'
+  if (Test-Path -LiteralPath $aiExpansionPath) {
+    $aiExpansion = Read-JsonFile $aiExpansionPath
+    if ($aiExpansion) {
+      if ($aiExpansion.schema -ne 'pongdang_ai_expansion_state') {
+        Add-Err "AI expansion state schema mismatch: $($aiExpansion.schema)"
+      }
+      if (!$aiExpansion.loop -or $aiExpansion.loop.Count -lt 4) {
+        Add-Err "AI expansion state must define the full handoff loop."
+      }
+      foreach ($actor in @('chatgpt', 'gemini', 'codex', 'github')) {
+        $found = $false
+        foreach ($step in $aiExpansion.loop) {
+          if ($step.actor -eq $actor) { $found = $true }
+        }
+        if (!$found) {
+          Add-Err "AI expansion state missing actor in loop: $actor"
+        }
+      }
+      if (!$aiExpansion.promotionLevels -or $aiExpansion.promotionLevels.Count -lt 5) {
+        Add-Err "AI expansion state must include promotion levels."
       }
     }
   }

@@ -28,6 +28,8 @@
   "chatgpt_codex_sequential_workflow": "docs/CHATGPT_CODEX_SEQUENTIAL_WORKFLOW.md",
   "ai_collaboration_protocol": "docs/AI_COLLABORATION_PROTOCOL.md",
   "ai_collaboration_matrix": "data/ai_collaboration_matrix.json",
+  "ai_mutual_expansion_loop": "docs/AI_MUTUAL_EXPANSION_LOOP.md",
+  "ai_expansion_state": "data/ai_expansion_state.json",
   "gemini_account_setup": "docs/GEMINI_ACCOUNT_SETUP.md",
   "check_gemini_config": "tools/check-gemini-config.ps1",
   "exchange_channels": "data/exchange_channels.json",

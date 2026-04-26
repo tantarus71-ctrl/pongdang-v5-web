@@ -1,0 +1,82 @@
+{
+  "schema": "pongdang_ai_expansion_state",
+  "version": 1,
+  "updatedAt": "2026-04-26",
+  "sourceOfTruth": "GitHub main",
+  "stableRuntime": {
+    "version": "v4.8.30",
+    "title": "Phone Zone Label Fit",
+    "appEntry": "app_assets/index.html",
+    "patchEntry": "patches/latest.generated.patch.js"
+  },
+  "loop": [
+    {
+      "step": 1,
+      "actor": "chatgpt",
+      "mode": "expand",
+      "input": "GitHub latest main plus user goal",
+      "output": "idea, draft, candidate plan"
+    },
+    {
+      "step": 2,
+      "actor": "gemini",
+      "mode": "review",
+      "input": "ChatGPT draft plus long-context and grounded sources",
+      "output": "review, source_check, risk_check"
+    },
+    {
+      "step": 3,
+      "actor": "codex",
+      "mode": "stabilize",
+      "input": "ChatGPT draft plus Gemini review plus repository files",
+      "output": "candidate files, tested patch, validation result"
+    },
+    {
+      "step": 4,
+      "actor": "github",
+      "mode": "persist",
+      "input": "Codex verified commit",
+      "output": "next source of truth for ChatGPT, Gemini, and Codex"
+    }
+  ],
+  "promotionLevels": [
+    "level_0_idea_only",
+    "level_1_candidate_doc_or_data",
+    "level_2_isolated_candidate_patch",
+    "level_3_codex_validated_change",
+    "level_4_published_source_of_truth"
+  ],
+  "activeCandidates": [
+    {
+      "id": "v4831_child_quality_layout",
+      "level": "level_1_candidate_doc_or_data",
+      "file": "app_assets/v4831_child_quality_layout.html",
+      "nextCodexAction": "fix encoding, verify mobile layout, compare against v4.8.30 runtime before promotion"
+    },
+    {
+      "id": "pirami_candidate_assets",
+      "level": "level_1_candidate_doc_or_data",
+      "files": [
+        "assets/fish/pirami/swim.svg",
+        "assets/fish/pirami/card.svg"
+      ],
+      "nextCodexAction": "connect species data and behavior only after asset and layout validation"
+    },
+    {
+      "id": "gemini_account_bridge",
+      "level": "level_1_candidate_doc_or_data",
+      "files": [
+        "docs/GEMINI_ACCOUNT_SETUP.md",
+        "tools/check-gemini-config.ps1"
+      ],
+      "nextCodexAction": "wait for user-provided GEMINI_API_KEY before live Gemini calls"
+    }
+  ],
+  "guardrails": [
+    "No credential, payment, permission, or visibility decision without user confirmation",
+    "No runtime promotion without tools/validate-release.ps1",
+    "No force push over remote AI or user work",
+    "External sources must be cited and treated as evidence only",
+    "GitHub main is the shared memory for the next AI cycle"
+  ]
+}
