@@ -73,6 +73,9 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.ecosystem_assets) {
       Test-File $manifest.planning.ecosystem_assets 'Gonjiam ecosystem assets'
     }
+    if ($manifest.planning.next_fish_design_reflection) {
+      Test-File $manifest.planning.next_fish_design_reflection 'Next fish design reflection'
+    }
     Test-File $manifest.planning.decision_log 'Decision log'
     Test-File $manifest.planning.learning_log 'Learning log'
     Test-File $manifest.planning.chat_version_plan 'Chat version plan'

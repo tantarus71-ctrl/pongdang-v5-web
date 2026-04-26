@@ -22,7 +22,8 @@
         "data/fish_catalog_option2.json",
         "data/exchange_channels.json",
         "data/technology_watchlist.json",
-        "data/gonjiam_ecosystem_assets_v1.json"
+        "data/gonjiam_ecosystem_assets_v1.json",
+        "docs/codex_next_fish_design_reflection_v1.md"
                  ],
     "invariants":  [
                        "Keep main and gh-pages aligned",
@@ -64,12 +65,18 @@
             "date":  "2026-04-26",
             "fact":  "상호 교환 프로토콜과 자가 확장 기술 레이더를 추가해 외부 공식 기술 조사 결과를 후보-실험-검증-반영 순서로 흡수하게 했다.",
             "evidence":  "docs/MUTUAL_EXCHANGE_PROTOCOL.md, docs/SELF_EXPANSION_TECH_RADAR.md"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "다음 물고기 디자인 반영 계획은 전체 일괄 반영이 아니라 피라미 1종을 다음 테스트 어종으로 삼는 방향이다.",
+            "evidence":  "docs/codex_next_fish_design_reflection_v1.md"
         }
                      ],
     "nextLearningTargets":  [
         "다음 개발부터 record-learning으로 세션 결과를 누적하고, 모바일 메뉴 최적화 후보를 중복 없이 runtime patch로 통합한다.",
         "곤지암 생태계 에셋 계획의 후보 어종을 fish_catalog_option2 구조와 병합하되 현장 확정종으로 단정하지 않는다.",
         "tools/update-tech-watch.ps1로 기술 후보를 주기적으로 조사하고, 낮은 위험 후보부터 실험 패치로 전환한다.",
+        "피라미 1종을 다음 디자인/행동 테스트 어종으로 준비하되, 현재 v4.8.30 안정 실행 기준은 유지한다.",
         "Convert v4.8.32 mobile menu candidate CSS into one non-duplicated runtime patch",
                                 "Promote fish_catalog_option2 beodeulchi draft into runtime data after asset decision",
                                 "Create or formalize fallback strategy for beodeulchi card and popup assets",

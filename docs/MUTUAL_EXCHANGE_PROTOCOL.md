@@ -21,6 +21,7 @@
 - `data/exchange_channels.json`: 교환 채널 목록과 쓰기 규칙
 - `data/technology_watchlist.json`: 외부 기술 후보와 적용 상태
 - `data/technology_research_log.json`: 외부 기술 조사 결과 캐시
+- `docs/codex_next_fish_design_reflection_v1.md`: 다음 물고기 디자인 반영 판단
 
 ## 처리 흐름
 
