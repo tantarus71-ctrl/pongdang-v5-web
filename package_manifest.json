@@ -1,5 +1,5 @@
 {
   "alias_of": "project-manifest.json",
-  "version": "v4.8.28",
-  "status": "legacy compatibility alias; current source of truth is project-manifest.json"
+  "version": "v4.8.30",
+  "status": "legacy compatibility alias; current source of truth is manifest.json and project-manifest.json"
 }

@@ -2,26 +2,31 @@
   "project": "pongdang-v5-web",
   "repository": "tantarus71-ctrl/pongdang-v5-web",
   "branch": "main",
+  "pages_branch": "gh-pages",
   "version": "v4.8.30",
   "status": "phone zone labels optimized so confluence text fits cleanly",
-  "source_of_truth": "github + codex package",
+  "source_of_truth": "GitHub main + project-manifest.json + Codex workspace",
+  "urls": {
+    "github": "https://github.com/tantarus71-ctrl/pongdang-v5-web",
+    "pages": "https://tantarus71-ctrl.github.io/pongdang-v5-web/",
+    "local": "http://127.0.0.1:4830/"
+  },
   "entrypoints": {
     "root": "index.html",
-    "viewer": "viewer.html",
+    "viewer": "00_열어서확인.html",
     "app": "app_assets/index.html",
     "patch": "patches/latest.generated.patch.js"
   },
-  "legacy_aliases": {
-    "viewer_legacy": "00_열어서확인.html",
-    "baseline_legacy": "index_gonjiam_stable_v4_4_1_upper_day_background_applied.html",
-    "manifest_legacy": "package_manifest.json"
+  "compatibility_aliases": {
+    "package_manifest": "package_manifest.json"
   },
   "rules": [
     "Preserve aquarium frame structure",
     "Patch elements only unless explicitly rebaselining",
-    "Keep GitHub main as latest reference",
+    "Keep GitHub main and gh-pages aligned",
     "Advance objects one slot at a time",
-    "Run structure validation before future releases"
+    "Run tools/validate-release.ps1 before release",
+    "Update README.md, manifest.json, project-manifest.json, and package_manifest.json when version changes"
   ],
   "latest_package": "pongdang4_v4_8_30_phone_zone_label_fit.zip",
   "final_background": {
@@ -31,7 +36,7 @@
   },
   "completed_step": {
     "version": "v4.8.30",
-    "task": "Optimized phone zone labels so 물모이 does not shift or overflow"
+    "task": "Optimized phone zone labels so confluence text fits cleanly"
   },
   "next_step": {
     "version": "v4.8.31",

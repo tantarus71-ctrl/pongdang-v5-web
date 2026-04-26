@@ -1,23 +1,44 @@
-# pongdang-v5-web
+# Pongdang V5 Web
 
-퐁당-4 곤지암천 수중 생태 학습 웹/앱 기준 저장소입니다.
+곤지암천 관찰형 수중 생태 학습 웹앱입니다. 이 저장소의 기준 최신본은 GitHub `main`과 `gh-pages` 브랜치에 함께 유지합니다.
 
-## 최신 기준
+## 현재 기준
 
-- 기준 버전: `v4.4.5 object slots created`
-- 실행 파일: `index.html`
-- 앱 기준 파일: `app_assets/index.html`
-- 확인 파일: `00_열어서확인.html`
+- Version: `v4.8.30`
+- App entry: `app_assets/index.html`
+- Root redirect: `index.html`
+- Patch entry: `patches/latest.generated.patch.js`
+- Public URL: https://tantarus71-ctrl.github.io/pongdang-v5-web/
+- Local URL: http://127.0.0.1:4830/
 
-## 개발 원칙
+## 작업 원칙
 
-1. GitHub 저장소를 항상 최신 기준으로 둡니다.
-2. 웹 기준본과 `app_assets/index.html`은 동일하게 유지합니다.
-3. 새 기능 추가 시 기존 동일 기능 코드는 삭제 또는 비활성화하고, 단일 기능 단일 함수 원칙을 유지합니다.
-4. 배경/오브젝트/수초/유리효과 레이어는 `pointer-events:none`을 기본으로 합니다.
-5. 물고기 클릭, 메뉴, 팝업, 도감, 카메라/GPS 전환은 충돌하지 않도록 Guard 구조를 유지합니다.
+1. `manifest.json`을 저장소의 사람/AI 공통 기준으로 둡니다.
+2. `project-manifest.json`은 Codex 작업 상태와 다음 단계를 기록합니다.
+3. `package_manifest.json`은 예전 자동화 호환용 별칭으로 유지하되, 버전은 항상 맞춥니다.
+4. 새 기능은 기존 수족관 프레임을 보존하고, 패치 또는 작은 단위로 누적합니다.
+5. 수정 후에는 `tools/validate-release.ps1`로 구조 검증을 통과시킨 뒤 커밋합니다.
 
-## 다음 단계
+## 자주 쓰는 명령
 
-- `v4.4.6`: 뒤쪽 수초 1개 제작 후 `BackObjects` 슬롯에만 적용
-- 적용 전 `PondangObjectLayerPreflightV444.run()` 또는 해당 Guard audit 실행
+로컬 실행:
+
+```powershell
+.\run-local-v4830.cmd
+```
+
+구조 검증:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\validate-release.ps1
+```
+
+검증 후 GitHub와 Pages에 동시 반영:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\publish-release.ps1 -CommitMessage "Publish Pongdang v4.8.31"
+```
+
+## ChatGPT / Codex 업데이트 방식
+
+ChatGPT나 Codex에 새 작업을 맡길 때는 `docs/CODEX_CHATGPT_SYNC.md`를 먼저 붙여 넣거나 참조합니다. 그러면 버전, 파일 위치, 검증, 배포 방식이 같은 기준으로 이어집니다.
