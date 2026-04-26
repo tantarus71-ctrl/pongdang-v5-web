@@ -16,6 +16,7 @@
         "docs/PROJECT_LEARNING_SYSTEM.md",
         "docs/SESSION_START_PROMPT.md",
         "docs/CHATGPT_CODEX_SEQUENTIAL_WORKFLOW.md",
+        "docs/AI_COLLABORATION_PROTOCOL.md",
         "docs/MUTUAL_EXCHANGE_PROTOCOL.md",
         "docs/SELF_EXPANSION_TECH_RADAR.md",
         "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
@@ -34,6 +35,7 @@
                        "Run tools/validate-release.ps1 before committing release work",
                        "Record session learnings before publishing meaningful changes",
                        "ChatGPT creates the first development draft, Codex stabilizes and verifies it, then GitHub becomes the source for the next ChatGPT cycle",
+                       "Use Gemini as a long-context, multimodal, grounded-research reviewer before Codex applies risky or broad changes",
                        "Keep fish data normalized before runtime migration",
                        "Avoid duplicate mobile layout CSS paths",
                        "Research external technology through official sources before adopting it",
@@ -99,9 +101,15 @@
             "date":  "2026-04-26",
             "fact":  "원격에서 v4.8.31 어린이 품질 레이아웃 후보 HTML이 추가되었고, 현재 안정 런타임과 분리된 후보 빌드로 추적한다.",
             "evidence":  "app_assets/v4831_child_quality_layout.html"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "ChatGPT, Gemini, Codex가 GitHub main을 기준으로 서로 검토하고 보완하는 AI 협력 프로토콜을 추가했다.",
+            "evidence":  "docs/AI_COLLABORATION_PROTOCOL.md, data/ai_collaboration_matrix.json"
         }
                      ],
     "nextLearningTargets":  [
+        "다음 큰 변경은 ChatGPT 초안, Gemini 긴 문맥/최신 출처 검토, Codex 적용/검증/배포 순서로 진행한다.",
         "v4.8.31 child quality layout 후보는 깨진 문자, 자산 경로, 모바일 겹침, 기존 v4.8.30 회귀 여부를 Codex가 정리한 뒤 반영한다.",
         "새 ChatGPT 개발 초안이 들어오면 먼저 후보 문서/데이터/패치로 분리하고 Codex 검증 후 main과 gh-pages에 반영한다.",
         "다음 개발부터 record-learning으로 세션 결과를 누적하고, 모바일 메뉴 최적화 후보를 중복 없이 runtime patch로 통합한다.",

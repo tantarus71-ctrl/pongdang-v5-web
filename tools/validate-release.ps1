@@ -61,6 +61,12 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.chatgpt_codex_sequential_workflow) {
       Test-File $manifest.planning.chatgpt_codex_sequential_workflow 'ChatGPT/Codex sequential workflow'
     }
+    if ($manifest.planning.ai_collaboration_protocol) {
+      Test-File $manifest.planning.ai_collaboration_protocol 'AI collaboration protocol'
+    }
+    if ($manifest.planning.ai_collaboration_matrix) {
+      Test-File $manifest.planning.ai_collaboration_matrix 'AI collaboration matrix'
+    }
     if ($manifest.planning.exchange_channels) {
       Test-File $manifest.planning.exchange_channels 'Exchange channels'
     }
@@ -195,6 +201,23 @@ if ($manifest -and $project -and $package) {
       }
       if (!$watch.candidates -or $watch.candidates.Count -lt 3) {
         Add-Err "Technology watchlist must include at least three candidates."
+      }
+    }
+  }
+  $aiMatrixPath = Join-Path $Root 'data/ai_collaboration_matrix.json'
+  if (Test-Path -LiteralPath $aiMatrixPath) {
+    $aiMatrix = Read-JsonFile $aiMatrixPath
+    if ($aiMatrix) {
+      if ($aiMatrix.schema -ne 'pongdang_ai_collaboration_matrix') {
+        Add-Err "AI collaboration matrix schema mismatch: $($aiMatrix.schema)"
+      }
+      foreach ($participant in @('chatgpt', 'gemini', 'codex')) {
+        if (!$aiMatrix.participants.$participant) {
+          Add-Err "AI collaboration matrix missing participant: $participant"
+        }
+      }
+      if (!$aiMatrix.securityRules -or $aiMatrix.securityRules.Count -lt 4) {
+        Add-Err "AI collaboration matrix must include security rules."
       }
     }
   }
