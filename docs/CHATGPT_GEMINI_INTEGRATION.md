@@ -48,3 +48,9 @@ powershell -ExecutionPolicy Bypass -File .\tools\invoke-gemini-bridge.ps1 -Promp
 - Gemini 키는 `GEMINI_API_KEY` 환경변수에서만 읽는다.
 - Gemini 응답은 자동 실행하지 않고 후보 입력으로만 사용한다.
 - Codex가 `tools/validate-release.ps1`를 통과시키기 전에는 런타임 기준으로 승격하지 않는다.
+
+## 현재 운영 판정
+
+- Gemini 검토 결과는 기본적으로 `level_1` 후보 입력이다.
+- v4.8.37 discovery UX와 v4.8.31 child layout은 깨진 한글 인코딩과 UI/리다이렉트 위험을 해결하기 전까지 런타임 승격 금지다.
+- Pirami assets는 종 데이터와 행동 매핑이 준비되기 전까지 후보 자산으로만 유지한다.

@@ -137,9 +137,21 @@
             "date":  "2026-04-26",
             "fact":  "ChatGPT가 Gemini 검토를 요청하면 Codex가 request-gemini-review.ps1로 Gemini 브리지를 호출하고 결과를 docs/gemini_reviews에 저장하는 연동 구조를 추가했다.",
             "evidence":  "docs/CHATGPT_GEMINI_INTEGRATION.md, tools/request-gemini-review.ps1"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "Gemini는 v4.8.37 discovery UX와 v4.8.31 child layout의 깨진 한글 인코딩과 루트 리다이렉트/레이아웃 위험을 이유로 런타임 승격 금지를 권고했다.",
+            "evidence":  "docs/gemini_reviews/20260426_202822_active_candidates_review.md"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "원격에서 v4.8.38~v4.8.47 후보 빌드와 사전점검 문서가 추가되었고, 안정 런타임으로 즉시 승격하지 않고 후보 묶음으로 추적한다.",
+            "evidence":  "docs/index_replacement_precheck_v4_8_47.md"
         }
                      ],
     "nextLearningTargets":  [
+        "v4.8.38~v4.8.47 후보 묶음을 Gemini/Codex 검토 대상으로 삼고, root index 교체 전 v4.8.30 안정 기준과 공개 Pages 동작을 재검증한다.",
+        "v4.8.37 루트 리다이렉트가 안정 런타임으로 오인되지 않도록 격리하고, 깨진 한글 인코딩을 먼저 정리한다.",
         "ChatGPT 초안은 docs/drafts에 저장하고 Gemini 검토 결과는 docs/gemini_reviews에 저장한 뒤 Codex가 검증한다.",
         "v4.8.37 discovery card UX 후보의 깨진 문자, 루트 리다이렉트 영향, v4.8.30 안정 기준 회귀 여부를 검증한다.",
         "Gemini 호출은 invoke-gemini-bridge.ps1을 통해 수행하고, 키 값은 출력하지 않으며 결과는 후보 입력으로만 사용한다.",

@@ -116,6 +116,20 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.discovery_card_ux_candidate) {
       Test-File $manifest.planning.discovery_card_ux_candidate 'Discovery card UX candidate'
     }
+    foreach ($candidateField in @(
+      @{ Name = 'responsive_aquarium_ui_candidate'; Label = 'Responsive aquarium UI candidate' },
+      @{ Name = 'responsive_ui_apply_candidate'; Label = 'Responsive UI apply candidate' },
+      @{ Name = 'optimized_shell_candidate'; Label = 'Optimized shell candidate' },
+      @{ Name = 'lightweight_modular_candidate'; Label = 'Lightweight modular candidate' },
+      @{ Name = 'production_candidate'; Label = 'Production candidate' },
+      @{ Name = 'visual_qa_matrix'; Label = 'Visual QA matrix' },
+      @{ Name = 'index_replacement_precheck'; Label = 'Index replacement precheck' }
+    )) {
+      $fieldName = $candidateField.Name
+      if ($manifest.planning.$fieldName) {
+        Test-File $manifest.planning.$fieldName $candidateField.Label
+      }
+    }
     Test-File $manifest.planning.mobile_menu_candidate 'Mobile menu candidate CSS'
   }
 

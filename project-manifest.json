@@ -54,6 +54,13 @@
   "fish_catalog_draft": "data/fish_catalog_option2.json",
   "child_quality_layout_candidate": "app_assets/v4831_child_quality_layout.html",
   "discovery_card_ux_candidate": "app_assets/v4837_discovery_card_ux_quality.html",
+  "responsive_aquarium_ui_candidate": "app_assets/patches/v4_8_37_responsive_aquarium_ui.css",
+  "responsive_ui_apply_candidate": "app_assets/patches/v4_8_38_apply_responsive_ui.js",
+  "optimized_shell_candidate": "app_assets/index_v4_8_39.html",
+  "lightweight_modular_candidate": "app_assets/index_v4_8_40.html",
+  "production_candidate": "app_assets/index_candidate_v4_8_46.html",
+  "visual_qa_matrix": "app_assets/test_matrix_v4_8_44.html",
+  "index_replacement_precheck": "docs/index_replacement_precheck_v4_8_47.md",
   "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css",
   "updated_viewer_at": "2026-04-24 01:29:45",
   "completed_step": {
