@@ -70,14 +70,16 @@
     },
     {
       "id": "gemini_account_bridge",
-      "level": "level_2_isolated_candidate_patch",
+      "level": "level_3_codex_validated_change",
       "files": [
         "docs/GEMINI_ACCOUNT_SETUP.md",
+        "docs/CHATGPT_GEMINI_INTEGRATION.md",
         "tools/check-gemini-config.ps1",
         "tools/invoke-gemini-bridge.ps1",
+        "tools/request-gemini-review.ps1",
         "GEMINI_CODEX_BRIDGE_TEST.cmd"
       ],
-      "nextCodexAction": "use the bridge from an environment that can read the saved user key; do not expose the key value"
+      "nextCodexAction": "use request-gemini-review.ps1 for ChatGPT draft reviews; save Gemini output under docs/gemini_reviews"
     }
   ],
   "guardrails": [

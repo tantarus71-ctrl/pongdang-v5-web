@@ -73,6 +73,9 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.ai_expansion_state) {
       Test-File $manifest.planning.ai_expansion_state 'AI expansion state'
     }
+    if ($manifest.planning.chatgpt_gemini_integration) {
+      Test-File $manifest.planning.chatgpt_gemini_integration 'ChatGPT Gemini integration'
+    }
     if ($manifest.planning.gemini_account_setup) {
       Test-File $manifest.planning.gemini_account_setup 'Gemini account setup'
     }
@@ -121,7 +124,10 @@ if ($manifest -and $project -and $package) {
   Test-File 'GEMINI_KEY_SETUP_EASY.cmd' 'Gemini easy key setup launcher'
   Test-File 'GEMINI_KEY_SETUP_VISIBLE.cmd' 'Gemini visible key setup launcher'
   Test-File 'tools/invoke-gemini-bridge.ps1' 'Gemini Codex bridge'
+  Test-File 'tools/request-gemini-review.ps1' 'ChatGPT Gemini review helper'
   Test-File 'GEMINI_CODEX_BRIDGE_TEST.cmd' 'Gemini Codex bridge launcher'
+  Test-File 'docs/drafts/.gitkeep' 'ChatGPT draft directory marker'
+  Test-File 'docs/gemini_reviews/.gitkeep' 'Gemini review directory marker'
 
   $appPath = Join-Path $Root $manifest.entrypoints.app
   $patchPath = Join-Path $Root $manifest.entrypoints.patch

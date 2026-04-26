@@ -1,11 +1,25 @@
 param(
-  [Parameter(Mandatory = $true)]
   [string]$Prompt,
+  [string]$PromptFile,
+  [string]$OutputFile,
   [string]$Model = 'gemini-2.5-flash',
   [int]$TimeoutSec = 60
 )
 
 $ErrorActionPreference = 'Stop'
+
+if ([string]::IsNullOrWhiteSpace($Prompt) -and ![string]::IsNullOrWhiteSpace($PromptFile)) {
+  if (!(Test-Path -LiteralPath $PromptFile)) {
+    Write-Host "Prompt file not found: $PromptFile"
+    exit 4
+  }
+  $Prompt = Get-Content -LiteralPath $PromptFile -Raw -Encoding UTF8
+}
+
+if ([string]::IsNullOrWhiteSpace($Prompt)) {
+  Write-Host 'Prompt or PromptFile is required.'
+  exit 4
+}
 
 function Get-GeminiKey {
   $key = [Environment]::GetEnvironmentVariable('GEMINI_API_KEY', 'Process')
@@ -69,4 +83,15 @@ if ($textParts.Count -eq 0) {
 
 Write-Host ''
 Write-Host 'Gemini response:'
-$textParts -join "`n"
+$text = $textParts -join "`n"
+Write-Host $text
+
+if (![string]::IsNullOrWhiteSpace($OutputFile)) {
+  $dir = Split-Path -Parent $OutputFile
+  if (![string]::IsNullOrWhiteSpace($dir) -and !(Test-Path -LiteralPath $dir)) {
+    New-Item -ItemType Directory -Path $dir | Out-Null
+  }
+  $text | Set-Content -LiteralPath $OutputFile -Encoding UTF8
+  Write-Host ''
+  Write-Host "Saved Gemini response: $OutputFile"
+}
