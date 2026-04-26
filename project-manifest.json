@@ -66,6 +66,8 @@
   "external_demo_candidate": "app_assets/demo_v4_8_50.html",
   "external_demo_guide": "docs/external_demo_guide_v4_8_50.md",
   "external_demo_package": "docs/demo_package_v4_8_51.md",
+  "qr_helper_candidate": "app_assets/qr_helper_v4_8_52.html",
+  "qr_helper_plan": "docs/qr_helper_v4_8_52.md",
   "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css",
   "updated_viewer_at": "2026-04-24 01:29:45",
   "completed_step": {

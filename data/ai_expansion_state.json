@@ -95,6 +95,15 @@
       "nextCodexAction": "treat as external/demo package candidate; verify it cannot confuse the stable app entry before promotion"
     },
     {
+      "id": "v4852_qr_helper",
+      "level": "level_1_candidate_doc_or_data",
+      "files": [
+        "app_assets/qr_helper_v4_8_52.html",
+        "docs/qr_helper_v4_8_52.md"
+      ],
+      "nextCodexAction": "verify QR helper is an optional helper and does not alter stable runtime entry"
+    },
+    {
       "id": "pirami_candidate_assets",
       "level": "level_1_candidate_doc_or_data",
       "files": [

@@ -128,7 +128,9 @@ if ($manifest -and $project -and $package) {
       @{ Name = 'safe_entry_plan'; Label = 'Safe entry plan' },
       @{ Name = 'external_demo_candidate'; Label = 'External demo candidate' },
       @{ Name = 'external_demo_guide'; Label = 'External demo guide' },
-      @{ Name = 'external_demo_package'; Label = 'External demo package' }
+      @{ Name = 'external_demo_package'; Label = 'External demo package' },
+      @{ Name = 'qr_helper_candidate'; Label = 'QR helper candidate' },
+      @{ Name = 'qr_helper_plan'; Label = 'QR helper plan' }
     )) {
       $fieldName = $candidateField.Name
       if ($manifest.planning.$fieldName) {
