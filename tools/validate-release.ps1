@@ -76,6 +76,9 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.next_fish_design_reflection) {
       Test-File $manifest.planning.next_fish_design_reflection 'Next fish design reflection'
     }
+    if ($manifest.planning.fish_design_style_guide) {
+      Test-File $manifest.planning.fish_design_style_guide 'Fish design style guide'
+    }
     Test-File $manifest.planning.decision_log 'Decision log'
     Test-File $manifest.planning.learning_log 'Learning log'
     Test-File $manifest.planning.chat_version_plan 'Chat version plan'

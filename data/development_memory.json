@@ -23,7 +23,8 @@
         "data/exchange_channels.json",
         "data/technology_watchlist.json",
         "data/gonjiam_ecosystem_assets_v1.json",
-        "docs/codex_next_fish_design_reflection_v1.md"
+        "docs/codex_next_fish_design_reflection_v1.md",
+        "docs/fish_design_style_guide_v1.md"
                  ],
     "invariants":  [
                        "Keep main and gh-pages aligned",
@@ -70,6 +71,11 @@
             "date":  "2026-04-26",
             "fact":  "다음 물고기 디자인 반영 계획은 전체 일괄 반영이 아니라 피라미 1종을 다음 테스트 어종으로 삼는 방향이다.",
             "evidence":  "docs/codex_next_fish_design_reflection_v1.md"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "물고기 디자인 스타일 가이드 v1이 추가되어 다음 어종 확장 시 카툰형+반실사 중간 톤과 종별 실루엣 차이를 기준으로 삼는다.",
+            "evidence":  "docs/fish_design_style_guide_v1.md"
         }
                      ],
     "nextLearningTargets":  [

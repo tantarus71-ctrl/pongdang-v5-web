@@ -28,6 +28,7 @@
     "technology_research_log": "data/technology_research_log.json",
     "ecosystem_assets": "data/gonjiam_ecosystem_assets_v1.json",
     "next_fish_design_reflection": "docs/codex_next_fish_design_reflection_v1.md",
+    "fish_design_style_guide": "docs/fish_design_style_guide_v1.md",
     "decision_log": "docs/DECISION_LOG.md",
     "learning_log": "docs/LEARNING_LOG.md",
     "chat_version_plan": "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
