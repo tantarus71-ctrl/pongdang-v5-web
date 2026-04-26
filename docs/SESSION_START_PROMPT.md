@@ -12,6 +12,7 @@
 4. docs/PROJECT_LEARNING_SYSTEM.md
 5. docs/CHAT_VERSION_INTEGRATION_PLAN.md
 6. docs/CODEX_CHATGPT_SYNC.md
+7. data/gonjiam_ecosystem_assets_v1.json
 
 현재 기준:
 - 저장소: tantarus71-ctrl/pongdang-v5-web
@@ -27,6 +28,7 @@
 - 실행 중인 v4.8.30 화면을 깨지 않는다.
 - 새 기능은 문서/데이터/후보 패치로 먼저 정리한 뒤 런타임에 반영한다.
 - 물고기 확장은 data/fish_catalog_option2.json 기준으로 정규화한다.
+- 곤지암천 생태계 에셋 후보는 data/gonjiam_ecosystem_assets_v1.json에서 확인하되, 현장 확인 전에는 확정 출현종으로 단정하지 않는다.
 - 모바일 메뉴는 중복 CSS를 만들지 않고 latest.generated.patch.js 안의 한 경로로 통합한다.
 - 수정 후 tools/validate-release.ps1을 반드시 통과시킨다.
 - 완료 후 tools/record-learning.ps1로 배운 점과 다음 작업을 기록한다.

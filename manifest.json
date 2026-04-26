@@ -21,6 +21,7 @@
     "learning_system": "docs/PROJECT_LEARNING_SYSTEM.md",
     "session_start_prompt": "docs/SESSION_START_PROMPT.md",
     "development_memory": "data/development_memory.json",
+    "ecosystem_assets": "data/gonjiam_ecosystem_assets_v1.json",
     "decision_log": "docs/DECISION_LOG.md",
     "learning_log": "docs/LEARNING_LOG.md",
     "chat_version_plan": "docs/CHAT_VERSION_INTEGRATION_PLAN.md",

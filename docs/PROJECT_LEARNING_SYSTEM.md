@@ -12,6 +12,7 @@
 ## 학습 저장소 구조
 
 - `data/development_memory.json`: 기계가 읽는 프로젝트 기억
+- `data/gonjiam_ecosystem_assets_v1.json`: 곤지암천형 생태계 후보 자산 계획
 - `docs/SESSION_START_PROMPT.md`: 새 ChatGPT/Codex 세션에 붙여 넣는 시작 프롬프트
 - `docs/DECISION_LOG.md`: 중요한 기술 결정 기록
 - `docs/LEARNING_LOG.md`: 세션별 학습/검증/다음 작업 기록
@@ -27,7 +28,8 @@
 2. `manifest.json`에서 현재 버전과 다음 단계를 확인한다.
 3. `data/development_memory.json`에서 불변 규칙과 최근 학습을 확인한다.
 4. `docs/CHAT_VERSION_INTEGRATION_PLAN.md`에서 백로그를 확인한다.
-5. 현재 앱을 `http://127.0.0.1:4830/`에서 확인한다.
+5. `data/gonjiam_ecosystem_assets_v1.json`에서 새 생태계 후보 지식을 확인한다.
+6. 현재 앱을 `http://127.0.0.1:4830/`에서 확인한다.
 
 ## 개발 중 규칙
 

@@ -14,10 +14,11 @@
                      "manifest.json",
                      "project-manifest.json",
                      "docs/PROJECT_LEARNING_SYSTEM.md",
-                     "docs/SESSION_START_PROMPT.md",
-                     "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
-                     "docs/CODEX_CHATGPT_SYNC.md",
-                     "data/fish_catalog_option2.json"
+        "docs/SESSION_START_PROMPT.md",
+        "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
+        "docs/CODEX_CHATGPT_SYNC.md",
+        "data/fish_catalog_option2.json",
+        "data/gonjiam_ecosystem_assets_v1.json"
                  ],
     "invariants":  [
                        "Keep main and gh-pages aligned",
@@ -43,15 +44,21 @@
                              "fact":  "Remote chat-version branches contain useful planning docs for v4.8.31 through v4.8.35.",
                              "evidence":  "docs/CHAT_VERSION_INTEGRATION_PLAN.md"
                          },
-                         {
-                             "date":  "2026-04-26",
-                             "fact":  "프로젝트 전용 학습 시스템을 추가해 ChatGPT/Codex가 세션 시작 시 같은 기억, 규칙, 결정 로그를 읽고 이어받게 했다.",
-                             "evidence":  "Recorded by tools/record-learning.ps1"
-                         }
+        {
+            "date":  "2026-04-26",
+            "fact":  "프로젝트 전용 학습 시스템을 추가해 ChatGPT/Codex가 세션 시작 시 같은 기억, 규칙, 결정 로그를 읽고 이어받게 했다.",
+            "evidence":  "Recorded by tools/record-learning.ps1"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "곤지암천 생태계 에셋 계획 v1이 원격에서 추가되었고, 현재는 v4.8.30 안정 런타임을 바꾸지 않는 후보 지식으로 관리한다.",
+            "evidence":  "data/gonjiam_ecosystem_assets_v1.json"
+        }
                      ],
     "nextLearningTargets":  [
-                                "다음 개발부터 record-learning으로 세션 결과를 누적하고, 모바일 메뉴 최적화 후보를 중복 없이 runtime patch로 통합한다.",
-                                "Convert v4.8.32 mobile menu candidate CSS into one non-duplicated runtime patch",
+        "다음 개발부터 record-learning으로 세션 결과를 누적하고, 모바일 메뉴 최적화 후보를 중복 없이 runtime patch로 통합한다.",
+        "곤지암 생태계 에셋 계획의 후보 어종을 fish_catalog_option2 구조와 병합하되 현장 확정종으로 단정하지 않는다.",
+        "Convert v4.8.32 mobile menu candidate CSS into one non-duplicated runtime patch",
                                 "Promote fish_catalog_option2 beodeulchi draft into runtime data after asset decision",
                                 "Create or formalize fallback strategy for beodeulchi card and popup assets",
                                 "Add automated viewport smoke checks when in-app browser runtime is available"

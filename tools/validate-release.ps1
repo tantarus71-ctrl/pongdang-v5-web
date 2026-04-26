@@ -55,6 +55,9 @@ if ($manifest -and $project -and $package) {
     Test-File $manifest.planning.learning_system 'Project learning system'
     Test-File $manifest.planning.session_start_prompt 'Session start prompt'
     Test-File $manifest.planning.development_memory 'Development memory'
+    if ($manifest.planning.ecosystem_assets) {
+      Test-File $manifest.planning.ecosystem_assets 'Gonjiam ecosystem assets'
+    }
     Test-File $manifest.planning.decision_log 'Decision log'
     Test-File $manifest.planning.learning_log 'Learning log'
     Test-File $manifest.planning.chat_version_plan 'Chat version plan'
@@ -122,6 +125,21 @@ if ($manifest -and $project -and $package) {
     }
     if (!$memory.invariants -or $memory.invariants.Count -lt 4) {
       Add-Err "Development memory must include invariants."
+    }
+  }
+  $ecosystemPath = Join-Path $Root 'data/gonjiam_ecosystem_assets_v1.json'
+  if (Test-Path -LiteralPath $ecosystemPath) {
+    $ecosystem = Read-JsonFile $ecosystemPath
+    if ($ecosystem) {
+      if (!$ecosystem.zones -or $ecosystem.zones.Count -lt 5) {
+        Add-Err "Gonjiam ecosystem assets must define at least five zones."
+      }
+      if (!$ecosystem.realSpecies -or $ecosystem.realSpecies.Count -lt 1) {
+        Add-Err "Gonjiam ecosystem assets must include candidate real species."
+      }
+      if ([string]::IsNullOrWhiteSpace([string]$ecosystem.principle)) {
+        Add-Warn "Gonjiam ecosystem assets should preserve a non-confirmation principle."
+      }
     }
   }
 }
