@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#061722">
+  <title>퐁당퐁당 v4.8.52 QR 주소 생성 도우미</title>
+  <style>
+    /* 한글 주석: 배포 도메인을 입력하면 QR용 최종 주소와 공유 문구를 만들어 주는 현장 도우미 */
+    :root{--bg:#061722;--panel:rgba(255,255,255,.08);--text:#eefbff;--muted:#b9e8f5;--line:rgba(180,245,255,.22);--accent:#23dff0;--ok:#9fffc7;--warn:#ffe0a8}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif}
+    body{padding:clamp(14px,3vw,28px);background:radial-gradient(circle at 50% 0%,rgba(72,215,244,.24),transparent 30%),linear-gradient(180deg,#0a314b,#061722)}
+    .wrap{max-width:980px;margin:0 auto;display:grid;gap:16px}.card{border:1px solid var(--line);border-radius:28px;background:var(--panel);box-shadow:0 20px 48px rgba(0,0,0,.24);backdrop-filter:blur(12px);padding:clamp(18px,3vw,28px)}
+    .eyebrow{font-size:13px;color:#9fefff;font-weight:950;letter-spacing:.02em}.title{margin:8px 0 0;font-size:clamp(30px,6vw,54px);line-height:.98;letter-spacing:-.065em;font-weight:950}.lead{margin:14px 0 0;color:var(--muted);font-size:clamp(15px,2.2vw,18px);line-height:1.58;font-weight:750}
+    .form{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:18px}label{display:block;font-size:13px;color:#c9f5ff;font-weight:900;margin-bottom:7px}.field{min-height:52px;width:100%;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.22);color:#fff;padding:0 14px;font:800 15px system-ui,-apple-system,'Noto Sans KR',sans-serif}.btn{min-height:52px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#2bdff0,#0a94c4);color:#fff;font-weight:950;padding:0 16px;cursor:pointer}.btn.secondary{background:rgba(255,255,255,.08)}
+    .result{display:grid;gap:12px;margin-top:16px}.box{padding:14px;border-radius:18px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.10)}.boxTitle{font-size:13px;color:#9fefff;font-weight:950;margin-bottom:7px}.path{font:850 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#e5fbff;word-break:break-all}.share{white-space:pre-wrap;line-height:1.55;color:#e7faff;font-size:14px;font-weight:750}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.copy{min-height:42px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:900;padding:0 12px;cursor:pointer}.copy.ok{background:linear-gradient(180deg,#7fedb0,#28a45e)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.mini h2{margin:0 0 10px;font-size:19px}.mini p{margin:0;color:var(--muted);line-height:1.55;font-size:14px;font-weight:750}.list{display:grid;gap:8px;margin-top:10px}.item{padding:10px 11px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:14px;line-height:1.45;color:#d7f6ff;font-weight:800}
+    .note{font-size:12px;color:#9fcdda;line-height:1.5;text-align:center}.warn{color:var(--warn)}
+    @media(max-width:760px){.form,.grid{grid-template-columns:1fr}.btn{width:100%}.actions .copy{width:100%}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="eyebrow">Pongdang v4.8.52 · QR Helper</div>
+      <h1 class="title">QR 주소<br>생성 도우미</h1>
+      <p class="lead">Netlify 또는 GitHub Pages 배포 주소를 입력하면 외부 시연용 최종 주소, QR 생성용 주소, 공유 문구를 자동으로 정리합니다.</p>
+      <div class="form">
+        <div>
+          <label for="domainInput">배포 도메인</label>
+          <input class="field" id="domainInput" placeholder="예: https://example.netlify.app" autocomplete="url">
+        </div>
+        <button class="btn" type="button" id="makeBtn">주소 만들기</button>
+      </div>
+      <div class="result" id="result" hidden>
+        <div class="box">
+          <div class="boxTitle">QR 생성용 최종 주소</div>
+          <div class="path" id="qrUrl"></div>
+          <div class="actions"><button class="copy" type="button" data-copy="qrUrl">QR 주소 복사</button><a class="copy" id="openQr" target="_blank" rel="noopener">열어보기</a></div>
+        </div>
+        <div class="box">
+          <div class="boxTitle">외부 공유 문구</div>
+          <div class="share" id="shareText"></div>
+          <div class="actions"><button class="copy" type="button" data-copy="shareText">공유 문구 복사</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card mini">
+        <h2>현장 확인 순서</h2>
+        <div class="list">
+          <div class="item">1. QR 주소를 핸드폰 카메라로 열기</div>
+          <div class="item">2. 수족관 화면이 바로 보이는지 확인</div>
+          <div class="item">3. 도감 버튼과 버들치 팝업 확인</div>
+          <div class="item">4. 화면이 깨지면 검수 매트릭스 확인</div>
+        </div>
+      </article>
+      <article class="card mini">
+        <h2>고정 경로</h2>
+        <p>QR은 반드시 안전 진입점으로 생성합니다.</p>
+        <div class="list">
+          <div class="item">/app_assets/start_v4_8_49.html</div>
+          <div class="item">/app_assets/demo_v4_8_50.html</div>
+          <div class="item">/app_assets/test_matrix_v4_8_44.html</div>
+        </div>
+      </article>
+    </section>
+    <div class="note">JOHN CHOI · Pongdang external demo QR helper · v4.8.52</div>
+  </main>
+
+  <script>
+    // 한글 주석: 입력된 도메인의 끝 슬래시를 정리하고 고정 안전 진입 경로를 붙인다.
+    const input = document.getElementById('domainInput');
+    const makeBtn = document.getElementById('makeBtn');
+    const result = document.getElementById('result');
+    const qrUrl = document.getElementById('qrUrl');
+    const shareText = document.getElementById('shareText');
+    const openQr = document.getElementById('openQr');
+
+    function normalizeDomain(value){
+      let domain = String(value || '').trim();
+      if(!domain) return '';
+      if(!/^https?:\/\//i.test(domain)) domain = 'https://' + domain;
+      return domain.replace(/\/+$/, '');
+    }
+
+    function make(){
+      const domain = normalizeDomain(input.value);
+      if(!domain){ input.focus(); return; }
+      const url = domain + '/app_assets/start_v4_8_49.html';
+      qrUrl.textContent = url;
+      openQr.href = url;
+      openQr.textContent = '시연 주소 열기';
+      shareText.textContent = `퐁당퐁당 곤지암천 디지털 생태학습 수족관 시연 링크입니다.\n핸드폰에서 열면 가장 보기 좋습니다.\n\n${url}`;
+      result.hidden = false;
+    }
+
+    makeBtn.addEventListener('click', make);
+    input.addEventListener('keydown', (event)=>{ if(event.key === 'Enter') make(); });
+    document.querySelectorAll('[data-copy]').forEach((btn)=>{
+      btn.addEventListener('click', async ()=>{
+        const target = document.getElementById(btn.dataset.copy);
+        const text = target ? target.textContent : '';
+        try{
+          await navigator.clipboard.writeText(text);
+          btn.classList.add('ok');
+          const old = btn.textContent;
+          btn.textContent = '복사 완료';
+          setTimeout(()=>{ btn.classList.remove('ok'); btn.textContent = old; }, 1200);
+        }catch(error){
+          alert('복사가 막힌 환경입니다. 내용을 길게 눌러 직접 복사하세요.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
