@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#061722">
+  <title>퐁당퐁당 v4.8.40 경량 최적화본</title>
+  <link rel="stylesheet" href="v4_8_40/css/pongdang-ui.css">
+</head>
+<body data-app-mode="aquarium" data-water-mode="day">
+  <main class="app" id="app">
+    <section class="hero" aria-label="현재 탐험 안내">
+      <div class="heroCard">
+        <div class="heroLabel">퐁당퐁당 곤지암천</div>
+        <h1 class="heroTitle" id="heroTitle">웃물 민물 친구 탐험</h1>
+        <p class="heroSub" id="heroSub">맑은 물이 시작되는 곳에서 작은 친구들을 찾아요.</p>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="탐험 조작">
+      <div class="chipRow" id="zoneBar" aria-label="구간 선택"></div>
+      <div class="chipRow" id="modeBar" aria-label="낮밤 선택"></div>
+    </section>
+
+    <section class="aquarium" aria-label="수족관 화면">
+      <div class="water" aria-hidden="true"></div>
+      <div class="fishLayer" id="fishLayer" aria-label="물고기 레이어"></div>
+    </section>
+
+    <nav class="nav" id="bottomNav" aria-label="하단 메뉴"></nav>
+
+    <section class="sheet" id="bookSheet" aria-hidden="true" aria-label="민물고기 도감">
+      <h2>민물고기 도감</h2>
+      <p>물고기 카드를 톡 누르면 이름과 사는 곳을 쉽게 알려줘요.</p>
+      <div class="cardGrid" id="cardGrid"></div>
+      <button type="button" class="closeBtn" data-close>도감 나가기</button>
+    </section>
+
+    <section class="sheet" id="rareSheet" aria-hidden="true" aria-label="반짝 물고기">
+      <h2>반짝 친구</h2>
+      <p>가끔 나타나는 특별한 친구를 찾는 자리예요. 다음 단계에서 희귀 물고기를 하나씩 넣어요.</p>
+      <button type="button" class="closeBtn" data-close>돌아가기</button>
+    </section>
+
+    <section class="sheet" id="cameraSheet" aria-hidden="true" aria-label="카메라 모드">
+      <h2>카메라 보기</h2>
+      <p>실제 하천을 비추며 관찰하는 기능은 앱 권한 안정화 뒤 연결해요. 지금은 안전 안내 화면으로 유지해요.</p>
+      <button type="button" class="closeBtn" data-close>돌아가기</button>
+    </section>
+
+    <section class="modal" id="fishModal" aria-hidden="true" aria-label="물고기 상세 보기">
+      <article class="modalCard">
+        <h2 class="modalTitle" id="modalTitle">버들치</h2>
+        <p class="modalSub" id="modalSub">맑은 물을 좋아하는 빠른 민물 친구</p>
+        <img class="modalImg" id="modalImg" src="../assets/fish/beodeulchi/popup.svg" alt="버들치">
+        <div class="infoBox" id="modalInfo">버들치는 맑은 물에서 빠르게 헤엄치는 작은 민물 친구예요.</div>
+        <button type="button" class="closeBtn" id="closeModal">닫기</button>
+      </article>
+    </section>
+  </main>
+
+  <script type="module" src="v4_8_40/js/pongdang-app.js"></script>
+</body>
+</html>
