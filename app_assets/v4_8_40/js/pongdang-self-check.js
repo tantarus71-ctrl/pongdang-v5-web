@@ -1,11 +1,11 @@
-// 퐁당퐁당 v4.8.45 경량 실행본 브라우저 자가 점검 도구
+// 퐁당퐁당 v4.8.57 경량 실행본 브라우저 자가 점검 도구
 // 한글 주석: DOM, CSS, JS, 이미지, 배치 상태를 확인하고 부모 검수 페이지에 결과를 전달한다.
 
 (function () {
   'use strict';
 
-  const CHECK_ID = 'pongdang-v4-8-45-self-check';
-  const OLD_IDS = ['pongdang-v4.8.42-self-check', 'pongdang-v4-8-43-self-check'];
+  const CHECK_ID = 'pongdang-v4-8-57-self-check';
+  const OLD_IDS = ['pongdang-v4.8.42-self-check', 'pongdang-v4-8-43-self-check', 'pongdang-v4-8-45-self-check'];
 
   const requiredSelectors = [
     '#app', '#heroTitle', '#heroSub', '#zoneBar', '#modeBar', '#fishLayer', '#bottomNav',
@@ -14,6 +14,7 @@
 
   const requiredAssets = [
     'v4_8_40/css/pongdang-ui.css',
+    'v4_8_40/css/pongdang-ui-v4_8_57.css',
     'v4_8_40/js/pongdang-data.js',
     'v4_8_40/js/pongdang-app.js',
     'assets/fish/beodeulchi/swim.svg',
@@ -79,9 +80,9 @@
     if (!aquarium || !nav) return { ok: false, detail: '수족관 또는 하단 메뉴 요소 없음' };
     const a = aquarium.getBoundingClientRect();
     const n = nav.getBoundingClientRect();
-    const minAquariumHeight = window.innerHeight < 560 ? 120 : 180;
+    const minAquariumHeight = window.innerHeight < 560 ? 130 : 210;
     const gap = n.top - a.bottom;
-    const ok = a.height >= minAquariumHeight && gap >= -2;
+    const ok = a.height >= minAquariumHeight && gap >= -1;
     return { ok, detail: `수족관 ${Math.round(a.width)}×${Math.round(a.height)} · 메뉴간격 ${Math.round(gap)}px`, width: Math.round(a.width), height: Math.round(a.height), gap: Math.round(gap) };
   }
 
@@ -101,7 +102,7 @@
   function sendToParent(payload) {
     try {
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: 'PONGDANG_SELF_CHECK_RESULT', version: 'v4.8.45', payload }, '*');
+        window.parent.postMessage({ type: 'PONGDANG_SELF_CHECK_RESULT', version: 'v4.8.57', payload }, '*');
       }
     } catch (error) {
       console.warn('[Pongdang self-check] parent message failed', error);
@@ -110,7 +111,7 @@
 
   async function runCheck() {
     const panel = createPanel();
-    panel.innerHTML = '<strong>v4.8.45 점검 중...</strong><br><small>DOM·파일·렌더링·이미지·배치를 확인합니다.</small>';
+    panel.innerHTML = '<strong>v4.8.57 점검 중...</strong><br><small>DOM·파일·렌더링·이미지·배치를 확인합니다.</small>';
 
     const domResults = requiredSelectors.map((selector) => ({ selector, ok: Boolean(document.querySelector(selector)) }));
     const assetResults = [];
@@ -131,7 +132,7 @@
 
     panel.innerHTML = `
       <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:6px;">
-        <strong>v4.8.45 점검</strong>
+        <strong>v4.8.57 점검</strong>
         <button type="button" id="pdSelfCheckClose" style="border:0;border-radius:999px;background:rgba(255,255,255,.14);color:#fff;font-weight:900;padding:3px 8px;">닫기</button>
       </div>
       ${row(domOk, 'DOM 구조', domOk ? '필수 요소 모두 존재' : domResults.filter((x) => !x.ok).map((x) => x.selector).join(', '))}
@@ -145,7 +146,7 @@
     `;
 
     document.getElementById('pdSelfCheckClose')?.addEventListener('click', () => panel.remove());
-    console.info('[Pongdang self-check v4.8.45]', result);
+    console.info('[Pongdang self-check v4.8.57]', result);
     sendToParent(result);
     return result;
   }
