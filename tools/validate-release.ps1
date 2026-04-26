@@ -58,6 +58,9 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.exchange_protocol) {
       Test-File $manifest.planning.exchange_protocol 'Mutual exchange protocol'
     }
+    if ($manifest.planning.chatgpt_codex_sequential_workflow) {
+      Test-File $manifest.planning.chatgpt_codex_sequential_workflow 'ChatGPT/Codex sequential workflow'
+    }
     if ($manifest.planning.exchange_channels) {
       Test-File $manifest.planning.exchange_channels 'Exchange channels'
     }
@@ -89,6 +92,9 @@ if ($manifest -and $project -and $package) {
     Test-File $manifest.planning.chat_version_plan 'Chat version plan'
     Test-File $manifest.planning.sync_prompt 'Codex/ChatGPT sync prompt'
     Test-File $manifest.planning.fish_catalog_draft 'Fish catalog draft'
+    if ($manifest.planning.child_quality_layout_candidate) {
+      Test-File $manifest.planning.child_quality_layout_candidate 'Child quality layout candidate'
+    }
     Test-File $manifest.planning.mobile_menu_candidate 'Mobile menu candidate CSS'
   }
 

@@ -15,6 +15,7 @@
                      "project-manifest.json",
         "docs/PROJECT_LEARNING_SYSTEM.md",
         "docs/SESSION_START_PROMPT.md",
+        "docs/CHATGPT_CODEX_SEQUENTIAL_WORKFLOW.md",
         "docs/MUTUAL_EXCHANGE_PROTOCOL.md",
         "docs/SELF_EXPANSION_TECH_RADAR.md",
         "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
@@ -23,6 +24,7 @@
         "data/exchange_channels.json",
         "data/technology_watchlist.json",
         "data/gonjiam_ecosystem_assets_v1.json",
+        "app_assets/v4831_child_quality_layout.html",
         "docs/codex_next_fish_design_reflection_v1.md",
         "docs/fish_design_style_guide_v1.md"
                  ],
@@ -31,6 +33,7 @@
                        "Do not break the v4.8.30 runtime while integrating future work",
                        "Run tools/validate-release.ps1 before committing release work",
                        "Record session learnings before publishing meaningful changes",
+                       "ChatGPT creates the first development draft, Codex stabilizes and verifies it, then GitHub becomes the source for the next ChatGPT cycle",
                        "Keep fish data normalized before runtime migration",
                        "Avoid duplicate mobile layout CSS paths",
                        "Research external technology through official sources before adopting it",
@@ -86,9 +89,21 @@
             "date":  "2026-04-26",
             "fact":  "피라미 테스트 어종의 카드 후보 자산 card.svg가 추가되었다.",
             "evidence":  "assets/fish/pirami/card.svg"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "개발 순서는 ChatGPT 선개발, Codex 최적화/안정화/오류 정리, GitHub 저장, ChatGPT 최신 반영 루프로 고정했다.",
+            "evidence":  "docs/CHATGPT_CODEX_SEQUENTIAL_WORKFLOW.md"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "원격에서 v4.8.31 어린이 품질 레이아웃 후보 HTML이 추가되었고, 현재 안정 런타임과 분리된 후보 빌드로 추적한다.",
+            "evidence":  "app_assets/v4831_child_quality_layout.html"
         }
                      ],
     "nextLearningTargets":  [
+        "v4.8.31 child quality layout 후보는 깨진 문자, 자산 경로, 모바일 겹침, 기존 v4.8.30 회귀 여부를 Codex가 정리한 뒤 반영한다.",
+        "새 ChatGPT 개발 초안이 들어오면 먼저 후보 문서/데이터/패치로 분리하고 Codex 검증 후 main과 gh-pages에 반영한다.",
         "다음 개발부터 record-learning으로 세션 결과를 누적하고, 모바일 메뉴 최적화 후보를 중복 없이 runtime patch로 통합한다.",
         "곤지암 생태계 에셋 계획의 후보 어종을 fish_catalog_option2 구조와 병합하되 현장 확정종으로 단정하지 않는다.",
         "tools/update-tech-watch.ps1로 기술 후보를 주기적으로 조사하고, 낮은 위험 후보부터 실험 패치로 전환한다.",

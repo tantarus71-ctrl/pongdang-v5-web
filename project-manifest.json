@@ -25,6 +25,7 @@
   "session_start_prompt": "docs/SESSION_START_PROMPT.md",
   "development_memory": "data/development_memory.json",
   "exchange_protocol": "docs/MUTUAL_EXCHANGE_PROTOCOL.md",
+  "chatgpt_codex_sequential_workflow": "docs/CHATGPT_CODEX_SEQUENTIAL_WORKFLOW.md",
   "exchange_channels": "data/exchange_channels.json",
   "self_expansion_tech_radar": "docs/SELF_EXPANSION_TECH_RADAR.md",
   "technology_watchlist": "data/technology_watchlist.json",
@@ -38,6 +39,7 @@
   "learning_log": "docs/LEARNING_LOG.md",
   "chat_version_plan": "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
   "fish_catalog_draft": "data/fish_catalog_option2.json",
+  "child_quality_layout_candidate": "app_assets/v4831_child_quality_layout.html",
   "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css",
   "updated_viewer_at": "2026-04-24 01:29:45",
   "completed_step": {
