@@ -63,6 +63,9 @@
   "index_replacement_precheck": "docs/index_replacement_precheck_v4_8_47.md",
   "safe_entry_candidate": "app_assets/start_v4_8_49.html",
   "safe_entry_plan": "docs/safe_entry_v4_8_49.md",
+  "external_demo_candidate": "app_assets/demo_v4_8_50.html",
+  "external_demo_guide": "docs/external_demo_guide_v4_8_50.md",
+  "external_demo_package": "docs/demo_package_v4_8_51.md",
   "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css",
   "updated_viewer_at": "2026-04-24 01:29:45",
   "completed_step": {

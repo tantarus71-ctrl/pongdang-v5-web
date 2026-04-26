@@ -85,6 +85,16 @@
       "nextCodexAction": "review safe entry page as an alternative to direct root replacement before publishing as the public entry"
     },
     {
+      "id": "v4850_v4851_external_demo",
+      "level": "level_1_candidate_doc_or_data",
+      "files": [
+        "app_assets/demo_v4_8_50.html",
+        "docs/external_demo_guide_v4_8_50.md",
+        "docs/demo_package_v4_8_51.md"
+      ],
+      "nextCodexAction": "treat as external/demo package candidate; verify it cannot confuse the stable app entry before promotion"
+    },
+    {
       "id": "pirami_candidate_assets",
       "level": "level_1_candidate_doc_or_data",
       "files": [

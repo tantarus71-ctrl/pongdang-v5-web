@@ -125,7 +125,10 @@ if ($manifest -and $project -and $package) {
       @{ Name = 'visual_qa_matrix'; Label = 'Visual QA matrix' },
       @{ Name = 'index_replacement_precheck'; Label = 'Index replacement precheck' },
       @{ Name = 'safe_entry_candidate'; Label = 'Safe entry candidate' },
-      @{ Name = 'safe_entry_plan'; Label = 'Safe entry plan' }
+      @{ Name = 'safe_entry_plan'; Label = 'Safe entry plan' },
+      @{ Name = 'external_demo_candidate'; Label = 'External demo candidate' },
+      @{ Name = 'external_demo_guide'; Label = 'External demo guide' },
+      @{ Name = 'external_demo_package'; Label = 'External demo package' }
     )) {
       $fieldName = $candidateField.Name
       if ($manifest.planning.$fieldName) {
