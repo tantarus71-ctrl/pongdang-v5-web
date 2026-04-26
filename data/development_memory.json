@@ -167,6 +167,11 @@
             "date":  "2026-04-26",
             "fact":  "원격에서 v4.8.57 어린이 친화 텍스트와 물고기 스케일 후보가 추가되어 v4.8.40 모듈러 후보 내부 변경으로 추적한다.",
             "evidence":  "app_assets/v4_8_40/css/pongdang-ui-v4_8_57.css"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "원격에서 v4.8.57 visual correction self-check 보정이 추가되어 v4.8.40 모듈러 후보 검증 범위에 포함한다.",
+            "evidence":  "app_assets/v4_8_40/js/pongdang-self-check.js"
         }
                      ],
     "nextLearningTargets":  [

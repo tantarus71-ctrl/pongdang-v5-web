@@ -108,7 +108,8 @@
       "level": "level_1_candidate_doc_or_data",
       "files": [
         "app_assets/v4_8_40/css/pongdang-ui-v4_8_57.css",
-        "app_assets/v4_8_40/js/pongdang-data.js"
+        "app_assets/v4_8_40/js/pongdang-data.js",
+        "app_assets/v4_8_40/js/pongdang-self-check.js"
       ],
       "nextCodexAction": "verify child-friendly text and fish scale changes in the modular candidate without changing v4.8.30 stable runtime"
     },
