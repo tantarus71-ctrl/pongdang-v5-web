@@ -8,7 +8,8 @@ const state = {
   mode: 'day',
   selectedFish: null,
   raf: null,
-  tick: 0
+  tick: 0,
+  fishRuntime: new Map()
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -35,10 +36,52 @@ function fishDepth(fish) {
   return clamp(Number(fish.depth ?? 0.55), 0.15, 0.95);
 }
 
-function getFishSprite(fish, dx, turn) {
+function seededUnit(text) {
+  let hash = 2166136261;
+  for (let i = 0; i < text.length; i += 1) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return ((hash >>> 0) % 10000) / 10000;
+}
+
+function runtimeForFish(fish, index = 0) {
+  const key = fish.id;
+  if (!state.fishRuntime.has(key)) {
+    const seed = seededUnit(`${fish.id}:${index}`);
+    state.fishRuntime.set(key, {
+      seed,
+      speedJitter: 0.86 + seed * 0.32,
+      curvePhase: seed * Math.PI * 2,
+      avoidX: 0,
+      avoidY: 0
+    });
+  }
+  return state.fishRuntime.get(key);
+}
+
+function spriteAt(sprite, frame = 0) {
+  if (Array.isArray(sprite)) return sprite[Math.abs(frame) % sprite.length] || '';
+  return sprite || '';
+}
+
+function frameForFish(fish, t) {
+  const tailRate = Number(fish.swim?.tailRate ?? 7);
+  return Math.floor(t * tailRate) % 3;
+}
+
+function getFishSprite(fish, dx, turn, frame = 0) {
   const sprites = fish.sprites || {};
-  if (dx >= 0) return turn > 0.58 ? (sprites.frontRight || sprites.right || fish.img) : (sprites.right || fish.img);
-  return turn < -0.58 ? (sprites.frontLeft || sprites.left || fish.img) : (sprites.left || fish.img);
+  if (dx >= 0) {
+    const sprite = turn > 0.58 ? (sprites.frontRight || sprites.right || fish.img) : (sprites.right || fish.img);
+    return spriteAt(sprite, frame) || fish.img;
+  }
+  const sprite = turn < -0.58 ? (sprites.frontLeft || sprites.left || fish.img) : (sprites.left || fish.img);
+  return spriteAt(sprite, frame) || fish.img;
+}
+
+function initialFishSprite(fish) {
+  return spriteAt(fish.sprites?.right, 1) || fish.img;
 }
 
 function applyFishDepth(btn, img, fish) {
@@ -112,15 +155,20 @@ function renderFish() {
   const layer = $('#fishLayer');
   if (!layer) return;
   const visible = FISH.filter((fish) => fish.zone === state.zone);
-  layer.innerHTML = visible.map((fish) => `
+  state.fishRuntime.clear();
+  layer.innerHTML = visible.map((fish, index) => `
     <button type="button" class="fish" data-fish="${fish.id}" data-depth="${fish.depth ?? 0.55}" style="left:${fish.x}%;top:${fish.y}%" aria-label="${fish.name} 보기">
-      <img src="${fish.sprites?.right || fish.img}" alt="${fish.name}" loading="eager" decoding="async">
+      <img class="fishSprite" src="${initialFishSprite(fish)}" alt="${fish.name}" loading="eager" decoding="async">
+      ${fish.sprites?.fins ? `<img class="fishFinLayer" src="${spriteAt(fish.sprites.fins, index)}" alt="" aria-hidden="true" loading="eager" decoding="async">` : ''}
     </button>
   `).join('');
-  $$('.fish', layer).forEach((btn) => {
+  $$('.fish', layer).forEach((btn, index) => {
     const fish = fishById(btn.dataset.fish);
-    const img = $('img', btn);
+    runtimeForFish(fish, index);
+    const img = $('.fishSprite', btn);
     if (img) applyFishDepth(btn, img, fish);
+    const fin = $('.fishFinLayer', btn);
+    if (fin) applyFishDepth(btn, fin, fish);
     btn.addEventListener('click', () => openFish(btn.dataset.fish));
   });
 }
@@ -130,25 +178,59 @@ function animateFish() {
   state.tick += 0.01;
   fishes.forEach((btn, index) => {
     const fish = fishById(btn.dataset.fish);
+    const runtime = runtimeForFish(fish, index);
     const swim = fish.swim || {};
     const depth = fishDepth(fish);
     const phase = Number(swim.phase ?? index);
-    const speed = Number(fish.speed ?? 1);
+    const speed = Number(fish.speed ?? 1) * runtime.speedJitter;
     const t = state.tick * speed + phase;
+    const idleEvery = Number(swim.idleEvery ?? 9);
+    const idleHold = Number(swim.idleHold ?? 1.1);
+    const idleWave = ((t + runtime.seed * idleEvery) % idleEvery);
+    const idle = idleWave < idleHold ? 0.38 + idleWave / idleHold * 0.24 : 1;
     const xAmp = Number(swim.xAmp ?? 10) * (0.65 + depth * 0.55);
     const yAmp = Number(swim.yAmp ?? 5) * (0.75 + depth * 0.35);
-    const driftX = Math.sin(t * 1.35) * xAmp;
-    const driftY = Math.cos(t * 1.05) * yAmp + Math.sin(t * 2.1) * 2;
+    let avoidX = 0;
+    let avoidY = 0;
+    const avoidRadius = Number(swim.avoidRadius ?? 120);
+    fishes.forEach((other, otherIndex) => {
+      if (other === btn) return;
+      const ox = Number(other.style.left.replace('%', '')) || 50;
+      const oy = Number(other.style.top.replace('%', '')) || 50;
+      const sx = Number(btn.style.left.replace('%', '')) || 50;
+      const sy = Number(btn.style.top.replace('%', '')) || 50;
+      const dxp = sx - ox;
+      const dyp = sy - oy;
+      const dist = Math.max(0.01, Math.hypot(dxp, dyp));
+      const push = Math.max(0, (avoidRadius / 10 - dist)) / (avoidRadius / 10);
+      avoidX += (dxp / dist) * push * (otherIndex + 1);
+      avoidY += (dyp / dist) * push * (otherIndex + 1);
+    });
+    runtime.avoidX = runtime.avoidX * 0.88 + avoidX * 0.12;
+    runtime.avoidY = runtime.avoidY * 0.88 + avoidY * 0.12;
+    const curveX = Math.sin(t * 0.34 + runtime.curvePhase) * xAmp * 0.7;
+    const curveY = Math.cos(t * 0.29 + runtime.curvePhase) * yAmp * 0.85;
+    const driftX = (Math.sin(t * 1.35) * xAmp + curveX + runtime.avoidX * 10) * idle;
+    const driftY = (Math.cos(t * 1.05) * yAmp + Math.sin(t * 2.1) * 2 + curveY + runtime.avoidY * 8) * idle;
     const dx = Math.cos(t * 1.35);
     const turn = Math.sin(t * 0.72);
     const roll = Math.sin(t * 1.9) * Number(swim.roll ?? 2);
-    const breathe = Math.sin(t * Number(swim.tailRate ?? 7)) * 0.018;
+    const breathe = Math.sin(t * Number(swim.tailRate ?? 7)) * 0.018 * idle;
     const scale = (fish.scale || 1) * (0.78 + depth * 0.38) + breathe;
-    const img = $('img', btn);
+    const img = $('.fishSprite', btn);
     if (img) {
-      const nextSprite = getFishSprite(fish, dx, turn);
+      const frame = frameForFish(fish, t);
+      const blinkClosed = Math.sin(t * 0.55 + runtime.curvePhase) > 0.992;
+      const nextSprite = blinkClosed && fish.sprites?.blinkClosed ? fish.sprites.blinkClosed : getFishSprite(fish, dx, turn, frame);
       if (nextSprite && img.getAttribute('src') !== nextSprite) img.setAttribute('src', nextSprite);
-      img.style.transform = `rotate(${roll.toFixed(2)}deg) scaleX(${(1 + Math.sin(t * 7) * 0.018).toFixed(3)})`;
+      img.style.transform = `rotate(${(roll * idle).toFixed(2)}deg) scaleX(${(1 + Math.sin(t * 7) * 0.018 * idle).toFixed(3)})`;
+    }
+    const fin = $('.fishFinLayer', btn);
+    if (fin && fish.sprites?.fins) {
+      const finFrame = Math.floor(t * 5) % fish.sprites.fins.length;
+      const nextFin = spriteAt(fish.sprites.fins, finFrame);
+      if (nextFin && fin.getAttribute('src') !== nextFin) fin.setAttribute('src', nextFin);
+      fin.style.transform = `rotate(${(Math.sin(t * 5.4) * 2.4 * idle).toFixed(2)}deg)`;
     }
     btn.style.transform = `translate(calc(-50% + ${driftX.toFixed(2)}px), calc(-50% + ${driftY.toFixed(2)}px)) scale(${scale.toFixed(3)})`;
   });

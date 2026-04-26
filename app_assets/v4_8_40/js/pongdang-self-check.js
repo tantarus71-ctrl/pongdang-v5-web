@@ -17,9 +17,12 @@
     'v4_8_40/css/pongdang-ui-v4_8_57.css',
     'v4_8_40/js/pongdang-data.js',
     'v4_8_40/js/pongdang-app.js',
-    '../assets/fish/beodeulchi/swim.svg',
-    '../assets/fish/beodeulchi/card.svg',
-    '../assets/fish/beodeulchi/popup.svg'
+    '../assets/fish/beodeulchi/cartoon_v1/swim_right_2.png',
+    '../assets/fish/beodeulchi/cartoon_v1/front_left_2.png',
+    '../assets/fish/beodeulchi/cartoon_v1/blink_closed.png',
+    '../assets/fish/beodeulchi/cartoon_v1/fin_layer_1.png',
+    '../assets/fish/beodeulchi/cartoon_v1/card.png',
+    '../assets/fish/beodeulchi/cartoon_v1/popup.png'
   ];
 
   function createPanel() {

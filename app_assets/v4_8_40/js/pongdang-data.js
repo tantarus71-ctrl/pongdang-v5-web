@@ -25,9 +25,9 @@ export const FISH = [
     summary: '맑은 물에서 빠르게 헤엄치는 친구',
     kid: '버들치는 맑은 물을 좋아해요. 물살이 있어도 몸을 살짝 틀며 빠르게 헤엄쳐요.',
     teacher: '버들치는 하천 상류와 여울에서 관찰되는 소형 어류로, 빠른 유영과 민첩한 방향 전환을 학습 요소로 활용할 수 있습니다.',
-    img: '../assets/fish/beodeulchi/swim.svg',
-    cardImg: '../assets/fish/beodeulchi/card.svg',
-    popupImg: '../assets/fish/beodeulchi/popup.svg',
+    img: '../assets/fish/beodeulchi/cartoon_v1/swim_right_2.png',
+    cardImg: '../assets/fish/beodeulchi/cartoon_v1/card.png',
+    popupImg: '../assets/fish/beodeulchi/cartoon_v1/popup.png',
     x: 48,
     y: 46,
     speed: 1,
@@ -38,13 +38,38 @@ export const FISH = [
       xAmp: 18,
       yAmp: 8,
       roll: 3.5,
-      tailRate: 8
+      tailRate: 8,
+      idleEvery: 8.5,
+      idleHold: 1.15,
+      avoidRadius: 128
     },
     sprites: {
-      left: '../assets/fish/beodeulchi/left.png',
-      right: '../assets/fish/beodeulchi/right.png',
-      frontLeft: '../assets/fish/beodeulchi/front_left.png',
-      frontRight: '../assets/fish/beodeulchi/front_right.png'
+      left: [
+        '../assets/fish/beodeulchi/cartoon_v1/swim_left_1.png',
+        '../assets/fish/beodeulchi/cartoon_v1/swim_left_2.png',
+        '../assets/fish/beodeulchi/cartoon_v1/swim_left_3.png'
+      ],
+      right: [
+        '../assets/fish/beodeulchi/cartoon_v1/swim_right_1.png',
+        '../assets/fish/beodeulchi/cartoon_v1/swim_right_2.png',
+        '../assets/fish/beodeulchi/cartoon_v1/swim_right_3.png'
+      ],
+      frontLeft: [
+        '../assets/fish/beodeulchi/cartoon_v1/front_left_1.png',
+        '../assets/fish/beodeulchi/cartoon_v1/front_left_2.png',
+        '../assets/fish/beodeulchi/cartoon_v1/front_left_3.png'
+      ],
+      frontRight: [
+        '../assets/fish/beodeulchi/cartoon_v1/front_right_1.png',
+        '../assets/fish/beodeulchi/cartoon_v1/front_right_2.png',
+        '../assets/fish/beodeulchi/cartoon_v1/front_right_3.png'
+      ],
+      blinkOpen: '../assets/fish/beodeulchi/cartoon_v1/blink_open.png',
+      blinkClosed: '../assets/fish/beodeulchi/cartoon_v1/blink_closed.png',
+      fins: [
+        '../assets/fish/beodeulchi/cartoon_v1/fin_layer_1.png',
+        '../assets/fish/beodeulchi/cartoon_v1/fin_layer_2.png'
+      ]
     }
   }
 ];

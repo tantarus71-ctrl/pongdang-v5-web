@@ -45,7 +45,7 @@
 .fishLayer{inset:6px !important;border-radius:calc(var(--radius) - 7px) !important;}
 
 /* 한글 주석: 버들치는 실제 화면에서 너무 커 보이지 않게 줄이고, 카드처럼 떠 보이는 느낌만 남긴다. */
-.fish{padding:12px !important;}
+.fish{padding:12px !important;will-change:transform !important;}
 .fish img{
   width:clamp(58px, 16vw, 108px) !important;
   max-width:108px !important;
@@ -53,6 +53,16 @@
   transform-origin:50% 55% !important;
   transition:filter .22s ease, opacity .22s ease, transform .12s linear !important;
   will-change:transform, filter, opacity !important;
+}
+.fishSprite{position:relative !important;z-index:2 !important;}
+.fishFinLayer{
+  position:absolute !important;
+  left:12px !important;
+  top:12px !important;
+  z-index:3 !important;
+  pointer-events:none !important;
+  opacity:.92 !important;
+  mix-blend-mode:normal !important;
 }
 
 /* 한글 주석: 하단 메뉴는 아이가 누르기 쉬운 크기를 유지하되 수족관을 침범하지 않게 압축한다. */
