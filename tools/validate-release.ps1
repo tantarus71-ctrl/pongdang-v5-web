@@ -187,6 +187,10 @@ if ($manifest -and $project -and $package) {
       }
     }
   }
+  $piramiSwim = Join-Path $Root 'assets/fish/pirami/swim.svg'
+  if (Test-Path -LiteralPath $piramiSwim) {
+    Add-Warn "Pirami swim.svg exists; keep it as candidate asset until card.svg and data mapping are ready."
+  }
 }
 
 Write-Host "Pongdang release validation"
