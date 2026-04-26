@@ -17,9 +17,9 @@
     'v4_8_40/css/pongdang-ui-v4_8_57.css',
     'v4_8_40/js/pongdang-data.js',
     'v4_8_40/js/pongdang-app.js',
-    'assets/fish/beodeulchi/swim.svg',
-    'assets/fish/beodeulchi/card.svg',
-    'assets/fish/beodeulchi/popup.svg'
+    '../assets/fish/beodeulchi/swim.svg',
+    '../assets/fish/beodeulchi/card.svg',
+    '../assets/fish/beodeulchi/popup.svg'
   ];
 
   function createPanel() {
