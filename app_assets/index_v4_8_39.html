@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <title>퐁당퐁당 v4.8.39 최적화 실행본</title>
+  <style>
+    /* 한글 주석: 원본 index.html을 보존한 채 최적화 UI를 주입하는 안전 실행본 */
+    :root{--bg:#061722;--text:#eefaff;--line:rgba(180,245,255,.22)}
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif}
+    .wrap{position:fixed;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 0%,rgba(64,190,220,.24),transparent 32%),#061722}
+    .appFrame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#061722}
+    .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:linear-gradient(180deg,#09304a,#061722);z-index:3;transition:opacity .28s ease,visibility .28s ease}
+    .loading.hide{opacity:0;visibility:hidden;pointer-events:none}
+    .bubble{width:66px;height:66px;border-radius:999px;border:1px solid var(--line);display:grid;place-items:center;font-size:34px;background:rgba(255,255,255,.08);box-shadow:0 18px 38px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.12)}
+    .title{font-size:20px;font-weight:950;letter-spacing:-.045em}
+    .sub{font-size:13px;color:#bdefff;font-weight:800}
+    .notice{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:4;max-width:min(92vw,520px);padding:9px 12px;border-radius:999px;background:rgba(4,31,52,.78);border:1px solid var(--line);font-size:12px;color:#d9f8ff;font-weight:800;backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:.24s ease}
+    .notice.show{opacity:1;visibility:visible}
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-label="퐁당퐁당 최적화 실행본">
+    <iframe class="appFrame" id="appFrame" src="index.html" title="퐁당퐁당 원본 앱"></iframe>
+    <section class="loading" id="loading" aria-live="polite">
+      <div class="bubble">🫧</div>
+      <div class="title">퐁당퐁당 최적화 화면 준비 중</div>
+      <div class="sub">수족관 크기와 아이들 메뉴를 맞추고 있어요</div>
+    </section>
+    <div class="notice" id="notice">v4.8.39 최적화 UI가 적용되었습니다</div>
+  </main>
+  <script>
+    /* 한글 주석: 같은 폴더의 원본 index.html을 iframe으로 불러온 뒤 UI 패치를 안전하게 주입한다. */
+    (function(){
+      'use strict';
+      const frame=document.getElementById('appFrame');
+      const loading=document.getElementById('loading');
+      const notice=document.getElementById('notice');
+      let injected=false;
+      function injectIntoFrame(){
+        if(injected)return;
+        const doc=frame.contentDocument||(frame.contentWindow&&frame.contentWindow.document);
+        if(!doc||!doc.head||!doc.body)return;
+        injected=true;
+        if(!doc.querySelector('link[data-pongdang-shell="v4.8.39-css"]')){
+          const link=doc.createElement('link');
+          link.rel='stylesheet';
+          link.href='patches/v4_8_37_responsive_aquarium_ui.css';
+          link.dataset.pongdangShell='v4.8.39-css';
+          doc.head.appendChild(link);
+        }
+        if(!doc.querySelector('script[data-pongdang-shell="v4.8.39-runtime"]')){
+          const script=doc.createElement('script');
+          script.src='patches/v4_8_38_apply_responsive_ui.js';
+          script.defer=true;
+          script.dataset.pongdangShell='v4.8.39-runtime';
+          doc.body.appendChild(script);
+        }
+        doc.documentElement.dataset.pongdangShell='v4.8.39';
+        window.setTimeout(()=>loading.classList.add('hide'),420);
+        window.setTimeout(()=>notice.classList.add('show'),620);
+        window.setTimeout(()=>notice.classList.remove('show'),2200);
+      }
+      frame.addEventListener('load',()=>{
+        try{
+          injectIntoFrame();
+          window.setTimeout(injectIntoFrame,160);
+          window.setTimeout(injectIntoFrame,520);
+        }catch(error){
+          console.error('[Pongdang] v4.8.39 shell injection failed',error);
+          loading.querySelector('.title').textContent='최적화 화면 적용을 확인해야 합니다';
+          loading.querySelector('.sub').textContent='원본 앱은 그대로 보존되어 있습니다';
+        }
+      });
+      window.addEventListener('resize',()=>{
+        try{
+          const doc=frame.contentDocument||(frame.contentWindow&&frame.contentWindow.document);
+          const win=frame.contentWindow;
+          if(win)win.dispatchEvent(new Event('resize'));
+          if(doc)doc.body.dataset.shellResizeTick=String(Date.now());
+        }catch(error){}
+      },{passive:true});
+    })();
+  </script>
+</body>
+</html>
