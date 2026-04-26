@@ -1,25 +1,15 @@
-// 퐁당퐁당 v4.8.43 경량 실행본 브라우저 자가 점검 도구
-// 한글 주석: 실제 브라우저에서 DOM, CSS, JS, 이미지 경로, 렌더링 상태를 더 견고하게 확인한다.
+// 퐁당퐁당 v4.8.45 경량 실행본 브라우저 자가 점검 도구
+// 한글 주석: DOM, CSS, JS, 이미지, 배치 상태를 확인하고 부모 검수 페이지에 결과를 전달한다.
 
 (function () {
   'use strict';
 
-  const CHECK_ID = 'pongdang-v4-8-43-self-check';
-  const OLD_CHECK_ID = 'pongdang-v4.8.42-self-check';
+  const CHECK_ID = 'pongdang-v4-8-45-self-check';
+  const OLD_IDS = ['pongdang-v4.8.42-self-check', 'pongdang-v4-8-43-self-check'];
 
   const requiredSelectors = [
-    '#app',
-    '#heroTitle',
-    '#heroSub',
-    '#zoneBar',
-    '#modeBar',
-    '#fishLayer',
-    '#bottomNav',
-    '#bookSheet',
-    '#rareSheet',
-    '#cameraSheet',
-    '#fishModal',
-    '#modalImg'
+    '#app', '#heroTitle', '#heroSub', '#zoneBar', '#modeBar', '#fishLayer', '#bottomNav',
+    '#bookSheet', '#rareSheet', '#cameraSheet', '#fishModal', '#modalImg'
   ];
 
   const requiredAssets = [
@@ -32,29 +22,18 @@
   ];
 
   function createPanel() {
-    const oldPanel = document.getElementById(OLD_CHECK_ID);
-    if (oldPanel) oldPanel.remove();
+    OLD_IDS.forEach((id) => document.getElementById(id)?.remove());
     if (document.getElementById(CHECK_ID)) return document.getElementById(CHECK_ID);
-
     const panel = document.createElement('aside');
     panel.id = CHECK_ID;
     panel.setAttribute('aria-live', 'polite');
     panel.style.cssText = [
-      'position:fixed',
-      'right:10px',
-      'top:max(10px,env(safe-area-inset-top))',
-      'z-index:9999',
-      'max-width:min(92vw,372px)',
-      'max-height:min(72vh,520px)',
-      'overflow:auto',
-      'padding:10px 12px',
-      'border-radius:16px',
-      'background:rgba(4,31,52,.90)',
-      'border:1px solid rgba(180,245,255,.28)',
-      'color:#e9fbff',
+      'position:fixed', 'right:10px', 'top:max(10px,env(safe-area-inset-top))', 'z-index:9999',
+      'max-width:min(92vw,372px)', 'max-height:min(72vh,520px)', 'overflow:auto',
+      'padding:10px 12px', 'border-radius:16px', 'background:rgba(4,31,52,.90)',
+      'border:1px solid rgba(180,245,255,.28)', 'color:#e9fbff',
       'font:800 12px/1.45 system-ui,-apple-system,Noto Sans KR,sans-serif',
-      'box-shadow:0 14px 34px rgba(0,0,0,.28)',
-      'backdrop-filter:blur(10px)'
+      'box-shadow:0 14px 34px rgba(0,0,0,.28)', 'backdrop-filter:blur(10px)'
     ].join(';');
     document.body.appendChild(panel);
     return panel;
@@ -72,7 +51,6 @@
     try {
       const head = await fetch(cacheBust, { method: 'HEAD', cache: 'no-store' });
       if (head.ok) return { ok: true, status: head.status, method: 'HEAD' };
-      // 한글 주석: 일부 정적 호스팅은 HEAD 응답을 제한할 수 있어 GET으로 한 번 더 확인한다.
       const get = await fetch(cacheBust, { method: 'GET', cache: 'no-store' });
       return { ok: get.ok, status: get.status, method: 'GET-fallback' };
     } catch (headError) {
@@ -104,10 +82,7 @@
     const minAquariumHeight = window.innerHeight < 560 ? 120 : 180;
     const gap = n.top - a.bottom;
     const ok = a.height >= minAquariumHeight && gap >= -2;
-    return {
-      ok,
-      detail: `수족관 ${Math.round(a.width)}×${Math.round(a.height)} · 메뉴간격 ${Math.round(gap)}px`
-    };
+    return { ok, detail: `수족관 ${Math.round(a.width)}×${Math.round(a.height)} · 메뉴간격 ${Math.round(gap)}px`, width: Math.round(a.width), height: Math.round(a.height), gap: Math.round(gap) };
   }
 
   function getImageStatus() {
@@ -123,19 +98,23 @@
     };
   }
 
+  function sendToParent(payload) {
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'PONGDANG_SELF_CHECK_RESULT', version: 'v4.8.45', payload }, '*');
+      }
+    } catch (error) {
+      console.warn('[Pongdang self-check] parent message failed', error);
+    }
+  }
+
   async function runCheck() {
     const panel = createPanel();
-    panel.innerHTML = '<strong>v4.8.43 점검 중...</strong><br><small>DOM·파일·렌더링·이미지·배치를 확인합니다.</small>';
+    panel.innerHTML = '<strong>v4.8.45 점검 중...</strong><br><small>DOM·파일·렌더링·이미지·배치를 확인합니다.</small>';
 
-    const domResults = requiredSelectors.map((selector) => ({
-      selector,
-      ok: Boolean(document.querySelector(selector))
-    }));
-
+    const domResults = requiredSelectors.map((selector) => ({ selector, ok: Boolean(document.querySelector(selector)) }));
     const assetResults = [];
-    for (const asset of requiredAssets) {
-      assetResults.push({ asset, ...(await fetchOk(asset)) });
-    }
+    for (const asset of requiredAssets) assetResults.push({ asset, ...(await fetchOk(asset)) });
 
     const rendered = getRenderedCounts();
     const layout = getLayoutStatus();
@@ -148,9 +127,11 @@
     const layoutOk = layout.ok;
     const allOk = domOk && assetOk && renderOk && imageOk && layoutOk;
 
+    const result = { domResults, assetResults, rendered, image, layout, checks: { domOk, assetOk, renderOk, imageOk, layoutOk }, allOk, viewport: { width: window.innerWidth, height: window.innerHeight } };
+
     panel.innerHTML = `
       <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:6px;">
-        <strong>v4.8.43 점검</strong>
+        <strong>v4.8.45 점검</strong>
         <button type="button" id="pdSelfCheckClose" style="border:0;border-radius:999px;background:rgba(255,255,255,.14);color:#fff;font-weight:900;padding:3px 8px;">닫기</button>
       </div>
       ${row(domOk, 'DOM 구조', domOk ? '필수 요소 모두 존재' : domResults.filter((x) => !x.ok).map((x) => x.selector).join(', '))}
@@ -164,8 +145,9 @@
     `;
 
     document.getElementById('pdSelfCheckClose')?.addEventListener('click', () => panel.remove());
-    console.info('[Pongdang self-check v4.8.43]', { domResults, assetResults, rendered, image, layout, allOk });
-    return { domResults, assetResults, rendered, image, layout, allOk };
+    console.info('[Pongdang self-check v4.8.45]', result);
+    sendToParent(result);
+    return result;
   }
 
   function delayedChecks() {
@@ -175,9 +157,6 @@
 
   window.PongdangSelfCheck = { run: runCheck };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', delayedChecks, { once: true });
-  } else {
-    delayedChecks();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', delayedChecks, { once: true });
+  else delayedChecks();
 })();
