@@ -8,13 +8,16 @@ Codex는 사용자의 Google/Gemini 계정에 직접 로그인하지 않는다. 
 
 1. Google AI Studio 또는 Google AI for Developers에서 새 Gemini API 키를 만든다.
 2. 이미 채팅에 노출된 키가 있다면 먼저 삭제하거나 비활성화한다.
-3. PowerShell에서 프로젝트 폴더로 이동한다.
+3. `GEMINI_KEY_SETUP_EASY.cmd`를 실행한다.
+4. `New GEMINI_API_KEY`가 나오면 새 키를 붙여넣고 Enter를 누른다. 붙여넣은 키가 화면에 안 보여도 정상이다.
+
+또는 PowerShell에서 프로젝트 폴더로 이동한다.
 
 ```powershell
 cd C:\Users\tanta\Documents\Codex\2026-04-25\pongdang-v5-web-github
 ```
 
-4. 아래 스크립트를 실행하고, 화면에 `New GEMINI_API_KEY`가 나오면 새 키를 붙여넣는다.
+아래 스크립트를 실행하고, 화면에 `New GEMINI_API_KEY`가 나오면 새 키를 붙여넣는다.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\set-gemini-user-key.ps1
