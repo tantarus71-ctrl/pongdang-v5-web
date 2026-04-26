@@ -50,6 +50,9 @@
   width:clamp(58px, 16vw, 108px) !important;
   max-width:108px !important;
   filter:drop-shadow(0 10px 14px rgba(0,0,0,.24)) !important;
+  transform-origin:50% 55% !important;
+  transition:filter .22s ease, opacity .22s ease, transform .12s linear !important;
+  will-change:transform, filter, opacity !important;
 }
 
 /* 한글 주석: 하단 메뉴는 아이가 누르기 쉬운 크기를 유지하되 수족관을 침범하지 않게 압축한다. */

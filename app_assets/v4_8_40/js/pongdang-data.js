@@ -31,6 +31,20 @@ export const FISH = [
     x: 48,
     y: 46,
     speed: 1,
-    scale: 0.86
+    scale: 0.86,
+    depth: 0.72,
+    swim: {
+      phase: 0.3,
+      xAmp: 18,
+      yAmp: 8,
+      roll: 3.5,
+      tailRate: 8
+    },
+    sprites: {
+      left: '../assets/fish/beodeulchi/left.png',
+      right: '../assets/fish/beodeulchi/right.png',
+      frontLeft: '../assets/fish/beodeulchi/front_left.png',
+      frontRight: '../assets/fish/beodeulchi/front_right.png'
+    }
   }
 ];

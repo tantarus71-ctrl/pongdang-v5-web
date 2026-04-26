@@ -27,6 +27,31 @@ function safeSetText(selector, text) {
   if (el) el.textContent = text;
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function fishDepth(fish) {
+  return clamp(Number(fish.depth ?? 0.55), 0.15, 0.95);
+}
+
+function getFishSprite(fish, dx, turn) {
+  const sprites = fish.sprites || {};
+  if (dx >= 0) return turn > 0.58 ? (sprites.frontRight || sprites.right || fish.img) : (sprites.right || fish.img);
+  return turn < -0.58 ? (sprites.frontLeft || sprites.left || fish.img) : (sprites.left || fish.img);
+}
+
+function applyFishDepth(btn, img, fish) {
+  const depth = fishDepth(fish);
+  const clarity = 0.72 + depth * 0.28;
+  const blur = (1 - depth) * 1.2;
+  const shadow = 10 + depth * 16;
+  btn.style.zIndex = String(Math.round(depth * 100));
+  btn.dataset.depth = depth.toFixed(2);
+  img.style.opacity = clarity.toFixed(2);
+  img.style.setProperty('filter', `saturate(${(0.86 + depth * 0.22).toFixed(2)}) brightness(${(0.88 + depth * 0.16).toFixed(2)}) blur(${blur.toFixed(2)}px) drop-shadow(0 ${Math.round(shadow * 0.42)}px ${Math.round(shadow)}px rgba(0,0,0,.24))`, 'important');
+}
+
 function renderZones() {
   const zoneBar = $('#zoneBar');
   if (!zoneBar) return;
@@ -88,11 +113,14 @@ function renderFish() {
   if (!layer) return;
   const visible = FISH.filter((fish) => fish.zone === state.zone);
   layer.innerHTML = visible.map((fish) => `
-    <button type="button" class="fish" data-fish="${fish.id}" style="left:${fish.x}%;top:${fish.y}%" aria-label="${fish.name} 보기">
-      <img src="${fish.img}" alt="${fish.name}" loading="eager" decoding="async">
+    <button type="button" class="fish" data-fish="${fish.id}" data-depth="${fish.depth ?? 0.55}" style="left:${fish.x}%;top:${fish.y}%" aria-label="${fish.name} 보기">
+      <img src="${fish.sprites?.right || fish.img}" alt="${fish.name}" loading="eager" decoding="async">
     </button>
   `).join('');
   $$('.fish', layer).forEach((btn) => {
+    const fish = fishById(btn.dataset.fish);
+    const img = $('img', btn);
+    if (img) applyFishDepth(btn, img, fish);
     btn.addEventListener('click', () => openFish(btn.dataset.fish));
   });
 }
@@ -102,10 +130,27 @@ function animateFish() {
   state.tick += 0.01;
   fishes.forEach((btn, index) => {
     const fish = fishById(btn.dataset.fish);
-    const driftX = Math.sin(state.tick * 1.4 + index) * 7;
-    const driftY = Math.cos(state.tick * 1.1 + index) * 5;
-    const scale = fish.scale + Math.sin(state.tick + index) * 0.04;
-    btn.style.transform = `translate(calc(-50% + ${driftX}px), calc(-50% + ${driftY}px)) scale(${scale})`;
+    const swim = fish.swim || {};
+    const depth = fishDepth(fish);
+    const phase = Number(swim.phase ?? index);
+    const speed = Number(fish.speed ?? 1);
+    const t = state.tick * speed + phase;
+    const xAmp = Number(swim.xAmp ?? 10) * (0.65 + depth * 0.55);
+    const yAmp = Number(swim.yAmp ?? 5) * (0.75 + depth * 0.35);
+    const driftX = Math.sin(t * 1.35) * xAmp;
+    const driftY = Math.cos(t * 1.05) * yAmp + Math.sin(t * 2.1) * 2;
+    const dx = Math.cos(t * 1.35);
+    const turn = Math.sin(t * 0.72);
+    const roll = Math.sin(t * 1.9) * Number(swim.roll ?? 2);
+    const breathe = Math.sin(t * Number(swim.tailRate ?? 7)) * 0.018;
+    const scale = (fish.scale || 1) * (0.78 + depth * 0.38) + breathe;
+    const img = $('img', btn);
+    if (img) {
+      const nextSprite = getFishSprite(fish, dx, turn);
+      if (nextSprite && img.getAttribute('src') !== nextSprite) img.setAttribute('src', nextSprite);
+      img.style.transform = `rotate(${roll.toFixed(2)}deg) scaleX(${(1 + Math.sin(t * 7) * 0.018).toFixed(3)})`;
+    }
+    btn.style.transform = `translate(calc(-50% + ${driftX.toFixed(2)}px), calc(-50% + ${driftY.toFixed(2)}px)) scale(${scale.toFixed(3)})`;
   });
   state.raf = requestAnimationFrame(animateFish);
 }
