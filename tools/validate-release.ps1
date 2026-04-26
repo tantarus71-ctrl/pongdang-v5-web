@@ -67,6 +67,9 @@ if ($manifest -and $project -and $package) {
     if ($manifest.planning.ai_collaboration_matrix) {
       Test-File $manifest.planning.ai_collaboration_matrix 'AI collaboration matrix'
     }
+    if ($manifest.planning.gemini_account_setup) {
+      Test-File $manifest.planning.gemini_account_setup 'Gemini account setup'
+    }
     if ($manifest.planning.exchange_channels) {
       Test-File $manifest.planning.exchange_channels 'Exchange channels'
     }
@@ -103,6 +106,8 @@ if ($manifest -and $project -and $package) {
     }
     Test-File $manifest.planning.mobile_menu_candidate 'Mobile menu candidate CSS'
   }
+
+  Test-File 'tools/check-gemini-config.ps1' 'Gemini config checker'
 
   $appPath = Join-Path $Root $manifest.entrypoints.app
   $patchPath = Join-Path $Root $manifest.entrypoints.patch

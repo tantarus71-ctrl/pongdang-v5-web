@@ -17,6 +17,7 @@
         "docs/SESSION_START_PROMPT.md",
         "docs/CHATGPT_CODEX_SEQUENTIAL_WORKFLOW.md",
         "docs/AI_COLLABORATION_PROTOCOL.md",
+        "docs/GEMINI_ACCOUNT_SETUP.md",
         "docs/MUTUAL_EXCHANGE_PROTOCOL.md",
         "docs/SELF_EXPANSION_TECH_RADAR.md",
         "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
@@ -36,6 +37,7 @@
                        "Record session learnings before publishing meaningful changes",
                        "ChatGPT creates the first development draft, Codex stabilizes and verifies it, then GitHub becomes the source for the next ChatGPT cycle",
                        "Use Gemini as a long-context, multimodal, grounded-research reviewer before Codex applies risky or broad changes",
+                       "Gemini access must use user-provided environment variables, never committed credentials",
                        "Keep fish data normalized before runtime migration",
                        "Avoid duplicate mobile layout CSS paths",
                        "Research external technology through official sources before adopting it",
@@ -106,9 +108,15 @@
             "date":  "2026-04-26",
             "fact":  "ChatGPT, Gemini, Codex가 GitHub main을 기준으로 서로 검토하고 보완하는 AI 협력 프로토콜을 추가했다.",
             "evidence":  "docs/AI_COLLABORATION_PROTOCOL.md, data/ai_collaboration_matrix.json"
+        },
+        {
+            "date":  "2026-04-26",
+            "fact":  "Gemini 계정 접속은 사용자가 직접 만든 GEMINI_API_KEY 환경변수로만 연결하고, 비밀키는 저장소에 저장하지 않도록 했다.",
+            "evidence":  "docs/GEMINI_ACCOUNT_SETUP.md, tools/check-gemini-config.ps1"
         }
                      ],
     "nextLearningTargets":  [
+        "사용자가 GEMINI_API_KEY를 설정하면 check-gemini-config로 준비 상태를 확인하고 Gemini 검토 결과를 후보 입력으로만 반영한다.",
         "다음 큰 변경은 ChatGPT 초안, Gemini 긴 문맥/최신 출처 검토, Codex 적용/검증/배포 순서로 진행한다.",
         "v4.8.31 child quality layout 후보는 깨진 문자, 자산 경로, 모바일 겹침, 기존 v4.8.30 회귀 여부를 Codex가 정리한 뒤 반영한다.",
         "새 ChatGPT 개발 초안이 들어오면 먼저 후보 문서/데이터/패치로 분리하고 Codex 검증 후 main과 gh-pages에 반영한다.",
