@@ -1,8 +1,8 @@
 {
   "schema": "fish_database_option2",
   "version": "draft-v4.8.36",
-  "status": "planning",
-  "purpose": "Shared fish data shape for future Codex and ChatGPT updates. Runtime migration is intentionally deferred until all required assets are present.",
+  "status": "fallback-assets-ready",
+  "purpose": "Shared fish data shape for future Codex and ChatGPT updates. Runtime migration is intentionally deferred until all required PNG assets are present. v4.8.36 adds SVG fallback coverage so card and popup views do not break while PNG assets are pending.",
   "species": {
     "beodeulchi": {
       "id": "beodeulchi",
@@ -22,11 +22,27 @@
       },
       "fallbackVector": {
         "swim": "assets/fish/beodeulchi/swim.svg",
-        "card": "assets/fish/beodeulchi/card.svg"
+        "card": "assets/fish/beodeulchi/card.svg",
+        "popup": "assets/fish/beodeulchi/popup.svg"
       },
       "pendingAssets": {
         "cardPng": "assets/fish/beodeulchi/card.png",
         "popupPng": "assets/fish/beodeulchi/popup.png"
+      },
+      "assetPolicy": {
+        "cardDisplayPriority": [
+          "assets/fish/beodeulchi/card.png",
+          "assets/fish/beodeulchi/card.svg",
+          "assets/fish/beodeulchi/front_right.png",
+          "assets/fish/beodeulchi/right.png"
+        ],
+        "popupDisplayPriority": [
+          "assets/fish/beodeulchi/popup.png",
+          "assets/fish/beodeulchi/popup.svg",
+          "assets/fish/beodeulchi/front_right.png",
+          "assets/fish/beodeulchi/right.png"
+        ],
+        "rule": "PNG final assets are preferred. SVG fallback assets are used only to prevent broken card or popup images until final PNG assets are created. Aquarium swimming continues to use the existing four-direction PNG set."
       },
       "behavior": {
         "xRange": [8, 86],
