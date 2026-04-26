@@ -20,13 +20,16 @@
   "local_run": "run-local-v4830.cmd",
   "validation": "tools/validate-release.ps1",
   "publish": "tools/publish-release.ps1",
+  "chat_version_plan": "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
+  "fish_catalog_draft": "data/fish_catalog_option2.json",
+  "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css",
   "updated_viewer_at": "2026-04-24 01:29:45",
   "completed_step": {
     "version": "v4.8.30",
     "task": "Optimized phone zone labels so confluence text fits cleanly"
   },
   "next_step": {
-    "version": "v4.8.31",
-    "task": "Browser-observe phone menu fit on real device widths and tune only minor spacing if needed"
+    "version": "v4.8.31-v4.8.36",
+    "task": "Apply the integrated chat-version backlog in safe slices: mobile fit, data normalization, beodeulchi asset completion, then runtime migration"
   }
 }

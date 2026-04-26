@@ -1,0 +1,63 @@
+{
+  "schema": "fish_database_option2",
+  "version": "draft-v4.8.36",
+  "status": "planning",
+  "purpose": "Shared fish data shape for future Codex and ChatGPT updates. Runtime migration is intentionally deferred until all required assets are present.",
+  "species": {
+    "beodeulchi": {
+      "id": "beodeulchi",
+      "koreanName": "버들치",
+      "englishName": "Chinese minnow",
+      "zone": "upper",
+      "depthLayer": "surface-to-mid",
+      "movementType": "schooling-dart-hover",
+      "rarity": "common",
+      "missionEnabled": true,
+      "quizEnabled": true,
+      "aquariumImage": {
+        "left": "assets/fish/beodeulchi/left.png",
+        "right": "assets/fish/beodeulchi/right.png",
+        "frontLeft": "assets/fish/beodeulchi/front_left.png",
+        "frontRight": "assets/fish/beodeulchi/front_right.png"
+      },
+      "fallbackVector": {
+        "swim": "assets/fish/beodeulchi/swim.svg",
+        "card": "assets/fish/beodeulchi/card.svg"
+      },
+      "pendingAssets": {
+        "cardPng": "assets/fish/beodeulchi/card.png",
+        "popupPng": "assets/fish/beodeulchi/popup.png"
+      },
+      "behavior": {
+        "xRange": [8, 86],
+        "yRange": [22, 72],
+        "zDepthRange": [0.04, 0.42],
+        "scaleRange": [0.82, 1.18],
+        "turnChance": 0.32,
+        "hidePassChance": 0.18,
+        "hoverChance": 0.42
+      },
+      "copy": {
+        "kid": "맑은 물에서 빠르게 움직이는 작은 물고기 친구예요.",
+        "teacher": "버들치는 맑은 하천 상류와 여울에서 관찰되는 소형 어류로, 빠른 유영과 민첩한 방향 전환을 학습 요소로 활용할 수 있습니다."
+      }
+    }
+  },
+  "expansionQueue": [
+    {
+      "id": "pirami",
+      "koreanName": "피라미",
+      "status": "planned-after-beodeulchi"
+    },
+    {
+      "id": "swiri",
+      "koreanName": "쉬리",
+      "status": "planned-after-beodeulchi"
+    },
+    {
+      "id": "gaksi",
+      "koreanName": "각시붕어",
+      "status": "planned-after-beodeulchi"
+    }
+  ]
+}

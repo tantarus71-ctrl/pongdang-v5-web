@@ -51,6 +51,12 @@ if ($manifest -and $project -and $package) {
   Test-File $manifest.entrypoints.app 'App entry'
   Test-File $manifest.entrypoints.patch 'Patch entry'
   Test-File $manifest.final_background.file 'Final background'
+  if ($manifest.planning) {
+    Test-File $manifest.planning.chat_version_plan 'Chat version plan'
+    Test-File $manifest.planning.sync_prompt 'Codex/ChatGPT sync prompt'
+    Test-File $manifest.planning.fish_catalog_draft 'Fish catalog draft'
+    Test-File $manifest.planning.mobile_menu_candidate 'Mobile menu candidate CSS'
+  }
 
   $appPath = Join-Path $Root $manifest.entrypoints.app
   $patchPath = Join-Path $Root $manifest.entrypoints.patch
@@ -64,10 +70,23 @@ if ($manifest -and $project -and $package) {
     }
     foreach ($asset in @(
       'assets/backgrounds/upper_day_underwater_real_v2.png',
-      'assets/fish/beodeulchi/right.png'
+      'assets/fish/beodeulchi/right.png',
+      'assets/fish/beodeulchi/left.png',
+      'assets/fish/beodeulchi/front_left.png',
+      'assets/fish/beodeulchi/front_right.png',
+      'assets/fish/beodeulchi/swim.svg',
+      'assets/fish/beodeulchi/card.svg'
     )) {
       if (!(Test-Path -LiteralPath (Join-Path $Root $asset))) {
         Add-Err "Required runtime asset missing: $asset"
+      }
+    }
+    foreach ($futureAsset in @(
+      'assets/fish/beodeulchi/card.png',
+      'assets/fish/beodeulchi/popup.png'
+    )) {
+      if (!(Test-Path -LiteralPath (Join-Path $Root $futureAsset))) {
+        Add-Warn "Future beodeulchi asset missing, keep fallback active: $futureAsset"
       }
     }
   }
@@ -75,6 +94,16 @@ if ($manifest -and $project -and $package) {
     $patch = Get-Content -LiteralPath $patchPath -Raw -Encoding UTF8
     if ($patch.Length -lt 1000) {
       Add-Warn "Patch file is unexpectedly small: $($manifest.entrypoints.patch)"
+    }
+  }
+  $catalogPath = Join-Path $Root 'data/fish_catalog_option2.json'
+  $catalog = Read-JsonFile $catalogPath
+  if ($catalog) {
+    if ($catalog.schema -ne 'fish_database_option2') {
+      Add-Err "Fish catalog schema mismatch: $($catalog.schema)"
+    }
+    if (!$catalog.species.beodeulchi) {
+      Add-Err "Fish catalog must include beodeulchi draft data."
     }
   }
 }

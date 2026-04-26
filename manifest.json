@@ -17,6 +17,12 @@
     "app": "app_assets/index.html",
     "patch": "patches/latest.generated.patch.js"
   },
+  "planning": {
+    "chat_version_plan": "docs/CHAT_VERSION_INTEGRATION_PLAN.md",
+    "sync_prompt": "docs/CODEX_CHATGPT_SYNC.md",
+    "fish_catalog_draft": "data/fish_catalog_option2.json",
+    "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css"
+  },
   "compatibility_aliases": {
     "package_manifest": "package_manifest.json"
   },
@@ -39,7 +45,7 @@
     "task": "Optimized phone zone labels so confluence text fits cleanly"
   },
   "next_step": {
-    "version": "v4.8.31",
-    "task": "Browser-observe phone menu fit on real device widths and tune only minor spacing if needed"
+    "version": "v4.8.31-v4.8.36",
+    "task": "Use the integrated chat-version plan to stabilize mobile layout, normalize fish data, and prepare beodeulchi assets without breaking v4.8.30 runtime"
   }
 }
