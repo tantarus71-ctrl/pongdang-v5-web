@@ -1,0 +1,50 @@
+{
+  "version": "gonjiam_ecosystem_asset_plan_v1",
+  "project": "Pongdang V5 / Gonjiam Stream underwater ecosystem learning",
+  "principle": "현장 확인 전에는 실제 어종을 곤지암천 확정 출현종으로 단정하지 않고 곤지암천형 적용 후보로 관리한다.",
+  "zones": [
+    {"id":"upper","name":"웃물","environment":"상류·찬물·큰 돌","water":"맑음, 빠른 흐름","uiRole":"첫 화면 대표 구간"},
+    {"id":"riffle","name":"여울","environment":"빠른 흐름·자갈","water":"맑음~보통","uiRole":"유속·산소·반짝임"},
+    {"id":"slow_riffle","name":"잔여울","environment":"완만한 흐름·모래/수초","water":"보통","uiRole":"카드 수집 구간"},
+    {"id":"deep_pool","name":"깊물","environment":"소·그늘·돌밑","water":"보통~약간 흐림","uiRole":"밤물/느린 관찰"},
+    {"id":"confluence","name":"물모이","environment":"합수부·가장자리·수초","water":"보통~흐림","uiRole":"확장 생태"}
+  ],
+  "realSpecies": [
+    {"id":"beodeulchi","name":"버들치","scientificName":"Rhynchocypris oxycephalus","zone":["upper","riffle"],"layer":"중층·바위 주변","behavior":"짧은 S자 유영, 앞쪽 접근","assetType":"round","status":"asset_connected"},
+    {"id":"pirami","name":"피라미","scientificName":"Zacco platypus","zone":["riffle","slow_riffle"],"layer":"중층","behavior":"빠른 무리 유영, 방향전환 잦음","assetType":"slim","status":"next_target"},
+    {"id":"swiri","name":"쉬리","scientificName":"Coreoleuciscus splendidus","zone":["riffle"],"layer":"중하층·자갈","behavior":"자갈 위 빠른 직선+회전","assetType":"sleek","status":"planned"},
+    {"id":"gaksi","name":"각시붕어","scientificName":"Rhodeus uyekii","zone":["slow_riffle"],"layer":"중하층·수초","behavior":"느리고 예쁜 정지/회전","assetType":"bitterling","status":"planned"},
+    {"id":"bungeo","name":"붕어","scientificName":"Carassius auratus","zone":["deep_pool","confluence"],"layer":"중하층","behavior":"느린 순환 유영","assetType":"deep_body","status":"candidate"},
+    {"id":"napjaru","name":"납자루","scientificName":"Acheilognathus lanceolatus","zone":["slow_riffle"],"layer":"중하층·수초","behavior":"수초 근처 짧은 유영","assetType":"bitterling","status":"candidate"},
+    {"id":"dolgogi","name":"돌고기","scientificName":"Pungtungia herzi","zone":["riffle","slow_riffle"],"layer":"중층·돌 주변","behavior":"짧은 군영","assetType":"slim_carp","status":"candidate"},
+    {"id":"chammaja","name":"참마자","scientificName":"Hemibarbus longirostris","zone":["riffle","slow_riffle"],"layer":"하층·모래/자갈","behavior":"바닥 탐색","assetType":"bottom_carp","status":"candidate"},
+    {"id":"moraemuji","name":"모래무지","scientificName":"Pseudogobio esocinus","zone":["slow_riffle","confluence"],"layer":"하층·모래","behavior":"바닥 가까이 느린 이동","assetType":"bottom_carp","status":"candidate"},
+    {"id":"dongjagae","name":"동자개","scientificName":"Pseudobagrus fulvidraco","zone":["deep_pool"],"layer":"하층·돌밑","behavior":"야간성 느린 이동","assetType":"catfish","status":"candidate"},
+    {"id":"mikkuri","name":"미꾸리","scientificName":"Misgurnus anguillicaudatus","zone":["confluence"],"layer":"하층·펄","behavior":"느린 바닥 이동","assetType":"eel","status":"candidate"},
+    {"id":"dongsari","name":"동사리","scientificName":"Odontobutis platycephala","zone":["deep_pool","slow_riffle"],"layer":"하층·돌밑","behavior":"매복형 정지","assetType":"goby","status":"candidate"},
+    {"id":"songsa","name":"송사리","scientificName":"Oryzias latipes","zone":["confluence"],"layer":"표층·얕은 곳","behavior":"느린 표층 유영","assetType":"small","status":"candidate"}
+  ],
+  "invasiveOrRiskSpecies": [
+    {"id":"bass","name":"배스","scientificName":"Micropterus salmoides","type":"외래 포식어종","zone":["deep_pool","confluence"],"riskMessage":"토착어종과 새우류 포식 위험","cardMode":"warning_quiz"},
+    {"id":"bluegill","name":"블루길","scientificName":"Lepomis macrochirus","type":"외래어종","zone":["confluence"],"riskMessage":"번식력과 서식지 경쟁 우려","cardMode":"warning_quiz"},
+    {"id":"bullfrog_tadpole","name":"황소개구리 올챙이","scientificName":"Lithobates catesbeianus","type":"외래 양서류","zone":["confluence"],"riskMessage":"고유 양서류·하천생물과 경쟁/포식 교육","cardMode":"warning_quiz"}
+  ],
+  "fantasySpecies": [
+    {"id":"eunha_swiri","name":"은하쉬리","fantasy":true,"zone":["riffle"],"spawnCondition":"밤/맑음","educationLink":"현실 고유종 쉬리와 비교"},
+    {"id":"ikki_dragon","name":"이끼드래곤피시","fantasy":true,"zone":["slow_riffle"],"spawnCondition":"낮/맑음","educationLink":"수초 훼손 금지"},
+    {"id":"amban_phantom","name":"암반팬텀","fantasy":true,"zone":["deep_pool"],"spawnCondition":"밤/맑음","educationLink":"돌밑 서식처 보호"},
+    {"id":"seoribineul","name":"서리비늘","fantasy":true,"zone":["deep_pool"],"spawnCondition":"밤/맑음","educationLink":"희귀 출몰 연출"},
+    {"id":"pomal_tail","name":"포말꼬리","fantasy":true,"zone":["riffle"],"spawnCondition":"낮/맑음","educationLink":"물살·산소"}
+  ],
+  "assetSchema": {
+    "paths": ["assets/fish/{id}/swim.png", "assets/fish/{id}/card.png", "assets/fish/{id}/left.png", "assets/fish/{id}/right.png", "assets/fish/{id}/front_left.png", "assets/fish/{id}/front_right.png", "assets/fish/{id}/back.png", "assets/fish/{id}/meta.json"],
+    "fallback": ["swim.svg", "card.svg", "generated SVG placeholder"]
+  },
+  "codexNextTasks": [
+    "기존 v4.6.2e 안정본 유지",
+    "이 JSON을 로드하는 loadEcosystemAssetManifest() 추가",
+    "피라미 1종만 assets/fish/pirami/ 경로로 추가",
+    "외래종은 warning_quiz 카드로 분리",
+    "환상어종은 fantasy:true와 disclaimer 필수"
+  ]
+}
