@@ -54,6 +54,8 @@
     "production_candidate": "app_assets/index_candidate_v4_8_46.html",
     "visual_qa_matrix": "app_assets/test_matrix_v4_8_44.html",
     "index_replacement_precheck": "docs/index_replacement_precheck_v4_8_47.md",
+    "safe_entry_candidate": "app_assets/start_v4_8_49.html",
+    "safe_entry_plan": "docs/safe_entry_v4_8_49.md",
     "mobile_menu_candidate": "patches/v4_8_32_mobile_menu_fit_candidate.css"
   },
   "compatibility_aliases": {

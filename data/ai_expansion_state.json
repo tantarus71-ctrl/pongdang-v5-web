@@ -76,6 +76,15 @@
       "nextCodexAction": "review imported candidate builds against v4.8.30 stability before any root index or runtime promotion"
     },
     {
+      "id": "v4849_safe_entry",
+      "level": "level_1_candidate_doc_or_data",
+      "files": [
+        "app_assets/start_v4_8_49.html",
+        "docs/safe_entry_v4_8_49.md"
+      ],
+      "nextCodexAction": "review safe entry page as an alternative to direct root replacement before publishing as the public entry"
+    },
+    {
       "id": "pirami_candidate_assets",
       "level": "level_1_candidate_doc_or_data",
       "files": [

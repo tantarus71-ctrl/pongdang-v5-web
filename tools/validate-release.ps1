@@ -123,7 +123,9 @@ if ($manifest -and $project -and $package) {
       @{ Name = 'lightweight_modular_candidate'; Label = 'Lightweight modular candidate' },
       @{ Name = 'production_candidate'; Label = 'Production candidate' },
       @{ Name = 'visual_qa_matrix'; Label = 'Visual QA matrix' },
-      @{ Name = 'index_replacement_precheck'; Label = 'Index replacement precheck' }
+      @{ Name = 'index_replacement_precheck'; Label = 'Index replacement precheck' },
+      @{ Name = 'safe_entry_candidate'; Label = 'Safe entry candidate' },
+      @{ Name = 'safe_entry_plan'; Label = 'Safe entry plan' }
     )) {
       $fieldName = $candidateField.Name
       if ($manifest.planning.$fieldName) {
