@@ -9,6 +9,9 @@
 - Root redirect: `index.html`
 - Patch entry: `patches/latest.generated.patch.js`
 - Chat/Codex plan: `docs/CHAT_VERSION_INTEGRATION_PLAN.md`
+- Learning system: `docs/PROJECT_LEARNING_SYSTEM.md`
+- Session prompt: `docs/SESSION_START_PROMPT.md`
+- Development memory: `data/development_memory.json`
 - Fish data draft: `data/fish_catalog_option2.json`
 - Public URL: https://tantarus71-ctrl.github.io/pongdang-v5-web/
 - Local URL: http://127.0.0.1:4830/
@@ -21,6 +24,7 @@
 4. 새 기능은 기존 수족관 프레임을 보존하고, 패치 또는 작은 단위로 누적합니다.
 5. 수정 후에는 `tools/validate-release.ps1`로 구조 검증을 통과시킨 뒤 커밋합니다.
 6. 새 챗버전의 아이디어는 먼저 `docs/CHAT_VERSION_INTEGRATION_PLAN.md`와 `data/fish_catalog_option2.json`에 반영한 뒤 런타임으로 옮깁니다.
+7. 작업 종료 시 `tools/record-learning.ps1`로 배운 점과 다음 목표를 기록합니다.
 
 ## 자주 쓰는 명령
 
@@ -36,6 +40,12 @@
 powershell -ExecutionPolicy Bypass -File .\tools\validate-release.ps1
 ```
 
+세션 학습 기록:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\record-learning.ps1 -Summary "무엇을 배웠는지" -Next "다음 작업"
+```
+
 검증 후 GitHub와 Pages에 동시 반영:
 
 ```powershell
@@ -44,4 +54,4 @@ powershell -ExecutionPolicy Bypass -File .\tools\publish-release.ps1 -CommitMess
 
 ## ChatGPT / Codex 업데이트 방식
 
-ChatGPT나 Codex에 새 작업을 맡길 때는 `docs/CODEX_CHATGPT_SYNC.md`를 먼저 붙여 넣거나 참조합니다. 그러면 버전, 파일 위치, 검증, 배포 방식이 같은 기준으로 이어집니다.
+ChatGPT나 Codex에 새 작업을 맡길 때는 `docs/SESSION_START_PROMPT.md`와 `docs/CODEX_CHATGPT_SYNC.md`를 먼저 붙여 넣거나 참조합니다. 그러면 버전, 파일 위치, 검증, 배포, 학습 기록 방식이 같은 기준으로 이어집니다.

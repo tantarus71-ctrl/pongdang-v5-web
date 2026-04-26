@@ -52,6 +52,11 @@ if ($manifest -and $project -and $package) {
   Test-File $manifest.entrypoints.patch 'Patch entry'
   Test-File $manifest.final_background.file 'Final background'
   if ($manifest.planning) {
+    Test-File $manifest.planning.learning_system 'Project learning system'
+    Test-File $manifest.planning.session_start_prompt 'Session start prompt'
+    Test-File $manifest.planning.development_memory 'Development memory'
+    Test-File $manifest.planning.decision_log 'Decision log'
+    Test-File $manifest.planning.learning_log 'Learning log'
     Test-File $manifest.planning.chat_version_plan 'Chat version plan'
     Test-File $manifest.planning.sync_prompt 'Codex/ChatGPT sync prompt'
     Test-File $manifest.planning.fish_catalog_draft 'Fish catalog draft'
@@ -104,6 +109,19 @@ if ($manifest -and $project -and $package) {
     }
     if (!$catalog.species.beodeulchi) {
       Add-Err "Fish catalog must include beodeulchi draft data."
+    }
+  }
+  $memoryPath = Join-Path $Root 'data/development_memory.json'
+  $memory = Read-JsonFile $memoryPath
+  if ($memory) {
+    if ($memory.schema -ne 'pongdang_development_memory') {
+      Add-Err "Development memory schema mismatch: $($memory.schema)"
+    }
+    if (!$memory.mustRead -or $memory.mustRead.Count -lt 4) {
+      Add-Err "Development memory must include mustRead files."
+    }
+    if (!$memory.invariants -or $memory.invariants.Count -lt 4) {
+      Add-Err "Development memory must include invariants."
     }
   }
 }

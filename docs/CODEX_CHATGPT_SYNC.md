@@ -11,6 +11,9 @@
 - 앱 파일: `app_assets/index.html`
 - 패치 파일: `patches/latest.generated.patch.js`
 - 물고기 데이터 초안: `data/fish_catalog_option2.json`
+- 프로젝트 학습 시스템: `docs/PROJECT_LEARNING_SYSTEM.md`
+- 세션 시작 프롬프트: `docs/SESSION_START_PROMPT.md`
+- 개발 기억: `data/development_memory.json`
 - 통합 계획: `docs/CHAT_VERSION_INTEGRATION_PLAN.md`
 - 기준 파일: `manifest.json`, `project-manifest.json`, `package_manifest.json`
 - 로컬 실행: `run-local-v4830.cmd`
@@ -22,9 +25,11 @@
 1. `manifest.json`을 먼저 읽고 현재 버전과 다음 단계를 확인한다.
 2. `project-manifest.json`에서 Codex 작업 상태를 확인한다.
 3. `docs/CHAT_VERSION_INTEGRATION_PLAN.md`에서 새 챗버전 반영 계획을 확인한다.
-4. 기능 수정은 가능한 한 `patches/latest.generated.patch.js` 또는 작은 범위의 HTML 수정으로 처리한다.
-5. 물고기 확장은 먼저 `data/fish_catalog_option2.json`에 정리하고, 검증 뒤 런타임으로 옮긴다.
-6. 수정 후 반드시 `tools/validate-release.ps1`을 실행한다.
+4. `data/development_memory.json`에서 최근 학습과 불변 규칙을 확인한다.
+5. 기능 수정은 가능한 한 `patches/latest.generated.patch.js` 또는 작은 범위의 HTML 수정으로 처리한다.
+6. 물고기 확장은 먼저 `data/fish_catalog_option2.json`에 정리하고, 검증 뒤 런타임으로 옮긴다.
+7. 수정 후 반드시 `tools/validate-release.ps1`을 실행한다.
+8. 의미 있는 작업이 끝나면 `tools/record-learning.ps1`로 배운 점을 기록한다.
 
 ## 버전을 올릴 때
 
