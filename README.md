@@ -10,6 +10,8 @@
 - Patch entry: `patches/latest.generated.patch.js`
 - Chat/Codex plan: `docs/CHAT_VERSION_INTEGRATION_PLAN.md`
 - Learning system: `docs/PROJECT_LEARNING_SYSTEM.md`
+- Mutual exchange: `docs/MUTUAL_EXCHANGE_PROTOCOL.md`
+- Self expansion radar: `docs/SELF_EXPANSION_TECH_RADAR.md`
 - Session prompt: `docs/SESSION_START_PROMPT.md`
 - Development memory: `data/development_memory.json`
 - Fish data draft: `data/fish_catalog_option2.json`
@@ -25,6 +27,7 @@
 5. 수정 후에는 `tools/validate-release.ps1`로 구조 검증을 통과시킨 뒤 커밋합니다.
 6. 새 챗버전의 아이디어는 먼저 `docs/CHAT_VERSION_INTEGRATION_PLAN.md`와 `data/fish_catalog_option2.json`에 반영한 뒤 런타임으로 옮깁니다.
 7. 작업 종료 시 `tools/record-learning.ps1`로 배운 점과 다음 목표를 기록합니다.
+8. 외부 최신 기술은 `tools/update-tech-watch.ps1`로 공식 문서를 먼저 조사한 뒤 후보-실험-검증 순서로 반영합니다.
 
 ## 자주 쓰는 명령
 
@@ -44,6 +47,12 @@ powershell -ExecutionPolicy Bypass -File .\tools\validate-release.ps1
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\tools\record-learning.ps1 -Summary "무엇을 배웠는지" -Next "다음 작업"
+```
+
+외부 기술 후보 조사:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\update-tech-watch.ps1
 ```
 
 검증 후 GitHub와 Pages에 동시 반영:

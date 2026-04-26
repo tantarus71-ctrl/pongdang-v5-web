@@ -10,9 +10,12 @@
 2. project-manifest.json
 3. data/development_memory.json
 4. docs/PROJECT_LEARNING_SYSTEM.md
-5. docs/CHAT_VERSION_INTEGRATION_PLAN.md
-6. docs/CODEX_CHATGPT_SYNC.md
-7. data/gonjiam_ecosystem_assets_v1.json
+5. docs/MUTUAL_EXCHANGE_PROTOCOL.md
+6. docs/SELF_EXPANSION_TECH_RADAR.md
+7. docs/CHAT_VERSION_INTEGRATION_PLAN.md
+8. docs/CODEX_CHATGPT_SYNC.md
+9. data/technology_watchlist.json
+10. data/gonjiam_ecosystem_assets_v1.json
 
 현재 기준:
 - 저장소: tantarus71-ctrl/pongdang-v5-web
@@ -29,6 +32,7 @@
 - 새 기능은 문서/데이터/후보 패치로 먼저 정리한 뒤 런타임에 반영한다.
 - 물고기 확장은 data/fish_catalog_option2.json 기준으로 정규화한다.
 - 곤지암천 생태계 에셋 후보는 data/gonjiam_ecosystem_assets_v1.json에서 확인하되, 현장 확인 전에는 확정 출현종으로 단정하지 않는다.
+- 외부 최신 기술은 tools/update-tech-watch.ps1로 공식 문서를 조사한 뒤, data/technology_research_log.json에 남기고 실험 후보로만 다룬다.
 - 모바일 메뉴는 중복 CSS를 만들지 않고 latest.generated.patch.js 안의 한 경로로 통합한다.
 - 수정 후 tools/validate-release.ps1을 반드시 통과시킨다.
 - 완료 후 tools/record-learning.ps1로 배운 점과 다음 작업을 기록한다.

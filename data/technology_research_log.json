@@ -1,0 +1,51 @@
+﻿{
+    "schema":  "pongdang_technology_research_log",
+    "version":  1,
+    "updatedAt":  "2026-04-26",
+    "entries":  [
+                    {
+                        "id":  "css-container-queries",
+                        "name":  "CSS Container Queries",
+                        "source":  "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries",
+                        "checkedAt":  "2026-04-26T11:07:32",
+                        "ok":  true,
+                        "title":  "CSS container queries - CSS | MDN",
+                        "status":  "trial",
+                        "risk":  "low",
+                        "note":  "HTTP 200"
+                    },
+                    {
+                        "id":  "dynamic-viewport-units",
+                        "name":  "Dynamic viewport units",
+                        "source":  "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Values_and_units",
+                        "checkedAt":  "2026-04-26T11:07:34",
+                        "ok":  true,
+                        "title":  "CSS values and units - CSS | MDN",
+                        "status":  "adopt",
+                        "risk":  "low",
+                        "note":  "HTTP 200"
+                    },
+                    {
+                        "id":  "view-transition-api",
+                        "name":  "View Transition API",
+                        "source":  "https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API",
+                        "checkedAt":  "2026-04-26T11:07:36",
+                        "ok":  true,
+                        "title":  "View Transition API - Web APIs | MDN",
+                        "status":  "watch",
+                        "risk":  "medium",
+                        "note":  "HTTP 200"
+                    },
+                    {
+                        "id":  "webgpu",
+                        "name":  "WebGPU",
+                        "source":  "https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API",
+                        "checkedAt":  "2026-04-26T11:07:37",
+                        "ok":  true,
+                        "title":  "WebGPU API - Web APIs | MDN",
+                        "status":  "watch",
+                        "risk":  "high",
+                        "note":  "HTTP 200"
+                    }
+                ]
+}

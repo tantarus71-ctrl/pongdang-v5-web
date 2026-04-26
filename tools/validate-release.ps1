@@ -55,6 +55,21 @@ if ($manifest -and $project -and $package) {
     Test-File $manifest.planning.learning_system 'Project learning system'
     Test-File $manifest.planning.session_start_prompt 'Session start prompt'
     Test-File $manifest.planning.development_memory 'Development memory'
+    if ($manifest.planning.exchange_protocol) {
+      Test-File $manifest.planning.exchange_protocol 'Mutual exchange protocol'
+    }
+    if ($manifest.planning.exchange_channels) {
+      Test-File $manifest.planning.exchange_channels 'Exchange channels'
+    }
+    if ($manifest.planning.self_expansion_tech_radar) {
+      Test-File $manifest.planning.self_expansion_tech_radar 'Self expansion tech radar'
+    }
+    if ($manifest.planning.technology_watchlist) {
+      Test-File $manifest.planning.technology_watchlist 'Technology watchlist'
+    }
+    if ($manifest.planning.technology_research_log) {
+      Test-File $manifest.planning.technology_research_log 'Technology research log'
+    }
     if ($manifest.planning.ecosystem_assets) {
       Test-File $manifest.planning.ecosystem_assets 'Gonjiam ecosystem assets'
     }
@@ -139,6 +154,30 @@ if ($manifest -and $project -and $package) {
       }
       if ([string]::IsNullOrWhiteSpace([string]$ecosystem.principle)) {
         Add-Warn "Gonjiam ecosystem assets should preserve a non-confirmation principle."
+      }
+    }
+  }
+  $exchangePath = Join-Path $Root 'data/exchange_channels.json'
+  if (Test-Path -LiteralPath $exchangePath) {
+    $exchange = Read-JsonFile $exchangePath
+    if ($exchange) {
+      if ($exchange.schema -ne 'pongdang_exchange_channels') {
+        Add-Err "Exchange channels schema mismatch: $($exchange.schema)"
+      }
+      if (!$exchange.channels -or $exchange.channels.Count -lt 5) {
+        Add-Err "Exchange channels must define at least five communication channels."
+      }
+    }
+  }
+  $watchPath = Join-Path $Root 'data/technology_watchlist.json'
+  if (Test-Path -LiteralPath $watchPath) {
+    $watch = Read-JsonFile $watchPath
+    if ($watch) {
+      if ($watch.schema -ne 'pongdang_technology_watchlist') {
+        Add-Err "Technology watchlist schema mismatch: $($watch.schema)"
+      }
+      if (!$watch.candidates -or $watch.candidates.Count -lt 3) {
+        Add-Err "Technology watchlist must include at least three candidates."
       }
     }
   }
