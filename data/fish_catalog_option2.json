@@ -1,8 +1,8 @@
 {
   "schema": "fish_database_option2",
   "version": "draft-v4.8.36",
-  "status": "fallback-assets-ready",
-  "purpose": "Shared fish data shape for future Codex and ChatGPT updates. Runtime migration is intentionally deferred until all required PNG assets are present. v4.8.36 adds SVG fallback coverage so card and popup views do not break while PNG assets are pending.",
+  "status": "fallback-policy-formalized",
+  "purpose": "Shared fish data shape for future Codex and ChatGPT updates. Runtime migration is intentionally deferred until the display path is wired and visually checked. Card and popup PNG assets now exist, while SVG and direction-image fallbacks remain listed to prevent broken card or popup views if an asset path fails.",
   "species": {
     "beodeulchi": {
       "id": "beodeulchi",
@@ -25,9 +25,14 @@
         "card": "assets/fish/beodeulchi/card.svg",
         "popup": "assets/fish/beodeulchi/popup.svg"
       },
-      "pendingAssets": {
+      "candidatePngAssets": {
         "cardPng": "assets/fish/beodeulchi/card.png",
         "popupPng": "assets/fish/beodeulchi/popup.png"
+      },
+      "validationState": {
+        "cardPng": "exists-visual-check-passed",
+        "popupPng": "exists-visual-check-passed",
+        "runtimeMigration": "deferred-until-display-loader"
       },
       "assetPolicy": {
         "cardDisplayPriority": [
@@ -42,7 +47,7 @@
           "assets/fish/beodeulchi/front_right.png",
           "assets/fish/beodeulchi/right.png"
         ],
-        "rule": "PNG final assets are preferred. SVG fallback assets are used only to prevent broken card or popup images until final PNG assets are created. Aquarium swimming continues to use the existing four-direction PNG set."
+        "rule": "Use the verified PNG display assets first. Keep SVG and direction-image fallbacks available so card or popup views never render a broken image. Aquarium swimming continues to use the existing four-direction PNG set."
       },
       "behavior": {
         "xRange": [8, 86],

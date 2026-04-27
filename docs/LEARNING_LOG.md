@@ -14,3 +14,8 @@
 
 - Summary: 프로젝트 전용 학습 시스템을 추가해 ChatGPT/Codex가 세션 시작 시 같은 기억, 규칙, 결정 로그를 읽고 이어받게 했다.
 - Next: 다음 개발부터 record-learning으로 세션 결과를 누적하고, 모바일 메뉴 최적화 후보를 중복 없이 runtime patch로 통합한다.
+
+## 2026-04-27 07:25:03
+
+- Summary: Continued 2026-04-26 work: confirmed v4.8.32 mobile menu fit is integrated as one runtime style installer, updated its style id, and formalized beodeulchi card/popup fallback policy after visual-checking candidate PNG assets.
+- Next: Wire beodeulchi card and popup display loading from fish_catalog_option2, then add viewport/browser smoke checks before promoting runtime data.

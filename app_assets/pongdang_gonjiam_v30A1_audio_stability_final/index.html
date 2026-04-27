@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#052033" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>퐁당퐁당 곤지암천 v30A-1 · 음성 안정화 최적화</title>
+  <script>
+    window.PONGDANG_DEV_CACHE = String(Date.now());
+    window.PONGDANG_FRESH_URL = (url) => url + (url.includes('?') ? '&' : '?') + 'cache=' + window.PONGDANG_DEV_CACHE;
+    document.write('<link rel="preload" as="image" href="' + window.PONGDANG_FRESH_URL('./assets/bg/upper/day.png') + '">');
+    document.write('<link rel="stylesheet" href="' + window.PONGDANG_FRESH_URL('./src/styles/main.css') + '">');
+  </script>
+</head>
+<body>
+<div id="app">
+  <main class="aquarium" id="aquarium" aria-label="퐁당퐁당 곤지암천 수족관">
+    <div class="bg" id="bg"></div>
+    <div class="far-haze"></div>
+    <div class="godrays" id="godrays"></div>
+    <div class="caustics" id="caustics"></div>
+    <div class="eco-layer" id="ecoLayer"></div>
+    <div class="particles" id="particles"></div>
+    <div class="fish-layer" id="fishLayer"></div>
+  </main>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">💧</div>
+      <div class="brand-text">
+        <strong>퐁당퐁당 곤지암천</strong>
+        <span id="zoneDesc">웃물 · 얕고 맑은 상류</span>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="round-btn audio-main-btn" id="audioBtn" aria-label="현재 화면 설명 듣기">🔊</button>
+      <button class="round-btn" id="modeBtn" aria-label="낮 밤 전환">🌙</button>
+      <button class="round-btn" id="fullBtn" aria-label="전체화면">⛶</button>
+    </div>
+  </header>
+
+  <nav class="zone-strip" id="zoneStrip" aria-label="곤지암천 구간 선택"></nav>
+  <div class="hint" id="hint">앞으로 다가온 버들치 한 마리만 눌러보세요</div>
+
+  <section class="bottom-card" id="bottomCard">
+    <div class="fish-badge">🐟</div>
+    <div class="card-text"><strong id="cardTitle">버들치 관찰 중</strong><span id="cardSub">중층에서 부드럽게 헤엄치는 곤지암천 대표 물고기</span></div>
+  </section>
+
+  <nav class="bottom-nav" aria-label="주요 메뉴">
+    <button class="nav-btn" data-menu="explore" aria-label="탐사 메뉴"><i data-icon-slot="explore">🧭</i><span>탐사</span></button>
+    <button class="nav-btn" data-menu="dex" aria-label="도감 메뉴"><i data-icon-slot="dex">🐟</i><span>도감</span></button>
+    <button class="nav-btn" data-menu="mission" aria-label="미션 메뉴"><i data-icon-slot="mission">🎯</i><span>미션</span></button>
+    <button class="nav-btn" data-menu="camera" aria-label="카메라 메뉴"><i data-icon-slot="camera">📷</i><span>카메라</span></button>
+  </nav>
+
+
+  <section class="feature-panel" id="featurePanel" aria-label="기능 메뉴 미리보기">
+    <div class="feature-head">
+      <div class="feature-title"><div class="feature-icon" id="featureIcon">🧭</div><div><strong id="featureTitle">탐사</strong><span id="featureSub">곤지암천 5존을 골라 탐사해요</span></div></div>
+      <button class="feature-close" id="featureClose" aria-label="기능 패널 닫기">✕</button>
+    </div>
+    <div class="feature-body" id="featureBody"></div>
+    <button class="feature-action" id="featureAction">준비 중인 기능 보기</button>
+  </section>
+
+
+
+
+
+  <section class="explore-panel" id="explorePanel" aria-label="탐사와 위치 안내 패널">
+    <div class="explore-top">
+      <div class="explore-title"><div class="explore-icon">🧭</div><div><strong>오늘의 탐사</strong><span>위치 없이도 탐사는 계속할 수 있어요</span></div></div>
+      <button class="explore-close" id="exploreClose" aria-label="탐사 패널 닫기">✕</button>
+    </div>
+    <div class="explore-actions">
+      <button class="explore-primary" id="openGpsGuide">내 위치 보기 📍</button>
+      <button class="explore-secondary" id="recommendZoneBtn">가까운 구간 찾기 🗺️</button>
+      <button class="explore-secondary" id="openExploreLog">탐사 기록 📝</button>
+    </div>
+    <article class="gps-result-card" id="gpsResultCard">
+      <div class="gps-result-icon" id="gpsResultIcon">💧</div>
+      <div><strong id="gpsResultTitle">웃물부터 살펴볼까요?</strong><p id="gpsResultText">맑고 얕은 구간이라 처음 탐사하기 좋아요.</p></div>
+      <button id="startRecommendedZone" class="tiny-action">시작하기</button>
+    </article>
+    <div class="explore-log-list" id="exploreLogList"></div>
+  </section>
+
+  <div class="gps-guide-backdrop" id="gpsGuideBackdrop" aria-hidden="true"></div>
+  <section class="gps-guide" id="gpsGuide" role="dialog" aria-modal="true" aria-label="위치 권한 안내">
+    <button class="gps-guide-close" id="gpsGuideClose" aria-label="위치 안내 닫기">✕</button>
+    <div class="gps-guide-icon">📍</div>
+    <h2>내 위치를 잠깐 확인할까요?</h2>
+    <p>가까운 탐사 구간을 알려주기 위해 지금 위치를 한 번 확인해요.</p>
+    <small>정확한 위치는 저장하지 않고, 탐사 구간 추천에만 사용하도록 설계했어요.</small>
+    <div class="gps-guide-actions">
+      <button id="requestGpsBtn" class="gps-confirm">위치 확인하기 📍</button>
+      <button id="cancelGpsBtn" class="gps-cancel">나중에 할래요</button>
+    </div>
+  </section>
+
+  <section class="mission-panel" id="missionPanel" aria-label="미션 진행률 패널">
+    <div class="mission-top">
+      <div class="mission-title"><div class="mission-icon">🎯</div><div><strong>오늘의 미션</strong><span>관찰하면 조금씩 채워져요</span></div></div>
+      <div class="mission-progress-summary" id="missionSummary">완료 0 / 0</div>
+      <button class="mission-close" id="missionClose" aria-label="미션 닫기">✕</button>
+    </div>
+    <div class="mission-list" id="missionList"></div>
+  </section>
+  <div class="mission-toast" id="missionToast">🎉 미션이 진행됐어요!</div>
+
+  <div class="acquire-backdrop" id="acquireBackdrop" aria-hidden="true"></div>
+  <section class="card-acquire" id="acquireCard" role="dialog" aria-modal="true" aria-label="첫 발견 획득 카드">
+    <button class="acquire-close" id="acquireClose" aria-label="획득 카드 닫기">✕</button>
+    <h2>새 물고기 발견! ✨</h2>
+    <div class="acquire-zone" id="acquireZone">💧 웃물에서 발견</div>
+    <div class="card-fish-img" id="acquireImage">🐟</div>
+    <strong id="acquireName">버들치</strong>
+    <div class="acquire-question" id="acquireQuestion">도감에 저장할까요?</div>
+    <div class="card-lines" id="acquireLines"><span>맑은 물을 좋아해요.</span><span>친구들과 무리 지어 다녀요.</span><span>물살을 타고 부드럽게 움직여요.</span></div>
+    <div class="acquire-reward-chip" id="acquireReward">🎁 첫 발견 카드 획득</div>
+    <div class="card-actions"><button class="save-card" id="saveCard">도감에 저장 📖</button><button class="keep-explore" id="keepExplore">계속 탐사 🧭</button></div>
+  </section>
+
+
+
+  <section class="dex-panel" id="dexPanel" aria-label="도감 카드 정보창">
+    <div class="dex-top">
+      <div class="dex-title"><div class="dex-icon">📖</div><div><strong>도감 카드</strong><span id="dexSub">획득한 물고기와 아직 못 찾은 물고기를 한눈에 봐요</span></div></div>
+      <div class="dex-progress" id="dexProgress">수집 0 / 0</div>
+      <button class="dex-close" id="dexClose" aria-label="도감 닫기">✕</button>
+    </div>
+    <div class="dex-filter" id="dexFilter" aria-label="도감 필터"></div>
+    <div class="dex-grid" id="dexGrid" aria-label="도감 카드 목록"></div>
+  </section>
+
+  <section class="card-detail" id="cardDetail" aria-label="도감 카드 확대 팝업">
+    <article class="detail-card">
+      <div class="detail-head">
+        <div><h2 id="detailName">버들치</h2><small id="detailMeta">웃물 · 민물고기</small></div>
+        <button class="detail-close" id="detailClose" aria-label="카드 팝업 닫기">✕</button>
+      </div>
+      <div class="detail-hero" id="detailHero"><img id="detailImage" alt="물고기 카드 이미지"><div class="detail-locked" id="detailLocked">🔒</div></div>
+      <div class="detail-info">
+        <div class="detail-row"><b>서식지</b><span id="detailHabitat">맑은 물</span></div>
+        <div class="detail-row"><b>특징</b><span id="detailFeature">작고 빠르게 움직여요.</span></div>
+        <div class="detail-row"><b>관찰</b><span id="detailPoint">수초와 자갈 근처를 살펴보세요.</span></div>
+      </div>
+      <div class="detail-actions"><button class="detail-secondary" id="detailClose2">닫기</button><button class="detail-primary" id="detailListen">설명 듣기 🔊</button></div>
+    </article>
+  </section>
+
+  <aside class="popup" id="popup" role="dialog" aria-modal="true" aria-label="물고기 정보">
+    <div class="popup-head"><div class="popup-icon">🐟</div><div><h2 id="popupTitle">버들치</h2><small id="popupZone">웃물에서 발견</small></div></div>
+    <p id="popupText">버들치는 맑은 하천의 중층에서 부드럽게 움직이는 작은 민물고기예요. 몸은 길고 가늘며, 물살을 따라 조심스럽게 헤엄쳐요.</p>
+    <div class="info-grid"><div class="info" id="infoLayer">중층~상층</div><div class="info" id="infoFlow">느림~보통</div><div class="info" id="infoMission">관찰 성공</div></div>
+    <div class="popup-actions"><button id="popupAudio" class="popup-audio">설명 듣기 🔊</button><button id="closePopup">닫기</button></div>
+  </aside>
+
+
+
+  <section class="camera-panel" id="cameraPanel" aria-label="관찰 사진 패널">
+    <div class="camera-top">
+      <div class="camera-title"><div class="camera-icon">📷</div><div><strong>관찰 사진</strong><span>지금 보고 있는 물속을 사진으로 남겨요</span></div></div>
+      <button class="camera-close" id="cameraClose" aria-label="카메라 패널 닫기">✕</button>
+    </div>
+    <div class="camera-actions">
+      <button class="camera-shot" id="captureShot">찰칵 찍기 📷</button>
+      <button class="camera-gallery-btn" id="openCaptureGallery">내 관찰 사진 🖼️</button>
+    </div>
+    <p class="camera-help" id="cameraHelp">수족관 장면과 현재 관찰 정보를 함께 저장해요.</p>
+  </section>
+
+  <section class="capture-gallery" id="captureGallery" aria-label="내 관찰 사진 목록">
+    <div class="gallery-top">
+      <div class="gallery-title"><div class="gallery-icon">🖼️</div><div><strong>내 관찰 사진</strong><span id="captureSummary">저장된 관찰 사진 0장</span></div></div>
+      <button class="gallery-close" id="captureGalleryClose" aria-label="관찰 사진 목록 닫기">✕</button>
+    </div>
+    <div class="capture-grid" id="captureGrid"></div>
+    <div class="capture-empty" id="captureEmpty">아직 저장한 관찰 사진이 없어요.<br>수족관에서 “찰칵 찍기”를 눌러보세요.</div>
+  </section>
+
+  <section class="capture-detail" id="captureDetail" aria-label="관찰 사진 상세 팝업">
+    <article class="capture-detail-card">
+      <div class="capture-detail-head">
+        <div><h2 id="captureDetailTitle">관찰 사진</h2><small id="captureDetailMeta">웃물 · 버들치</small></div>
+        <button class="capture-detail-close" id="captureDetailClose" aria-label="관찰 사진 상세 닫기">✕</button>
+      </div>
+      <img class="capture-detail-img" id="captureDetailImage" alt="저장한 관찰 사진" />
+      <p class="capture-detail-memo" id="captureDetailMemo">관찰 기록</p>
+      <div class="capture-detail-actions">
+        <button id="captureDownload">다운로드 ⬇️</button>
+        <button id="captureDelete" class="danger">삭제 🗑️</button>
+        <button id="captureDetailClose2">닫기</button>
+      </div>
+    </article>
+  </section>
+
+  <div class="capture-toast" id="captureToast">📷 관찰 사진을 저장했어요!</div>
+
+  <section class="audio-panel" id="audioPanel" aria-live="polite" aria-label="음성 설명 패널">
+    <div class="audio-panel-head">
+      <div class="audio-face" id="audioFace">🔊</div>
+      <div class="audio-copy"><strong id="audioTitle">설명 듣기</strong><span id="audioText">아이 눈높이로 짧게 들려드려요.</span></div>
+      <button class="audio-icon-btn" id="audioClose" aria-label="음성 닫기">✕</button>
+    </div>
+    <div class="audio-panel-actions">
+      <button class="audio-control" id="audioReplay">다시 듣기 🔁</button>
+      <button class="audio-control stop" id="audioStop">그만 듣기 ⏹️</button>
+    </div>
+  </section>
+  <div class="debug-chip" id="debugChip">v30A-1 · 음성 안정화 · Codex 최적화</div>
+</div>
+<script>
+  document.write('<script src="' + window.PONGDANG_FRESH_URL('./src/app.js') + '" defer><\/script>');
+</script>
+</body>
+</html>

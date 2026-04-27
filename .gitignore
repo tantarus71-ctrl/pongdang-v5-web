@@ -9,3 +9,4 @@ Thumbs.db
 *secret*
 node_modules/
 .codex-local/
+app_assets/*/assets/bg/_backup/

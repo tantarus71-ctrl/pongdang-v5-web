@@ -355,9 +355,12 @@
       document.head.appendChild(style);
     },
     installMobileMenuFitStyles() {
-      if (document.getElementById("pongdang-v4829-mobile-menu-fit-style")) return;
+      if (
+        document.getElementById("pongdang-v4832-mobile-menu-fit-style") ||
+        document.getElementById("pongdang-v4829-mobile-menu-fit-style")
+      ) return;
       const style = document.createElement("style");
-      style.id = "pongdang-v4829-mobile-menu-fit-style";
+      style.id = "pongdang-v4832-mobile-menu-fit-style";
       style.textContent = `
         /* 한글 리마크: 휴대폰에서는 상단 조작 메뉴와 하단 메뉴가 수족관을 덜 가리도록 높이와 간격을 줄인다. */
         @media (max-width: 680px) and (orientation: portrait) {

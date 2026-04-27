@@ -1,7 +1,7 @@
 (() => {
   const AS = '../assets/fish/';
   const RIG = `${AS}beodeulchi/`;
-  const IMG = `${RIG}beodeulchi_side_right.png?v=15`;
+  const IMG = `${RIG}beodeulchi_side_right.png?v=16`;
   const aq = document.getElementById('aq');
   const fx = document.getElementById('fx');
   const fl = document.getElementById('fishLayer');
@@ -64,28 +64,28 @@
   };
   const rigAssets = {
     body: {
-      side_right: `${RIG}beodeulchi_side_right.png?v=15`,
-      quarter_right: `${RIG}beodeulchi_quarter_right.png?v=15`,
-      front_angle: `${RIG}beodeulchi_front_angle.png?v=15`,
-      quarter_left: `${RIG}beodeulchi_quarter_left.png?v=15`,
-      side_left: `${RIG}beodeulchi_side_left.png?v=15`,
+      side_right: `${RIG}beodeulchi_side_right.png?v=16`,
+      quarter_right: `${RIG}beodeulchi_quarter_right.png?v=16`,
+      front_angle: `${RIG}beodeulchi_front_angle.png?v=16`,
+      quarter_left: `${RIG}beodeulchi_quarter_left.png?v=16`,
+      side_left: `${RIG}beodeulchi_side_left.png?v=16`,
     },
     tail: {
       right: [
-        `${RIG}beodeulchi_tail_left.png?v=15`,
-        `${RIG}beodeulchi_tail_idle.png?v=15`,
-        `${RIG}beodeulchi_tail_right.png?v=15`,
+        `${RIG}beodeulchi_tail_left.png?v=16`,
+        `${RIG}beodeulchi_tail_idle.png?v=16`,
+        `${RIG}beodeulchi_tail_right.png?v=16`,
       ],
       left: [
-        `${RIG}beodeulchi_tail_left.png?v=15`,
-        `${RIG}beodeulchi_tail_idle.png?v=15`,
-        `${RIG}beodeulchi_tail_right.png?v=15`,
+        `${RIG}beodeulchi_tail_left.png?v=16`,
+        `${RIG}beodeulchi_tail_idle.png?v=16`,
+        `${RIG}beodeulchi_tail_right.png?v=16`,
       ],
     },
     fin: {
-      idle: `${RIG}beodeulchi_fin_idle.png?v=15`,
-      turn_left: `${RIG}beodeulchi_fin_turn_left.png?v=15`,
-      turn_right: `${RIG}beodeulchi_fin_turn_right.png?v=15`,
+      idle: `${RIG}beodeulchi_fin_idle.png?v=16`,
+      turn_left: `${RIG}beodeulchi_fin_turn_left.png?v=16`,
+      turn_right: `${RIG}beodeulchi_fin_turn_right.png?v=16`,
     },
   };
 
@@ -247,7 +247,7 @@
       e.dataset.fishId = f.id;
       e.dataset.species = 'beodeulchi';
       e.setAttribute('aria-label', `${txt.fish} ${txt.observe}`);
-      e.innerHTML = `<span class="fish-rig"><img class="fish-body" src="${rigAssets.body.side_right}" alt="${txt.fish}" data-asset="beodeulchi-body-v15"><img class="fish-tail" src="${rigAssets.tail.right[1]}" alt="" aria-hidden="true"><img class="fish-fin" src="${rigAssets.fin.idle}" alt="" aria-hidden="true"></span>`;
+      e.innerHTML = `<span class="fish-rig"><img class="fish-body" src="${rigAssets.body.side_right}" alt="${txt.fish}" data-asset="beodeulchi-body-v16"><img class="fish-tail" src="${rigAssets.tail.right[1]}" alt="" aria-hidden="true"><img class="fish-fin" src="${rigAssets.fin.idle}" alt="" aria-hidden="true"></span>`;
       f.el = e;
       f.img = e.querySelector('.fish-body');
       f.bodyEl = e.querySelector('.fish-body');
@@ -264,11 +264,11 @@
 
   function selectSpecies(discovered = true) {
     if (discovered) seen.add('beodeulchi');
-    icon.innerHTML = `<img src="${IMG}" alt="${txt.fish}" data-asset="beodeulchi-body-v15">`;
+    icon.innerHTML = `<img src="${IMG}" alt="${txt.fish}" data-asset="beodeulchi-body-v16">`;
     const img = icon.querySelector('img');
     img.onload = () => { asset.loaded += 1; };
     img.onerror = () => { asset.fallback += 1; };
-    nameEl.innerHTML = `${txt.fish} \u00B7 ${txt.zone}${seen.has('beodeulchi') ? `<span class="badge">${txt.observe}</span>` : `<span class="badge">${txt.newLabel}</span>`}`;
+    nameEl.innerHTML = `${txt.fish} \u00B7 ${zone}${seen.has('beodeulchi') ? `<span class="badge">${txt.observe}</span>` : `<span class="badge">${txt.newLabel}</span>`}`;
     textEl.textContent = `${txt.size} \u00B7 ${txt.copy}`;
     updateReport();
     if (discovered) showFound();
@@ -378,7 +378,7 @@
   }
 
   function chooseActive(now) {
-    if (activeId || now < nextFrontAt || zone !== txt.zone) return;
+    if (activeId || now < nextFrontAt) return;
     const centered = school.filter((f) => f.cooldownUntil < now && f.id !== lastActiveId && f.x > 18 && f.x < 82 && f.y > 28 && f.y < 60);
     const fallback = school.filter((f) => f.cooldownUntil < now && f.x > 12 && f.x < 88);
     const candidates = centered.length ? centered : fallback;
@@ -649,12 +649,10 @@
   function tick(ts) {
     const dt = clamp((ts - lastTs) / 1000, 0.001, 0.045);
     lastTs = ts;
-    if (zone === txt.zone) {
-      chooseActive(ts);
-      avoid(dt, ts);
-      school.forEach((f) => updateFish(f, dt, ts));
-      if (!activeId && ts > nextFrontAt + 5600) nextFrontAt = ts + 900;
-    }
+    chooseActive(ts);
+    avoid(dt, ts);
+    school.forEach((f) => updateFish(f, dt, ts));
+    if (!activeId && ts > nextFrontAt + 5600) nextFrontAt = ts + 900;
     rafId = requestAnimationFrame(tick);
   }
 
@@ -677,18 +675,8 @@
 
   function setZone(nextZone) {
     zone = nextZone;
-    if (zone === txt.zone) {
-      resetSchool();
-      say(txt.copy);
-      return;
-    }
-    cancelAnimationFrame(rafId);
-    fl.innerHTML = '';
-    activeId = null;
-    icon.innerHTML = '';
-    nameEl.textContent = zone;
-    textEl.textContent = txt.zoneWait;
-    say(`${zone} ${txt.zoneReady}`);
+    resetSchool();
+    say(`${zone} \uC218\uC871\uAD00\uC744 \uC5F4\uC5C8\uC5B4\uC694.`);
   }
 
   document.querySelectorAll('.dock button').forEach((b) => {
@@ -728,12 +716,12 @@
         }
       }
       const problems = [];
-      if (zone === txt.zone && school.length < 3) problems.push('school too small');
+      if (school.length < 3) problems.push('school too small');
       if (clickable.length > 1) problems.push('multiple clickable fish');
       if (clickable.some((e) => e.dataset.fishId !== activeId)) problems.push('background fish is clickable');
       if (overlaps > 0) problems.push('overlap risk');
       return {
-        version: 'v4.8.37-rigged-beodeulchi-v15',
+        version: 'v4.8.37-rigged-beodeulchi-v16',
         ok: problems.length === 0,
         zone,
         fishCount: school.length,

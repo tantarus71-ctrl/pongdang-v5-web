@@ -1,0 +1,2 @@
+// 런타임 상태 분리 예정 파일입니다.
+export const RUNTIME_STATE_VERSION = 'v25-runtime-schema';

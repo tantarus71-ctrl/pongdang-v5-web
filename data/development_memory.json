@@ -1,7 +1,7 @@
 ﻿{
     "schema":  "pongdang_development_memory",
     "version":  1,
-    "updatedAt":  "2026-04-26",
+    "updatedAt":  "2026-04-27",
     "stableRuntime":  {
                           "version":  "v4.8.30",
                           "title":  "Phone Zone Label Fit",
@@ -55,8 +55,8 @@
                          },
                          {
                              "date":  "2026-04-26",
-                             "fact":  "Beodeulchi has four PNG direction assets and two SVG fallback assets, but card.png and popup.png are missing.",
-                             "evidence":  "tools/validate-release.ps1 warnings"
+                             "fact":  "Beodeulchi has four PNG direction assets plus card.png and popup.png candidate display assets; SVG and direction-image fallback priority remains documented until runtime display loading is wired and visually checked.",
+                             "evidence":  "data/fish_catalog_option2.json, assets/fish/beodeulchi/card.png, assets/fish/beodeulchi/popup.png"
                          },
                          {
                              "date":  "2026-04-26",
@@ -193,9 +193,9 @@
         "곤지암 생태계 에셋 계획의 후보 어종을 fish_catalog_option2 구조와 병합하되 현장 확정종으로 단정하지 않는다.",
         "tools/update-tech-watch.ps1로 기술 후보를 주기적으로 조사하고, 낮은 위험 후보부터 실험 패치로 전환한다.",
         "피라미 1종을 다음 디자인/행동 테스트 어종으로 준비하되, 현재 v4.8.30 안정 실행 기준은 유지한다.",
-        "Convert v4.8.32 mobile menu candidate CSS into one non-duplicated runtime patch",
-                                "Promote fish_catalog_option2 beodeulchi draft into runtime data after asset decision",
-                                "Create or formalize fallback strategy for beodeulchi card and popup assets",
+        "Keep the v4.8.32 mobile menu fit integrated as one runtime style installer and avoid adding a second CSS path.",
+                                "Promote fish_catalog_option2 beodeulchi draft into runtime data after display-loader decision",
+                                "Keep the beodeulchi card and popup fallback priority documented until runtime card and popup image loading is wired.",
                                 "Add automated viewport smoke checks when in-app browser runtime is available"
                             ]
 }
