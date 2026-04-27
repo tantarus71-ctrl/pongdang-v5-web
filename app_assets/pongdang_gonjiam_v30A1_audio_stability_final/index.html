@@ -11,8 +11,18 @@
   <script>
     window.PONGDANG_DEV_CACHE = String(Date.now());
     window.PONGDANG_FRESH_URL = (url) => url + (url.includes('?') ? '&' : '?') + 'cache=' + window.PONGDANG_DEV_CACHE;
-    document.write('<link rel="preload" as="image" href="' + window.PONGDANG_FRESH_URL('./assets/bg/upper/day.png') + '">');
-    document.write('<link rel="stylesheet" href="' + window.PONGDANG_FRESH_URL('./src/styles/main.css') + '">');
+    (() => {
+      const preload = document.createElement('link');
+      preload.rel = 'preload';
+      preload.as = 'image';
+      preload.href = window.PONGDANG_FRESH_URL('./assets/bg/upper/day.png');
+      document.head.appendChild(preload);
+
+      const style = document.createElement('link');
+      style.rel = 'stylesheet';
+      style.href = window.PONGDANG_FRESH_URL('./src/styles/main.css');
+      document.head.appendChild(style);
+    })();
   </script>
 </head>
 <body>
@@ -215,7 +225,12 @@
   <div class="debug-chip" id="debugChip">v30A-1 · 음성 안정화 · Codex 최적화</div>
 </div>
 <script>
-  document.write('<script src="' + window.PONGDANG_FRESH_URL('./src/app.js') + '" defer><\/script>');
+  (() => {
+    const appScript = document.createElement('script');
+    appScript.src = window.PONGDANG_FRESH_URL('./src/app.js');
+    appScript.defer = true;
+    document.body.appendChild(appScript);
+  })();
 </script>
 </body>
 </html>
