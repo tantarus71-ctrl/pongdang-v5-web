@@ -8,22 +8,8 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>퐁당퐁당 곤지암천 v30A-1 · 음성 안정화 최적화</title>
-  <script>
-    window.PONGDANG_DEV_CACHE = String(Date.now());
-    window.PONGDANG_FRESH_URL = (url) => url + (url.includes('?') ? '&' : '?') + 'cache=' + window.PONGDANG_DEV_CACHE;
-    (() => {
-      const preload = document.createElement('link');
-      preload.rel = 'preload';
-      preload.as = 'image';
-      preload.href = window.PONGDANG_FRESH_URL('./assets/bg/upper/day.png');
-      document.head.appendChild(preload);
-
-      const style = document.createElement('link');
-      style.rel = 'stylesheet';
-      style.href = window.PONGDANG_FRESH_URL('./src/styles/main.css');
-      document.head.appendChild(style);
-    })();
-  </script>
+  <link rel="preload" as="image" href="./assets/bg/upper/day.png?v=30A1-assetfix" />
+  <link rel="stylesheet" href="./src/styles/main.css?v=30A1-assetfix" />
 </head>
 <body>
 <div id="app">
@@ -224,13 +210,6 @@
   </section>
   <div class="debug-chip" id="debugChip">v30A-1 · 음성 안정화 · Codex 최적화</div>
 </div>
-<script>
-  (() => {
-    const appScript = document.createElement('script');
-    appScript.src = window.PONGDANG_FRESH_URL('./src/app.js');
-    appScript.defer = true;
-    document.body.appendChild(appScript);
-  })();
-</script>
+<script src="./src/app.js?v=30A1-assetfix" defer></script>
 </body>
 </html>
