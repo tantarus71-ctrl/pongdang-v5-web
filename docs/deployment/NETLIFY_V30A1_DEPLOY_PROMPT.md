@@ -69,3 +69,24 @@ siteId: a534d145-451b-4199-88b1-17437c29f2c6
 3. 최소 수정
 4. 재검증
 5. 개발기획서에 기록
+
+## 2026-04-28 진행 결과
+- v30A1 배포 설정 파일 `netlify.toml`을 저장소 루트에 추가했다.
+- publish directory는 `app_assets/pongdang_gonjiam_v30A1_audio_stability_final`로 고정했다.
+- `app.js` 문법 검사는 통과했다.
+- GitHub `main` 브랜치에 커밋 `896f7fe Prepare v30A1 Netlify deployment`로 반영했다.
+- Netlify 프로젝트 `pongdong-johnchoi` 상태 확인 결과, 현재 활성 배포는 2026-04-24 수동 업로드본이다.
+- Netlify 커넥터의 직접 업로드 명령은 `npx`가 필요하지만 현재 PC 환경에서 `npx`, `npm`, `netlify` 실행 파일을 찾을 수 없어 직접 업로드는 보류 상태다.
+
+## 다음 배포 실행 조건
+아래 둘 중 하나가 충족되면 바로 Netlify에 반영할 수 있다.
+
+1. Netlify 프로젝트가 GitHub 저장소 `tantarus71-ctrl/pongdang-v5-web`의 `main` 브랜치 자동 배포로 연결되어 있어야 한다.
+2. 로컬 PC에 Node.js/npm이 설치되어 `npx` 명령을 사용할 수 있어야 한다.
+
+Node.js/npm 설치 후 실행할 명령:
+```powershell
+npx netlify deploy --prod --dir app_assets/pongdang_gonjiam_v30A1_audio_stability_final
+```
+
+Netlify 커넥터 배포를 사용할 때는 새 `deploy-site` 명령을 다시 발급받아 실행한다. 커넥터가 발급하는 `proxy-path`는 일회성일 수 있으므로 오래된 값을 문서에 고정하지 않는다.

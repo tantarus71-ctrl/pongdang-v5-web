@@ -639,3 +639,18 @@
   npx netlify deploy --prod --dir app_assets/pongdang_gonjiam_v30A1_audio_stability_final
 - 상세 문서:
   docs/deployment/NETLIFY_V30A1_DEPLOY_PROMPT.md
+
+[2026-04-28 Netlify v30A1 배포 진행 기록]
+- 적용:
+  netlify.toml을 저장소 루트에 추가하고 publish directory를 app_assets/pongdang_gonjiam_v30A1_audio_stability_final로 고정했다.
+- 검증:
+  app_assets/pongdang_gonjiam_v30A1_audio_stability_final/src/app.js node --check 통과.
+- 저장소 반영:
+  GitHub main 브랜치에 커밋 896f7fe Prepare v30A1 Netlify deployment로 push 완료.
+- Netlify 상태:
+  pongdong-johnchoi / siteId a534d145-451b-4199-88b1-17437c29f2c6 확인.
+  현재 Netlify 활성 배포는 2026-04-24 수동 업로드본으로 확인됨.
+- 보류 사유:
+  Netlify 커넥터 직접 배포 명령은 npx가 필요하지만 현재 PC에서 npx, npm, netlify 실행 파일을 찾을 수 없음.
+- 다음 조건:
+  Netlify Git 자동 배포 연결을 확인하거나, Node.js/npm 설치 후 npx 기반 배포 명령을 실행한다.
