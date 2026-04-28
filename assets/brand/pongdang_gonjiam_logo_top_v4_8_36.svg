@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="210" viewBox="0 0 900 210" role="img" aria-labelledby="title desc">
+  <title id="title">퐁당퐁당 곤지암천</title>
+  <desc id="desc">퐁당퐁당은 크게, 곤지암천은 작게 배치한 어린이용 물방울 스타일 투명 배경 로고</desc>
+  <defs>
+    <linearGradient id="waterBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#67edff"/>
+      <stop offset="0.46" stop-color="#13bce6"/>
+      <stop offset="1" stop-color="#1260d6"/>
+    </linearGradient>
+    <linearGradient id="deepBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d78db"/>
+      <stop offset="1" stop-color="#0b3d9d"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-18%" width="125%" height="145%">
+      <feDropShadow dx="0" dy="9" stdDeviation="7" flood-color="#053b86" flood-opacity="0.34"/>
+    </filter>
+    <filter id="smallShadow" x="-12%" y="-18%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#082c68" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <g filter="url(#softShadow)">
+    <text x="34" y="140" font-family="Arial Black, Noto Sans KR, sans-serif" font-size="132" font-weight="900" letter-spacing="-9" fill="none" stroke="#ffffff" stroke-width="30" stroke-linejoin="round">퐁당퐁당</text>
+    <text x="34" y="140" font-family="Arial Black, Noto Sans KR, sans-serif" font-size="132" font-weight="900" letter-spacing="-9" fill="none" stroke="#073b91" stroke-width="15" stroke-linejoin="round">퐁당퐁당</text>
+    <text x="34" y="140" font-family="Arial Black, Noto Sans KR, sans-serif" font-size="132" font-weight="900" letter-spacing="-9" fill="url(#waterBlue)" stroke="#0a67c4" stroke-width="3" stroke-linejoin="round">퐁당퐁당</text>
+    <path d="M97 40 C104 18 125 8 137 27 C148 45 126 61 111 71 C101 78 91 61 97 40Z" fill="#30d6ff" stroke="#ffffff" stroke-width="6"/>
+    <path d="M52 66 C31 56 23 76 37 91 C50 104 68 87 82 76 C73 71 64 70 52 66Z" fill="#4ee6ff" stroke="#ffffff" stroke-width="5"/>
+  </g>
+  <g filter="url(#smallShadow)">
+    <text x="654" y="137" font-family="Noto Sans KR, Arial Rounded MT Bold, sans-serif" font-size="56" font-weight="900" letter-spacing="-4" fill="none" stroke="#ffffff" stroke-width="15" stroke-linejoin="round">곤지암천</text>
+    <text x="654" y="137" font-family="Noto Sans KR, Arial Rounded MT Bold, sans-serif" font-size="56" font-weight="900" letter-spacing="-4" fill="none" stroke="#073b91" stroke-width="8" stroke-linejoin="round">곤지암천</text>
+    <text x="654" y="137" font-family="Noto Sans KR, Arial Rounded MT Bold, sans-serif" font-size="56" font-weight="900" letter-spacing="-4" fill="url(#deepBlue)">곤지암천</text>
+  </g>
+</svg>
