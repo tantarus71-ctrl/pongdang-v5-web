@@ -654,3 +654,17 @@
   Netlify 커넥터 직접 배포 명령은 npx가 필요하지만 현재 PC에서 npx, npm, netlify 실행 파일을 찾을 수 없음.
 - 다음 조건:
   Netlify Git 자동 배포 연결을 확인하거나, Node.js/npm 설치 후 npx 기반 배포 명령을 실행한다.
+
+[2026-04-28 배경/레이어 QA]
+- 범위:
+  5개 존 낮/저녁 배경 경로, 광선/물결/수초/물방울/물고기/UI 레이어, 모바일 세로 safe area.
+- 결과:
+  로컬 서버 기준 10개 배경 파일, index.html, src/app.js, src/styles/main.css 응답 200 확인.
+  app.js node --check 통과.
+  z-index 구조상 배경 0, 광선 5, caustics 7, eco-layer 12, particles 30, fish-layer 38, UI 76 이상으로 분리 확인.
+  광선/물방울/수초 레이어는 pointer-events:none 확인.
+  모바일 세로 360x740 기준 물고기 유영 하단과 하단 카드 사이 최소 63px 여유 확인.
+- 보류:
+  in-app browser 자동 스크린샷 QA는 OS 접근 거부로 실행하지 못함. 실제 픽셀 단위 겹침은 육안 확인 필요.
+- 상세 문서:
+  docs/QA_2026-04-28_BACKGROUND_LAYER_SAFE_AREA.md
