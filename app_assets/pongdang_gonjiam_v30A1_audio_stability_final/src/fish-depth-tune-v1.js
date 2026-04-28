@@ -75,6 +75,30 @@
     });
   }
 
+  function auditFishDepth() {
+    tuneFishDepth();
+    const fishes = Array.from(document.querySelectorAll('.fish-root'));
+    const counts = { total: fishes.length, back: 0, mid: 0, front: 0, clickable: 0, left: 0, right: 0 };
+    const samples = fishes.slice(0, 8).map((fish, index) => {
+      const band = fish.dataset.depthBand || 'none';
+      const direction = fish.dataset.swimDirection || 'none';
+      if (counts[band] !== undefined) counts[band] += 1;
+      if (fish.classList.contains('clickable')) counts.clickable += 1;
+      if (direction === 'left') counts.left += 1;
+      if (direction === 'right') counts.right += 1;
+      return {
+        index,
+        band,
+        direction,
+        clickable: fish.classList.contains('clickable'),
+        zIndex: fish.style.zIndex || '',
+        scale: fish.style.getPropertyValue('--fish-depth-scale'),
+        opacity: fish.style.getPropertyValue('--fish-depth-opacity')
+      };
+    });
+    return { counts, samples, note: '브라우저 콘솔에서 확인하는 버들치 depth-band 진단값입니다.' };
+  }
+
   function installNote() {
     if (document.getElementById('aqFishDepthNote')) return;
     const app = document.getElementById('app');
@@ -104,7 +128,7 @@
     const target = document.getElementById('fishLayer') || document.getElementById('app') || document.body;
     const observer = new MutationObserver(() => schedule(180));
     observer.observe(target, { childList: true, subtree: true, attributes: true });
-    window.PondangFishDepthTuneV1 = { apply: tuneFishDepth, schedule };
+    window.PondangFishDepthTuneV1 = { apply: tuneFishDepth, schedule, audit: auditFishDepth };
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
