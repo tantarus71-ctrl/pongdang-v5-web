@@ -2,12 +2,36 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=./app_assets/index.html">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>Pongdang4 v4.8.31 Viewer Recovery</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <title>퐁당퐁당 곤지암천 Viewer v4.8.36</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#071928;font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif}
+    .pongdangAppFrame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#071928}
+    .topBrandLogo{
+      position:fixed;
+      left:50%;
+      top:max(8px, env(safe-area-inset-top));
+      width:min(74vw, 430px);
+      height:clamp(54px, 13vw, 92px);
+      transform:translateX(-50%);
+      z-index:9999;
+      pointer-events:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      filter:drop-shadow(0 8px 14px rgba(1,23,48,.24));
+    }
+    .topBrandLogo img{width:100%;height:100%;object-fit:contain;display:block}
+    @media (max-width:430px){.topBrandLogo{width:min(82vw, 360px);height:clamp(50px, 14vw, 76px)}}
+    @media (min-width:900px){.topBrandLogo{width:min(42vw, 520px);height:92px}}
+  </style>
 </head>
 <body>
-  <!-- 한글 주석: 외부 시연자가 viewer.html 주소로 들어와도 최신 앱 화면으로 안전하게 이동시킨다. -->
-  <p>최신 퐁당퐁당 곤지암천 화면을 여는 중입니다. 자동으로 열리지 않으면 <a href="./app_assets/index.html">여기를 눌러 주세요</a>.</p>
+  <!-- 한글 주석: 외부 시연용 viewer도 동일한 상단 브랜드 로고를 적용한다. -->
+  <iframe class="pongdangAppFrame" src="./app_assets/index.html" title="퐁당퐁당 곤지암천 앱"></iframe>
+  <div class="topBrandLogo" aria-hidden="true">
+    <img src="./assets/brand/pongdang_gonjiam_logo_top_v4_8_36.svg" alt="">
+  </div>
 </body>
 </html>
