@@ -1,4 +1,5 @@
 /* 퐁당퐁당 곤지암천 v30A-1 - 수족관 레이어·입체감 보강 */
+.aq-depth-root{position:absolute;inset:0;z-index:11;pointer-events:none;overflow:hidden;contain:layout paint style;}
 .aq-depth-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;contain:layout paint style;}
 .aq-depth-back{z-index:13;opacity:.66;filter:saturate(.92) blur(.15px)}
 .aq-depth-mid{z-index:18;opacity:.78;}
