@@ -1,0 +1,26 @@
+{
+  "version": "v30A1-data-draft-1",
+  "runtimeLinked": true,
+  "fallbackRequired": true,
+  "assets": {
+    "backgrounds": [
+      {
+        "id": "utmul_day",
+        "zoneId": "utmul",
+        "time": "day",
+        "path": "assets/bg/upper/day.png",
+        "fallbackPath": "assets/bg/upper/day.jpg",
+        "adminEditable": true
+      }
+    ],
+    "fish": [
+      {
+        "id": "beodeulchi_side_right",
+        "speciesId": "beodeulchi",
+        "usage": "aquarium_body_right",
+        "path": "assets/fish/beodeulchi/aquarium/beodeulchi_side_right.png",
+        "adminEditable": false
+      }
+    ]
+  }
+}
