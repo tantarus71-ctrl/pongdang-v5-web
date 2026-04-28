@@ -1,0 +1,17 @@
+{
+  "version": "draft-v1",
+  "runtimeLinked": false,
+  "missions": [
+    {
+      "id": "observe_beodeulchi_1",
+      "title": "버들치 한 마리 관찰하기",
+      "description": "앞으로 다가온 버들치를 눌러 자세히 관찰해요.",
+      "zone": "웃물",
+      "targetSpecies": "beodeulchi",
+      "goalCount": 1,
+      "rewardText": "첫 관찰 성공!",
+      "adminEditable": true,
+      "notes": "샘플 데이터다. 현재 런타임 미션 구조와 직접 연결하지 않는다."
+    }
+  ]
+}
