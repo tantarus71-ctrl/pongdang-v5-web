@@ -735,3 +735,19 @@
   AUDIO_SCRIPT_DATABASE의 audioPath 18개가 모두 null임을 확인.
 - 인계 문서:
   docs/CHATGPT_HANDOFF_PROMPT_AUDIO_SAFE.md
+
+[2026-04-28 ChatGPT 관리자 파일 안정화 점검]
+- 범위:
+  ChatGPT 전달 전 파일 무결성, DOM id 참조, assets 경로, 음성/배경/버들치 안정화 상태 점검.
+- 결과:
+  app.js node --check 통과.
+  document.getElementById 참조 누락 0개.
+  참조 assets 누락 0개.
+  audioPath 18개 모두 null 확인.
+  playToken, hasUsableAudioPath, stopAudio 존재 확인.
+  실제 사용 JPG 배경 10장 존재 확인.
+  로컬 서버 주요 파일 index.html, src/app.js, main.css, upper/day.jpg, 버들치 이미지 200 응답 확인.
+- 판단:
+  현재 파일 기준으로 즉시 수정해야 할 치명 오류는 없음. ChatGPT에는 안정화 유지 기준으로 인계한다.
+- 인계 문서:
+  docs/CHATGPT_ADMIN_FILE_STABILITY_PROMPT.md
