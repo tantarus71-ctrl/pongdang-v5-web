@@ -8,15 +8,55 @@
       "name": "웃물",
       "icon": "💧",
       "description": "얕고 맑은 상류",
-      "dayBackground": "assets/bg/upper/day.png",
-      "nightBackground": "assets/bg/upper/night.png",
-      "depthRange": [0.30, 0.68],
-      "observeDepth": 0.88,
-      "flow": 0.35,
-      "light": 0.92,
-      "caustic": 0.30,
-      "fishCount": [4, 6],
-      "adminEditable": true
+      "folder": "upper",
+      "dayBackground": "assets/bg/upper/day.jpg",
+      "nightBackground": "assets/bg/upper/night.jpg",
+      "adminEditable": true,
+      "active": true
+    },
+    {
+      "id": "yeoul",
+      "name": "여울",
+      "icon": "🌊",
+      "description": "반짝이는 빠른 물살",
+      "folder": "rapid",
+      "dayBackground": "assets/bg/rapid/day.jpg",
+      "nightBackground": "assets/bg/rapid/night.jpg",
+      "adminEditable": true,
+      "active": true
+    },
+    {
+      "id": "janyeoul",
+      "name": "잔여울",
+      "icon": "🍃",
+      "description": "부드러운 수중 정원",
+      "folder": "soft-rapid",
+      "dayBackground": "assets/bg/soft-rapid/day.jpg",
+      "nightBackground": "assets/bg/soft-rapid/night.jpg",
+      "adminEditable": true,
+      "active": true
+    },
+    {
+      "id": "gipmul",
+      "name": "깊물",
+      "icon": "🪨",
+      "description": "깊고 고요한 물그늘",
+      "folder": "deep",
+      "dayBackground": "assets/bg/deep/day.jpg",
+      "nightBackground": "assets/bg/deep/night.jpg",
+      "adminEditable": true,
+      "active": true
+    },
+    {
+      "id": "mulmoi",
+      "name": "물모이",
+      "icon": "🌿",
+      "description": "생명이 모이는 넓은 자리",
+      "folder": "pool",
+      "dayBackground": "assets/bg/pool/day.jpg",
+      "nightBackground": "assets/bg/pool/night.jpg",
+      "adminEditable": true,
+      "active": true
     }
   ]
 }
