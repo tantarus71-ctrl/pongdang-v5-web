@@ -1,0 +1,18 @@
+{
+  "version": "v30A1-data-draft-1",
+  "runtimeLinked": true,
+  "fallbackRequired": true,
+  "species": [
+    {
+      "id": "beodeulchi",
+      "name": "버들치",
+      "category": "민물고기",
+      "layer": "중층~상층",
+      "description": "버들치는 맑은 하천의 중층에서 물살을 따라 부드럽게 헤엄치는 작은 민물고기예요.",
+      "habitat": "맑고 흐름이 있는 하천의 중·상류",
+      "feature": "작은 몸으로 물살을 타며 무리 지어 움직여요.",
+      "observePoint": "앞쪽으로 나온 버들치를 누르면 자세히 볼 수 있어요.",
+      "adminEditable": true
+    }
+  ]
+}
