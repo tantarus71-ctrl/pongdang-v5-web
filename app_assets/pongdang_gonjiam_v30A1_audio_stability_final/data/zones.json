@@ -1,0 +1,22 @@
+{
+  "version": "v30A1-data-draft-1",
+  "runtimeLinked": true,
+  "fallbackRequired": true,
+  "zones": [
+    {
+      "id": "utmul",
+      "name": "웃물",
+      "icon": "💧",
+      "description": "얕고 맑은 상류",
+      "dayBackground": "assets/bg/upper/day.png",
+      "nightBackground": "assets/bg/upper/night.png",
+      "depthRange": [0.30, 0.68],
+      "observeDepth": 0.88,
+      "flow": 0.35,
+      "light": 0.92,
+      "caustic": 0.30,
+      "fishCount": [4, 6],
+      "adminEditable": true
+    }
+  ]
+}
