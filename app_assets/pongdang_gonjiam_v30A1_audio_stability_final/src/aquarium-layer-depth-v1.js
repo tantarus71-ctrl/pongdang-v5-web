@@ -2,12 +2,18 @@
 (() => {
   'use strict';
 
+  /*
+    수족관 1차 안정화 기준:
+    - 어종 추가 없이 수조 레이어만 보강한다.
+    - 존별 특수성은 유지하되 모바일 성능을 위해 수량을 보수적으로 둔다.
+    - 전경 오브젝트는 물고기 클릭을 방해하지 않도록 pointer-events:none CSS와 낮은 밀도를 유지한다.
+  */
   const PROFILES = {
-    utmul: { label: '웃물', cls: 'aq-zone-utmul', plantBack: 4, plantMid: 6, plantFront: 3, stoneBack: 4, stoneMid: 7, stoneFront: 2, bubbleBack: 5, bubbleFront: 3, dust: 12, creatures: { shrimp: 3, snail: 3, fry: 2, benthic: 0 } },
-    yeoul: { label: '여울', cls: 'aq-zone-yeoul', plantBack: 2, plantMid: 4, plantFront: 2, stoneBack: 6, stoneMid: 10, stoneFront: 2, bubbleBack: 7, bubbleFront: 5, dust: 16, creatures: { shrimp: 2, snail: 2, fry: 1, benthic: 0 } },
-    janyeoul: { label: '잔여울', cls: 'aq-zone-janyeoul', plantBack: 7, plantMid: 11, plantFront: 5, stoneBack: 3, stoneMid: 7, stoneFront: 2, bubbleBack: 4, bubbleFront: 3, dust: 14, creatures: { shrimp: 3, snail: 3, fry: 2, benthic: 0 } },
-    gipmul: { label: '깊물', cls: 'aq-zone-gipmul', plantBack: 3, plantMid: 5, plantFront: 2, stoneBack: 7, stoneMid: 11, stoneFront: 3, bubbleBack: 3, bubbleFront: 2, dust: 10, creatures: { shrimp: 1, snail: 2, fry: 1, benthic: 1 } },
-    mulmoi: { label: '물모이', cls: 'aq-zone-mulmoi', plantBack: 6, plantMid: 9, plantFront: 4, stoneBack: 5, stoneMid: 9, stoneFront: 3, bubbleBack: 6, bubbleFront: 4, dust: 18, creatures: { shrimp: 3, snail: 4, fry: 3, benthic: 0 } }
+    utmul: { label: '웃물', cls: 'aq-zone-utmul', plantBack: 3, plantMid: 5, plantFront: 2, stoneBack: 3, stoneMid: 5, stoneFront: 1, bubbleBack: 4, bubbleFront: 2, dust: 9, creatures: { shrimp: 2, snail: 2, fry: 1, benthic: 0 } },
+    yeoul: { label: '여울', cls: 'aq-zone-yeoul', plantBack: 2, plantMid: 3, plantFront: 1, stoneBack: 5, stoneMid: 8, stoneFront: 2, bubbleBack: 5, bubbleFront: 3, dust: 12, creatures: { shrimp: 1, snail: 1, fry: 1, benthic: 0 } },
+    janyeoul: { label: '잔여울', cls: 'aq-zone-janyeoul', plantBack: 5, plantMid: 8, plantFront: 3, stoneBack: 2, stoneMid: 5, stoneFront: 1, bubbleBack: 3, bubbleFront: 2, dust: 11, creatures: { shrimp: 2, snail: 2, fry: 1, benthic: 0 } },
+    gipmul: { label: '깊물', cls: 'aq-zone-gipmul', plantBack: 2, plantMid: 4, plantFront: 1, stoneBack: 5, stoneMid: 8, stoneFront: 2, bubbleBack: 2, bubbleFront: 1, dust: 8, creatures: { shrimp: 1, snail: 1, fry: 0, benthic: 1 } },
+    mulmoi: { label: '물모이', cls: 'aq-zone-mulmoi', plantBack: 4, plantMid: 7, plantFront: 3, stoneBack: 4, stoneMid: 7, stoneFront: 2, bubbleBack: 4, bubbleFront: 3, dust: 13, creatures: { shrimp: 2, snail: 3, fry: 2, benthic: 0 } }
   };
 
   const ZONE_BY_LABEL = {
@@ -18,7 +24,7 @@
     '물모이': 'mulmoi'
   };
 
-  const state = { renderedKey: '', busy: false };
+  const state = { renderedKey: '', busy: false, timer: null };
   const rnd = (min, max) => min + Math.random() * (max - min);
 
   function loadScriptOnce(src, id) {
@@ -66,18 +72,18 @@
   function makePlant(depth, index) {
     const el = document.createElement('i');
     el.className = `aq-plant ${depth}`;
-    const baseHeight = depth === 'front' ? rnd(70, 132) : depth === 'mid' ? rnd(42, 96) : rnd(24, 64);
-    const baseWidth = depth === 'front' ? rnd(8, 14) : depth === 'mid' ? rnd(5, 10) : rnd(3, 7);
+    const baseHeight = depth === 'front' ? rnd(62, 118) : depth === 'mid' ? rnd(38, 88) : rnd(22, 58);
+    const baseWidth = depth === 'front' ? rnd(7, 12) : depth === 'mid' ? rnd(5, 9) : rnd(3, 6);
     setVars(el, {
       '--x': `${rnd(4, 94)}%`,
       '--w': `${baseWidth}px`,
       '--h': `${baseHeight}px`,
-      '--tilt': rnd(1.2, 3.8).toFixed(2),
-      '--dur': `${rnd(5.8, 11.5).toFixed(2)}s`,
-      '--drift': `${rnd(-4, 4).toFixed(1)}px`,
+      '--tilt': rnd(1.0, 3.2).toFixed(2),
+      '--dur': `${rnd(6.2, 12.5).toFixed(2)}s`,
+      '--drift': `${rnd(-3, 3).toFixed(1)}px`,
       '--leaf': `${rnd(22, 42).toFixed(1)}deg`,
-      '--op': depth === 'front' ? rnd(.56, .75).toFixed(2) : depth === 'back' ? rnd(.28, .45).toFixed(2) : rnd(.46, .68).toFixed(2),
-      '--scale': depth === 'front' ? rnd(1.02, 1.18).toFixed(2) : depth === 'back' ? rnd(.72, .88).toFixed(2) : rnd(.9, 1.02).toFixed(2)
+      '--op': depth === 'front' ? rnd(.48, .66).toFixed(2) : depth === 'back' ? rnd(.24, .40).toFixed(2) : rnd(.42, .62).toFixed(2),
+      '--scale': depth === 'front' ? rnd(1.0, 1.13).toFixed(2) : depth === 'back' ? rnd(.72, .86).toFixed(2) : rnd(.9, 1.0).toFixed(2)
     });
     el.style.animationDelay = `-${(index * .47 + rnd(0, 3)).toFixed(2)}s`;
     return el;
@@ -86,13 +92,13 @@
   function makeStone(depth) {
     const el = document.createElement('i');
     el.className = `aq-stone ${depth}`;
-    const width = depth === 'front' ? rnd(38, 92) : depth === 'mid' ? rnd(28, 74) : rnd(18, 54);
+    const width = depth === 'front' ? rnd(34, 78) : depth === 'mid' ? rnd(26, 66) : rnd(18, 48);
     setVars(el, {
       '--x': `${rnd(2, 92)}%`,
       '--w': `${width}px`,
       '--ratio': rnd(.34, .54).toFixed(2),
-      '--op': depth === 'front' ? rnd(.56, .78).toFixed(2) : depth === 'back' ? rnd(.28, .48).toFixed(2) : rnd(.45, .70).toFixed(2),
-      '--blur': depth === 'back' ? '.42px' : '0px'
+      '--op': depth === 'front' ? rnd(.48, .68).toFixed(2) : depth === 'back' ? rnd(.25, .42).toFixed(2) : rnd(.40, .62).toFixed(2),
+      '--blur': depth === 'back' ? '.38px' : '0px'
     });
     return el;
   }
@@ -100,14 +106,14 @@
   function makeBubble(depth, index) {
     const el = document.createElement('i');
     el.className = `aq-bubble ${depth}`;
-    const size = depth === 'front' ? rnd(5, 13) : rnd(2.4, 7);
+    const size = depth === 'front' ? rnd(4.6, 10.5) : rnd(2.2, 6.2);
     setVars(el, {
       '--x': `${rnd(5, 95)}%`,
-      '--top': `${rnd(60, 116)}%`,
+      '--top': `${rnd(62, 116)}%`,
       '--s': `${size.toFixed(1)}px`,
-      '--drift': `${rnd(-28, 28).toFixed(1)}px`,
-      '--dur': `${rnd(8, 20).toFixed(2)}s`,
-      '--op': depth === 'front' ? rnd(.32, .48).toFixed(2) : rnd(.14, .30).toFixed(2)
+      '--drift': `${rnd(-22, 22).toFixed(1)}px`,
+      '--dur': `${rnd(9, 22).toFixed(2)}s`,
+      '--op': depth === 'front' ? rnd(.26, .40).toFixed(2) : rnd(.12, .26).toFixed(2)
     });
     el.style.animationDelay = `-${(index * .63 + rnd(0, 5)).toFixed(2)}s`;
     return el;
@@ -119,11 +125,11 @@
     setVars(el, {
       '--x': `${rnd(2, 98)}%`,
       '--y': `${rnd(15, 88)}%`,
-      '--s': `${rnd(1.2, 3.2).toFixed(1)}px`,
-      '--dx': `${rnd(-34, 34).toFixed(1)}px`,
-      '--dy': `${rnd(-42, 26).toFixed(1)}px`,
-      '--dur': `${rnd(15, 34).toFixed(2)}s`,
-      '--op': rnd(.08, .22).toFixed(2)
+      '--s': `${rnd(1.1, 2.8).toFixed(1)}px`,
+      '--dx': `${rnd(-28, 28).toFixed(1)}px`,
+      '--dy': `${rnd(-34, 24).toFixed(1)}px`,
+      '--dur': `${rnd(17, 36).toFixed(2)}s`,
+      '--op': rnd(.07, .18).toFixed(2)
     });
     el.style.animationDelay = `-${(index * .41 + rnd(0, 8)).toFixed(2)}s`;
     return el;
@@ -133,17 +139,17 @@
     const el = document.createElement('i');
     const classMap = { shrimp: 'aq-small-shrimp', snail: 'aq-snail', fry: 'aq-small-shadow', benthic: 'aq-benthic' };
     el.className = `aq-creature ${classMap[type] || 'aq-small-shadow'}`;
-    const widthMap = { shrimp: [15, 25], snail: [10, 18], fry: [10, 18], benthic: [22, 34] };
-    const [minW, maxW] = widthMap[type] || [10, 18];
+    const widthMap = { shrimp: [13, 21], snail: [9, 16], fry: [8, 14], benthic: [20, 30] };
+    const [minW, maxW] = widthMap[type] || [9, 16];
     const w = rnd(minW, maxW);
     setVars(el, {
       '--x': `${rnd(5, 90)}%`,
-      '--b': `${rnd(8, depth === 'front' ? 96 : 70).toFixed(1)}px`,
+      '--b': `${rnd(8, depth === 'front' ? 88 : 62).toFixed(1)}px`,
       '--w': `${w.toFixed(1)}px`,
       '--h': `${(w * rnd(.34, .58)).toFixed(1)}px`,
-      '--op': depth === 'front' ? rnd(.46, .66).toFixed(2) : rnd(.26, .45).toFixed(2),
-      '--scale': depth === 'front' ? rnd(1, 1.18).toFixed(2) : rnd(.72, .9).toFixed(2),
-      '--dur': `${rnd(10, 19).toFixed(2)}s`
+      '--op': depth === 'front' ? rnd(.36, .54).toFixed(2) : rnd(.20, .38).toFixed(2),
+      '--scale': depth === 'front' ? rnd(.92, 1.08).toFixed(2) : rnd(.68, .86).toFixed(2),
+      '--dur': `${rnd(11, 21).toFixed(2)}s`
     });
     el.style.animationDelay = `-${(index * .77 + rnd(0, 4)).toFixed(2)}s`;
     return el;
@@ -202,17 +208,18 @@
     }
   }
 
-  function scheduleRender() {
-    window.setTimeout(renderLayer, 80);
-    window.setTimeout(renderLayer, 420);
+  function scheduleRender(delay = 120) {
+    window.clearTimeout(state.timer);
+    state.timer = window.setTimeout(renderLayer, delay);
   }
 
   function boot() {
     ensureFishDepthTune();
-    scheduleRender();
-    document.addEventListener('click', scheduleRender, true);
+    scheduleRender(80);
+    window.setTimeout(() => scheduleRender(0), 420);
+    document.addEventListener('click', () => scheduleRender(120), true);
     const target = document.getElementById('app') || document.body;
-    const observer = new MutationObserver(() => scheduleRender());
+    const observer = new MutationObserver(() => scheduleRender(180));
     observer.observe(target, { childList: true, subtree: true, attributes: true, characterData: true });
     window.PondangAquariumDepthV1 = { render: renderLayer, profiles: PROFILES };
   }
