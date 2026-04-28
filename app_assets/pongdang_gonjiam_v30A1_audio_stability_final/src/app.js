@@ -151,7 +151,7 @@
     gps_found:{id:'gps_found',type:'system',title:'탐사 구간 추천',emoji:'🧭',text:'가까운 탐사 구간을 찾아봤어요. 오늘은 추천 구간부터 살펴볼까요?',shortText:'가까운 탐사 구간을 찾아봤어요.',audioPath:null,fallbackTts:true},
     audio_unavailable:{id:'audio_unavailable',type:'system',title:'음성 준비 중',emoji:'🔇',text:'이 기기에서는 소리 설명을 사용할 수 없어요. 화면의 글자로 함께 볼 수 있어요.',shortText:'소리 설명을 사용할 수 없어요.',audioPath:null,fallbackTts:false}
   };
-  let AUDIO_STATE = {supported:true,ttsSupported:('speechSynthesis' in window),isOpen:false,isPlaying:false,isLoading:false,mode:null,currentId:null,currentScriptId:null,currentText:'',currentTitle:'',lastScriptId:null,audio:null,utterance:null,startedAt:null,error:null,lastClickAt:0};
+  let AUDIO_STATE = {supported:true,ttsSupported:('speechSynthesis' in window),isOpen:false,isPlaying:false,isLoading:false,mode:null,currentId:null,currentScriptId:null,currentText:'',currentTitle:'',lastScriptId:null,audio:null,utterance:null,startedAt:null,error:null,lastClickAt:0,playToken:0};
 
   /* v29: 전체 UI 충돌 방지를 위한 단일 상태표. 실제 패널/팝업은 open 함수에서 이 상태와 함께 갱신한다. */
   const UI_STATE = {
@@ -438,6 +438,7 @@
   }
   function stopAudio(options={}){
     const hide=!!options.hide;
+    AUDIO_STATE.playToken++;
     try{ if(AUDIO_STATE.audio){AUDIO_STATE.audio.pause();AUDIO_STATE.audio.removeAttribute('src');AUDIO_STATE.audio.load?.();} }catch(_){ }
     try{ window.speechSynthesis?.cancel(); }catch(_){ }
     AUDIO_STATE.audio=null;
@@ -445,7 +446,7 @@
     resetAudioState(options.reason||'stop');
     if(hide){ audioPanel?.classList.remove('show'); AUDIO_STATE.isOpen=false; clearActivePopup('audio'); syncOverlayHistory(); }
   }
-  function speakText(text){
+  function speakText(text,token=AUDIO_STATE.playToken){
     if(!text){showAudioFallbackMessage('설명 문구를 준비 중이에요.');return false;}
     if(!('speechSynthesis' in window)){AUDIO_STATE.error='tts_unsupported';showAudioFallbackMessage('이 기기에서는 소리 설명을 사용할 수 없어요.');return false;}
     try{ window.speechSynthesis.cancel(); }catch(_){ }
@@ -454,8 +455,8 @@
     utter.rate=.88;
     utter.pitch=1.04;
     utter.volume=1;
-    utter.onend=()=>{AUDIO_STATE.isPlaying=false;AUDIO_STATE.isLoading=false;AUDIO_STATE.mode=null;UI_STATE.audioPlaying=false;audioBtn?.classList.remove('listening')};
-    utter.onerror=()=>{AUDIO_STATE.isPlaying=false;AUDIO_STATE.isLoading=false;AUDIO_STATE.error='tts_error';UI_STATE.audioPlaying=false;audioBtn?.classList.remove('listening');showAudioFallbackMessage('소리 설명을 잠깐 사용할 수 없어요.')};
+    utter.onend=()=>{if(token!==AUDIO_STATE.playToken)return;AUDIO_STATE.isPlaying=false;AUDIO_STATE.isLoading=false;AUDIO_STATE.mode=null;UI_STATE.audioPlaying=false;audioBtn?.classList.remove('listening')};
+    utter.onerror=()=>{if(token!==AUDIO_STATE.playToken)return;AUDIO_STATE.isPlaying=false;AUDIO_STATE.isLoading=false;AUDIO_STATE.error='tts_error';UI_STATE.audioPlaying=false;audioBtn?.classList.remove('listening');showAudioFallbackMessage('소리 설명을 잠깐 사용할 수 없어요.')};
     AUDIO_STATE.utterance=utter;
     AUDIO_STATE.mode='tts';
     AUDIO_STATE.isLoading=false;
@@ -463,23 +464,25 @@
     window.speechSynthesis.speak(utter);
     return true;
   }
-  function playMp3ThenFallback(script){
-    if(!script.audioPath){return speakText(script.text);}
+  function hasUsableAudioPath(script){return typeof script?.audioPath==='string'&&script.audioPath.trim().length>0}
+  function playMp3ThenFallback(script,token=AUDIO_STATE.playToken){
+    if(!hasUsableAudioPath(script)){return speakText(script.text,token);}
     try{
-      const a=new Audio(script.audioPath);
+      const a=new Audio(freshUrl(script.audioPath.trim()));
       AUDIO_STATE.audio=a;
       AUDIO_STATE.mode='mp3';
       AUDIO_STATE.isLoading=true;
-      a.oncanplay=()=>{AUDIO_STATE.isLoading=false;};
-      a.onended=()=>{AUDIO_STATE.isPlaying=false;AUDIO_STATE.isLoading=false;AUDIO_STATE.mode=null;UI_STATE.audioPlaying=false;audioBtn?.classList.remove('listening')};
-      a.onerror=()=>{AUDIO_STATE.audio=null;AUDIO_STATE.error='mp3_error';AUDIO_STATE.isLoading=false;AUDIO_STATE.isPlaying=script.fallbackTts!==false && speakText(script.text); if(!AUDIO_STATE.isPlaying)showAudioFallbackMessage('설명을 준비 중이에요.')};
+      a.oncanplay=()=>{if(token===AUDIO_STATE.playToken)AUDIO_STATE.isLoading=false;};
+      a.onended=()=>{if(token!==AUDIO_STATE.playToken)return;AUDIO_STATE.isPlaying=false;AUDIO_STATE.isLoading=false;AUDIO_STATE.mode=null;UI_STATE.audioPlaying=false;audioBtn?.classList.remove('listening')};
+      a.onerror=()=>{if(token!==AUDIO_STATE.playToken)return;AUDIO_STATE.audio=null;AUDIO_STATE.error='mp3_error';AUDIO_STATE.isLoading=false;AUDIO_STATE.isPlaying=script.fallbackTts!==false && speakText(script.text,token); if(!AUDIO_STATE.isPlaying)showAudioFallbackMessage('설명을 준비 중이에요.')};
       AUDIO_STATE.isPlaying=true;
       UI_STATE.audioPlaying=true;
-      a.play().then(()=>{AUDIO_STATE.isLoading=false;}).catch(()=>{AUDIO_STATE.audio=null;AUDIO_STATE.error='mp3_blocked';AUDIO_STATE.isLoading=false;AUDIO_STATE.isPlaying=script.fallbackTts!==false && speakText(script.text); if(!AUDIO_STATE.isPlaying)showAudioFallbackMessage('설명을 준비 중이에요.')});
+      a.play().then(()=>{if(token===AUDIO_STATE.playToken)AUDIO_STATE.isLoading=false;}).catch(()=>{if(token!==AUDIO_STATE.playToken)return;AUDIO_STATE.audio=null;AUDIO_STATE.error='mp3_blocked';AUDIO_STATE.isLoading=false;AUDIO_STATE.isPlaying=script.fallbackTts!==false && speakText(script.text,token); if(!AUDIO_STATE.isPlaying)showAudioFallbackMessage('설명을 준비 중이에요.')});
       return true;
     }catch(err){
+      if(token!==AUDIO_STATE.playToken)return false;
       AUDIO_STATE.error='mp3_exception';
-      return script.fallbackTts!==false && speakText(script.text);
+      return script.fallbackTts!==false && speakText(script.text,token);
     }
   }
   function playAudioById(id, options={}){
@@ -488,6 +491,7 @@
     AUDIO_STATE.lastClickAt=now;
     const script=getAudioScript(id);
     stopAudio({reason:'new-audio'});
+    const token=++AUDIO_STATE.playToken;
     if(!script){showAudioFallbackMessage('설명을 준비 중이에요.');return null;}
     AUDIO_STATE.currentId=script.id;
     AUDIO_STATE.currentScriptId=script.id;
@@ -498,7 +502,7 @@
     AUDIO_STATE.isLoading=true;
     setActivePopup('audio');
     setAudioPanel(script,'설명을 준비하고 있어요.');
-    const ok=script.audioPath ? playMp3ThenFallback(script) : (script.fallbackTts!==false && speakText(script.text));
+    const ok=hasUsableAudioPath(script) ? playMp3ThenFallback(script,token) : (script.fallbackTts!==false && speakText(script.text,token));
     if(!ok){AUDIO_STATE.isLoading=false;showAudioFallbackMessage('설명을 준비 중이에요.');}
     else setAudioPanel(script,'듣는 중이에요 🔊');
     return script;
