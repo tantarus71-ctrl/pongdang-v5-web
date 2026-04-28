@@ -10,13 +10,13 @@
         "zoneName": "웃물",
         "time": "day",
         "folder": "upper",
-        "path": "assets/bg/upper/day.jpg",
-        "fallbackPath": "assets/bg/upper/day.png",
+        "path": "assets/bg_optimized/upper/day_941_q88.jpg",
+        "fallbackPath": "assets/bg/upper/day.jpg",
         "adminEditable": true,
         "active": true,
         "retired": false,
         "retiredReason": "",
-        "notes": "jpg 런타임 기준. png 원본 후보 보존. optimized q88 후보는 별도 preview 단계에서 검토 중."
+        "notes": "optimized q88 1슬롯 실제 반영. 원본 jpg는 fallbackPath로 유지. PNG 원본 후보는 보존만 함."
       },
       {
         "id": "utmul_night",
