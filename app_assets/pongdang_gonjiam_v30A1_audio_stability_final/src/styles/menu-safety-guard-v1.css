@@ -1,0 +1,49 @@
+/* 퐁당퐁당 곤지암천 v30A-1 - 메뉴 클릭 안정화 가드 */
+.aq-depth-root,
+.aq-depth-layer,
+.aq-polish-root,
+.aq-polish-back,
+.aq-polish-mid,
+.aq-polish-front,
+.aq-polish-light,
+.zone-overlay-root,
+.zone-overlay-img,
+.aq-plant,
+.aq-stone,
+.aq-bubble,
+.aq-dust,
+.aq-creature,
+.aq-polish-reed,
+.aq-polish-stone{
+  pointer-events:none!important;
+}
+
+.topbar,
+.zone-strip,
+.hint,
+.bottom-card,
+.bottom-nav,
+.feature-panel,
+.explore-panel,
+.gps-guide,
+.mission-panel,
+.dex-panel,
+.card-detail,
+.popup,
+.camera-panel,
+.capture-gallery,
+.capture-detail,
+.audio-panel{
+  pointer-events:auto;
+}
+
+.topbar{z-index:80;}
+.zone-strip{z-index:76;}
+.bottom-nav{z-index:86;}
+.feature-panel,.explore-panel,.camera-panel,.mission-panel,.dex-panel{z-index:122;}
+.popup{z-index:130;}
+.card-detail,.capture-detail{z-index:140;}
+.audio-panel{z-index:150;}
+
+.menu-safety-chip{position:absolute;left:12px;bottom:calc(var(--bottom-h) + var(--safe-bottom) + 132px);z-index:74;font-size:10px;color:rgba(255,255,255,.68);padding:5px 7px;border-radius:999px;background:rgba(0,20,35,.22);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(8px);pointer-events:none;}
+@media(max-width:520px){.menu-safety-chip{display:none}}
