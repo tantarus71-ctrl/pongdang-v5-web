@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <title>퐁당퐁당 상단 로고 확인 v4.8.36</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#eef8ff;font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif;color:#17384d}
+    body{min-height:100vh;padding:18px;display:grid;gap:22px;place-items:start center}
+    .pageTitle{width:min(100%,980px)}
+    .pageTitle h1{font-size:22px;margin:0 0 8px;font-weight:900;letter-spacing:-.04em}
+    .pageTitle p{font-size:14px;margin:0;color:#4e7187;line-height:1.5}
+    .previewGrid{width:min(100%,980px);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;align-items:start}
+    .deviceCard{background:white;border:1px solid rgba(17,95,132,.14);border-radius:24px;padding:14px;box-shadow:0 14px 34px rgba(19,80,116,.12)}
+    .deviceLabel{font-weight:900;font-size:14px;margin:0 0 10px;color:#0f4d77}
+    .phoneFrame{position:relative;margin:auto;border-radius:34px;background:#061926;overflow:hidden;border:8px solid #111;width:100%;max-width:390px;aspect-ratio:390/844;box-shadow:0 16px 44px rgba(4,32,52,.24)}
+    .tabletFrame{position:relative;margin:auto;border-radius:28px;background:#061926;overflow:hidden;border:8px solid #1a1a1a;width:100%;max-width:520px;aspect-ratio:3/4;box-shadow:0 16px 44px rgba(4,32,52,.20)}
+    .pcFrame{position:relative;border-radius:24px;background:#061926;overflow:hidden;border:8px solid #1a1a1a;width:100%;aspect-ratio:16/9;box-shadow:0 16px 44px rgba(4,32,52,.20)}
+    .mockApp{position:absolute;inset:0;background:linear-gradient(180deg,#74cdec 0%,#2e7da7 42%,#123c59 100%);overflow:hidden}
+    .mockApp::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 16%,rgba(255,255,255,.34),transparent 16%),radial-gradient(circle at 80% 12%,rgba(255,255,255,.24),transparent 20%),linear-gradient(180deg,rgba(255,255,255,.22),transparent 32%,rgba(0,19,32,.28));}
+    .mockHero{position:absolute;left:14px;right:14px;top:14px;height:72px;border-radius:20px;background:rgba(4,40,64,.62);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px)}
+    .mockZone{position:absolute;left:14px;right:14px;top:96px;height:66px;border-radius:22px;background:rgba(4,40,64,.38);border:1px solid rgba(255,255,255,.14)}
+    .mockTank{position:absolute;left:14px;right:14px;top:172px;bottom:114px;border-radius:28px;border:1px solid rgba(220,250,255,.35);background:linear-gradient(180deg,rgba(180,240,255,.22),rgba(1,37,55,.26));box-shadow:inset 0 0 30px rgba(255,255,255,.16)}
+    .mockNav{position:absolute;left:14px;right:14px;bottom:14px;height:84px;border-radius:24px;background:rgba(255,255,255,.90);box-shadow:0 -10px 26px rgba(0,24,42,.18)}
+    .logoOverlay{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:74%;height:86px;z-index:20;pointer-events:none;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 8px 14px rgba(1,23,48,.24))}
+    .phoneFrame.small .logoOverlay{width:82%;height:70px}
+    .tabletFrame .logoOverlay{width:68%;height:92px;top:12px}
+    .pcFrame .logoOverlay{width:42%;height:92px;top:12px}
+    .logoOverlay img{width:100%;height:100%;object-fit:contain;display:block}
+    .safeLine{position:absolute;left:0;right:0;top:104px;border-top:2px dashed rgba(255,236,120,.78);z-index:15}
+    .safeText{position:absolute;right:10px;top:108px;z-index:16;font-size:10px;background:rgba(255,250,190,.9);color:#5a4b00;padding:3px 6px;border-radius:999px;font-weight:800}
+  </style>
+</head>
+<body>
+  <section class="pageTitle">
+    <h1>상단 로고 눈검수 프리뷰 v4.8.36</h1>
+    <p>노란 점선 위쪽은 상단 로고 안전영역입니다. 로고가 기존 안내 카드/존 버튼을 과하게 가리는지 확인합니다.</p>
+  </section>
+  <section class="previewGrid">
+    <article class="deviceCard">
+      <p class="deviceLabel">좁은 폰 360px 기준</p>
+      <div class="phoneFrame small">
+        <div class="mockApp"><div class="mockHero"></div><div class="mockZone"></div><div class="mockTank"></div><div class="mockNav"></div></div>
+        <div class="logoOverlay"><img src="../assets/brand/pongdang_gonjiam_logo_top_v4_8_36.svg" alt="퐁당퐁당 곤지암천"></div>
+        <div class="safeLine"></div><div class="safeText">겹침 기준선</div>
+      </div>
+    </article>
+    <article class="deviceCard">
+      <p class="deviceLabel">일반 폰 390px 기준</p>
+      <div class="phoneFrame">
+        <div class="mockApp"><div class="mockHero"></div><div class="mockZone"></div><div class="mockTank"></div><div class="mockNav"></div></div>
+        <div class="logoOverlay"><img src="../assets/brand/pongdang_gonjiam_logo_top_v4_8_36.svg" alt="퐁당퐁당 곤지암천"></div>
+        <div class="safeLine"></div><div class="safeText">겹침 기준선</div>
+      </div>
+    </article>
+    <article class="deviceCard">
+      <p class="deviceLabel">태블릿 세로 기준</p>
+      <div class="tabletFrame">
+        <div class="mockApp"><div class="mockHero"></div><div class="mockZone"></div><div class="mockTank"></div><div class="mockNav"></div></div>
+        <div class="logoOverlay"><img src="../assets/brand/pongdang_gonjiam_logo_top_v4_8_36.svg" alt="퐁당퐁당 곤지암천"></div>
+        <div class="safeLine"></div><div class="safeText">겹침 기준선</div>
+      </div>
+    </article>
+    <article class="deviceCard">
+      <p class="deviceLabel">PC 브라우저 기준</p>
+      <div class="pcFrame">
+        <div class="mockApp"><div class="mockHero"></div><div class="mockZone"></div><div class="mockTank"></div><div class="mockNav"></div></div>
+        <div class="logoOverlay"><img src="../assets/brand/pongdang_gonjiam_logo_top_v4_8_36.svg" alt="퐁당퐁당 곤지암천"></div>
+        <div class="safeLine"></div><div class="safeText">겹침 기준선</div>
+      </div>
+    </article>
+  </section>
+</body>
+</html>
