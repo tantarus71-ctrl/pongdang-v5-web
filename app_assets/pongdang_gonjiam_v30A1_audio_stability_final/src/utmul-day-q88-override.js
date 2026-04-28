@@ -4,6 +4,21 @@
 
   const Q88_PATH = 'assets/bg_optimized/upper/day_941_q88.jpg';
   const Q88_URL = `./${Q88_PATH}?cache=q88-utmul-day-${Date.now()}`;
+  const DEPTH_CSS = './src/styles/aquarium-layer-depth-v1.css?v=aq-depth-v1';
+  const DEPTH_JS = './src/aquarium-layer-depth-v1.js?v=aq-depth-v1';
+
+  function loadOnce(tagName, attrs, marker) {
+    if (document.querySelector(`[data-loader-marker="${marker}"]`)) return;
+    const node = document.createElement(tagName);
+    Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+    node.dataset.loaderMarker = marker;
+    document.head.appendChild(node);
+  }
+
+  function installDepthEnhancement() {
+    loadOnce('link', { rel: 'stylesheet', href: DEPTH_CSS }, 'aq-depth-css-v1');
+    loadOnce('script', { src: DEPTH_JS, defer: 'defer' }, 'aq-depth-js-v1');
+  }
 
   function isNightMode() {
     return document.body.classList.contains('night') || document.documentElement.classList.contains('night') || document.getElementById('app')?.classList.contains('night');
@@ -27,7 +42,7 @@
   function installControls() {
     const chip = document.getElementById('debugChip');
     if (chip && !chip.dataset.q88Marked) {
-      chip.textContent = `${chip.textContent} · q88 웃물낮`;
+      chip.textContent = `${chip.textContent} · q88 웃물낮 · 입체수조`;
       chip.dataset.q88Marked = 'true';
     }
   }
@@ -39,13 +54,14 @@
   }
 
   function boot() {
+    installDepthEnhancement();
     installControls();
     scheduleApply();
     document.addEventListener('click', () => window.setTimeout(applyQ88IfNeeded, 80), true);
     const observer = new MutationObserver(() => applyQ88IfNeeded());
     const app = document.getElementById('app') || document.body;
     observer.observe(app, { attributes: true, childList: true, subtree: true, characterData: true });
-    window.PondangUtmulDayQ88Override = { apply: applyQ88IfNeeded, path: Q88_PATH };
+    window.PondangUtmulDayQ88Override = { apply: applyQ88IfNeeded, path: Q88_PATH, depthEnhancement: true };
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
