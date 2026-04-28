@@ -1,0 +1,29 @@
+{
+  "version": "draft-v1",
+  "runtimeLinked": false,
+  "audioScripts": [
+    {
+      "id": "zone_utmul",
+      "type": "zone",
+      "title": "웃물 설명",
+      "emoji": "💧",
+      "text": "여기는 웃물이에요. 물이 얕고 맑아서 작은 물고기들이 살기 좋아요. 자갈 사이를 천천히 살펴봐요.",
+      "shortText": "웃물은 맑고 얕은 물길이에요.",
+      "audioPath": null,
+      "fallbackTts": true,
+      "adminEditable": true
+    },
+    {
+      "id": "species_beodeulchi",
+      "type": "species",
+      "title": "버들치 설명",
+      "emoji": "🐟",
+      "text": "버들치는 맑은 물을 좋아하는 작은 민물고기예요. 친구들과 함께 물살을 타고 헤엄쳐요.",
+      "shortText": "버들치는 맑은 물을 좋아해요.",
+      "audioPath": null,
+      "fallbackTts": true,
+      "adminEditable": true
+    }
+  ],
+  "notes": "샘플 데이터다. 실제 mp3 파일이 없으면 audioPath는 null로 둔다."
+}
