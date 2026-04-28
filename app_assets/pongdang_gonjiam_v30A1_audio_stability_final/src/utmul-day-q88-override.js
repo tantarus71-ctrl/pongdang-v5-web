@@ -6,7 +6,9 @@
   const Q88_URL = `./${Q88_PATH}?cache=q88-utmul-day-${Date.now()}`;
   const DEPTH_CSS = './src/styles/aquarium-layer-depth-v1.css?v=aq-depth-v1';
   const ZONE_TUNE_CSS = './src/styles/aquarium-zone-special-v1.css?v=aq-zone-special-v1';
+  const MENU_SAFETY_CSS = './src/styles/menu-safety-guard-v1.css?v=menu-safety-v1';
   const DEPTH_JS = './src/aquarium-layer-depth-v1.js?v=aq-depth-v1';
+  const MENU_SAFETY_JS = './src/menu-function-safety-v1.js?v=menu-safety-v1';
 
   function loadOnce(tagName, attrs, marker) {
     if (document.querySelector(`[data-loader-marker="${marker}"]`)) return;
@@ -19,7 +21,9 @@
   function installDepthEnhancement() {
     loadOnce('link', { rel: 'stylesheet', href: DEPTH_CSS }, 'aq-depth-css-v1');
     loadOnce('link', { rel: 'stylesheet', href: ZONE_TUNE_CSS }, 'aq-zone-special-css-v1');
+    loadOnce('link', { rel: 'stylesheet', href: MENU_SAFETY_CSS }, 'menu-safety-css-v1');
     loadOnce('script', { src: DEPTH_JS, defer: 'defer' }, 'aq-depth-js-v1');
+    loadOnce('script', { src: MENU_SAFETY_JS, defer: 'defer' }, 'menu-safety-js-v1');
   }
 
   function isNightMode() {
@@ -44,7 +48,7 @@
   function installControls() {
     const chip = document.getElementById('debugChip');
     if (chip && !chip.dataset.q88Marked) {
-      chip.textContent = `${chip.textContent} · q88 웃물낮 · 입체수조`;
+      chip.textContent = `${chip.textContent} · q88 웃물낮 · 입체수조 · 메뉴가드`;
       chip.dataset.q88Marked = 'true';
     }
   }
@@ -63,7 +67,7 @@
     const observer = new MutationObserver(() => applyQ88IfNeeded());
     const app = document.getElementById('app') || document.body;
     observer.observe(app, { attributes: true, childList: true, subtree: true, characterData: true });
-    window.PondangUtmulDayQ88Override = { apply: applyQ88IfNeeded, path: Q88_PATH, depthEnhancement: true, zoneSpecial: true };
+    window.PondangUtmulDayQ88Override = { apply: applyQ88IfNeeded, path: Q88_PATH, depthEnhancement: true, zoneSpecial: true, menuSafety: true };
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
