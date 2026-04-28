@@ -20,7 +20,19 @@
 
   const state = { renderedKey: '', busy: false };
   const rnd = (min, max) => min + Math.random() * (max - min);
-  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+  function loadScriptOnce(src, id) {
+    if (document.getElementById(id)) return;
+    const script = document.createElement('script');
+    script.id = id;
+    script.src = src;
+    script.defer = true;
+    document.body.appendChild(script);
+  }
+
+  function ensureFishDepthTune() {
+    loadScriptOnce('./src/fish-depth-tune-v1.js?v=fish-depth-v1', 'fishDepthTuneV1Js');
+  }
 
   function detectZoneId() {
     const activeText = document.querySelector('.zone-btn.active')?.textContent || '';
@@ -184,6 +196,7 @@
       });
 
       state.renderedKey = signature;
+      window.setTimeout(() => window.PondangFishDepthTuneV1?.apply?.(), 60);
     } finally {
       state.busy = false;
     }
@@ -195,6 +208,7 @@
   }
 
   function boot() {
+    ensureFishDepthTune();
     scheduleRender();
     document.addEventListener('click', scheduleRender, true);
     const target = document.getElementById('app') || document.body;
