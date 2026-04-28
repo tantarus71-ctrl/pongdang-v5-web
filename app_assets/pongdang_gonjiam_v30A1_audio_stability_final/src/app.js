@@ -20,11 +20,11 @@
 
   /* v18 5존 독립 설정: 배경·유속·빛·수초·자갈·입자·물고기 규칙을 완전히 분리한다. */
   const ZONES = {
-    utmul:{id:'utmul', name:'웃물', icon:'💧', desc:'얕고 맑은 상류', day:'assets/bg/upper/day.png', night:'assets/bg/upper/night.png', depth:[.30,.68], observeDepth:.88, flow:.35, light:.92, caustic:.30, plant:14, stone:18, particle:34, tone:['#7ee7ff','#d7f8ff'], fishCount:[4,6], behavior:{speed:[.18,.42], y:[.28,.64], patterns:['glide','s','ellipse']}},
-    yeoul:{id:'yeoul', name:'여울', icon:'🌊', desc:'반짝이는 빠른 물살', day:'assets/bg/rapid/day.png', night:'assets/bg/rapid/night.png', depth:[.32,.72], observeDepth:.86, flow:.72, light:.86, caustic:.36, plant:20, stone:26, particle:48, tone:['#63dfff','#bdf3ff'], fishCount:[5,7], behavior:{speed:[.30,.70], y:[.30,.68], patterns:['s','arc','flow']}},
-    janyeoul:{id:'janyeoul', name:'잔여울', icon:'🍃', desc:'부드러운 수중 정원', day:'assets/bg/soft-rapid/day.png', night:'assets/bg/soft-rapid/night.png', depth:[.36,.76], observeDepth:.86, flow:.48, light:.78, caustic:.24, plant:28, stone:20, particle:38, tone:['#74dec7','#d4f4e8'], fishCount:[5,7], behavior:{speed:[.22,.52], y:[.32,.68], patterns:['ellipse','circle','s']}},
-    gipmul:{id:'gipmul', name:'깊물', icon:'🪨', desc:'깊고 고요한 물그늘', day:'assets/bg/deep/day.png', night:'assets/bg/deep/night.png', depth:[.42,.86], observeDepth:.84, flow:.24, light:.52, caustic:.15, plant:18, stone:30, particle:42, tone:['#275c8a','#9ec9e9'], fishCount:[3,5], behavior:{speed:[.14,.36], y:[.34,.70], patterns:['arc','deep','ellipse']}},
-    mulmoi:{id:'mulmoi', name:'물모이', icon:'🌿', desc:'생명이 모이는 넓은 자리', day:'assets/bg/pool/day.png', night:'assets/bg/pool/night.png', depth:[.34,.82], observeDepth:.88, flow:.38, light:.68, caustic:.22, plant:34, stone:28, particle:58, tone:['#4bb8aa','#d1efd8'], fishCount:[6,8], behavior:{speed:[.18,.48], y:[.30,.70], patterns:['circle','ellipse','pause','s']}}
+    utmul:{id:'utmul', name:'웃물', icon:'💧', desc:'얕고 맑은 상류', day:'assets/bg/upper/day.jpg', night:'assets/bg/upper/night.jpg', depth:[.30,.68], observeDepth:.88, flow:.35, light:.92, caustic:.30, plant:14, stone:18, particle:34, tone:['#7ee7ff','#d7f8ff'], fishCount:[4,6], behavior:{speed:[.18,.42], y:[.28,.64], patterns:['glide','s','ellipse']}},
+    yeoul:{id:'yeoul', name:'여울', icon:'🌊', desc:'반짝이는 빠른 물살', day:'assets/bg/rapid/day.jpg', night:'assets/bg/rapid/night.jpg', depth:[.32,.72], observeDepth:.86, flow:.72, light:.86, caustic:.36, plant:20, stone:26, particle:48, tone:['#63dfff','#bdf3ff'], fishCount:[5,7], behavior:{speed:[.30,.70], y:[.30,.68], patterns:['s','arc','flow']}},
+    janyeoul:{id:'janyeoul', name:'잔여울', icon:'🍃', desc:'부드러운 수중 정원', day:'assets/bg/soft-rapid/day.jpg', night:'assets/bg/soft-rapid/night.jpg', depth:[.36,.76], observeDepth:.86, flow:.48, light:.78, caustic:.24, plant:28, stone:20, particle:38, tone:['#74dec7','#d4f4e8'], fishCount:[5,7], behavior:{speed:[.22,.52], y:[.32,.68], patterns:['ellipse','circle','s']}},
+    gipmul:{id:'gipmul', name:'깊물', icon:'🪨', desc:'깊고 고요한 물그늘', day:'assets/bg/deep/day.jpg', night:'assets/bg/deep/night.jpg', depth:[.42,.86], observeDepth:.84, flow:.24, light:.52, caustic:.15, plant:18, stone:30, particle:42, tone:['#275c8a','#9ec9e9'], fishCount:[3,5], behavior:{speed:[.14,.36], y:[.34,.70], patterns:['arc','deep','ellipse']}},
+    mulmoi:{id:'mulmoi', name:'물모이', icon:'🌿', desc:'생명이 모이는 넓은 자리', day:'assets/bg/pool/day.jpg', night:'assets/bg/pool/night.jpg', depth:[.34,.82], observeDepth:.88, flow:.38, light:.68, caustic:.22, plant:34, stone:28, particle:58, tone:['#4bb8aa','#d1efd8'], fishCount:[6,8], behavior:{speed:[.18,.48], y:[.30,.70], patterns:['circle','ellipse','pause','s']}}
   };
 
   const SPECIES = {
@@ -511,8 +511,10 @@
   const rand=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.floor(Math.random()*a.length)], clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), lerp=(a,b,t)=>a+(b-a)*t, ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
 
   function safeRect(){const w=innerWidth,h=innerHeight;return{w,h,minX:Math.max(26,w*.06),maxX:Math.min(w-26,w*.94),minY:Math.max(112+parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-top')||0),h*.24),maxY:Math.min(h-118,h*.72),centerMin:w*.30,centerMax:w*.70}}
-  const BACKGROUND_LOAD_STATE={loaded:new Set(),loading:new Map(),requested:0,failed:new Set()};
+  const BACKGROUND_LOAD_STATE={loaded:new Set(),loading:new Map(),requested:0,failed:new Set(),queued:new Set(),queue:[],draining:false,idleStarted:false};
+  const PERF_STATE={frames:0,slowFrames:0,avgDt:16.7,lastFps:60,optimized:false,particleScale:1};
   function resolveAssetUrl(src){return new URL(freshUrl(src),document.baseURI).href}
+  function fallbackBackgroundSrc(src){return src&&src.endsWith('.jpg')?src.replace(/\.jpg$/i,'.png'):''}
   function loadBackground(src){
     if(!src)return Promise.resolve(false);
     const url=resolveAssetUrl(src);
@@ -532,11 +534,33 @@
     BACKGROUND_LOAD_STATE.loading.set(src,task);
     return task;
   }
-  function preloadZoneBackgrounds(zoneId){
+  function runIdle(fn,timeout=1600){if('requestIdleCallback' in window)return requestIdleCallback(fn,{timeout});return setTimeout(()=>fn({timeRemaining:()=>0,didTimeout:true}),220)}
+  function queueBackground(src){
+    if(!src||BACKGROUND_LOAD_STATE.loaded.has(src)||BACKGROUND_LOAD_STATE.loading.has(src)||BACKGROUND_LOAD_STATE.queued.has(src))return;
+    BACKGROUND_LOAD_STATE.queued.add(src);
+    BACKGROUND_LOAD_STATE.queue.push(src);
+    drainBackgroundQueue();
+  }
+  function drainBackgroundQueue(){
+    if(BACKGROUND_LOAD_STATE.draining)return;
+    const src=BACKGROUND_LOAD_STATE.queue.shift();
+    if(!src)return;
+    BACKGROUND_LOAD_STATE.draining=true;
+    BACKGROUND_LOAD_STATE.queued.delete(src);
+    runIdle(()=>{loadBackground(src).then(ok=>{const fallback=fallbackBackgroundSrc(src);if(!ok&&fallback)return loadBackground(fallback)}).finally(()=>{BACKGROUND_LOAD_STATE.draining=false;drainBackgroundQueue()})},1800);
+  }
+  function preloadZoneBackgrounds(zoneId,immediate=false){
     const z=ZONES[zoneId];
     if(!z)return;
-    loadBackground(z.day);
-    loadBackground(z.night);
+    [z.day,z.night].forEach(src=>immediate?loadBackground(src):queueBackground(src));
+  }
+  function scheduleDeferredBackgrounds(){
+    if(BACKGROUND_LOAD_STATE.idleStarted)return;
+    BACKGROUND_LOAD_STATE.idleStarted=true;
+    const current=isNight?zone.night:zone.day;
+    const ordered=[];
+    Object.values(ZONES).forEach(z=>{[z.day,z.night].forEach(src=>{if(src!==current)ordered.push(src)})});
+    ordered.forEach((src,i)=>runIdle(()=>queueBackground(src),2200+i*180));
   }
   function getBackgroundLoadAudit(){
     const bgStyle=bg?getComputedStyle(bg):null;
@@ -544,6 +568,8 @@
       loaded:[...BACKGROUND_LOAD_STATE.loaded],
       loading:[...BACKGROUND_LOAD_STATE.loading.keys()],
       failed:[...BACKGROUND_LOAD_STATE.failed],
+      queued:[...BACKGROUND_LOAD_STATE.queued],
+      draining:BACKGROUND_LOAD_STATE.draining,
       requested:BACKGROUND_LOAD_STATE.requested,
       element:!!bg,
       selected:zone?(isNight?zone.night:zone.day):'',
@@ -554,7 +580,7 @@
       pointerEvents:bgStyle?.pointerEvents||''
     };
   }
-  function preload(){Object.values(ASSETS).forEach(src=>{const img=new Image();img.decoding='async';img.src=freshUrl(src)});preloadZoneBackgrounds(currentZoneId)}
+  function preload(){Object.values(ASSETS).forEach(src=>{const img=new Image();img.decoding='async';img.loading='eager';img.src=freshUrl(src)});loadBackground(isNight?zone.night:zone.day).then(ok=>{const fallback=fallbackBackgroundSrc(isNight?zone.night:zone.day);if(!ok&&fallback)loadBackground(fallback)});scheduleDeferredBackgrounds()}
   function bodyFrameFor(f){if(!f.isTurning)return f.dir===1?ASSETS.bodyRight:ASSETS.bodyLeft;const p=f.turnProgress;if(f.dir===1&&f.desiredDir===-1){if(p<.22)return ASSETS.bodyRight;if(p<.43)return ASSETS.quarterRight;if(p<.62)return ASSETS.front;if(p<.82)return ASSETS.quarterLeft;return ASSETS.bodyLeft}if(f.dir===-1&&f.desiredDir===1){if(p<.22)return ASSETS.bodyLeft;if(p<.43)return ASSETS.quarterLeft;if(p<.62)return ASSETS.front;if(p<.82)return ASSETS.quarterRight;return ASSETS.bodyRight}return f.dir===1?ASSETS.bodyRight:ASSETS.bodyLeft}
 
   function setupZoneButtons(){
@@ -571,10 +597,10 @@
       zoneStrip.appendChild(btn);
     });
   }
-  function applyZoneVisual(){const bgSrc=isNight?zone.night:zone.day;const bgUrl=resolveAssetUrl(bgSrc);loadBackground(bgSrc).then(ok=>{if(!ok)console.warn('배경 이미지 로드 실패',bgSrc,bgUrl)});bg.style.setProperty('--bg-img',`url("${bgUrl}")`);bg.style.backgroundImage=`url("${bgUrl}")`;bg.dataset.zone=zone.id;bg.dataset.mode=isNight?'night':'day';bg.dataset.src=bgSrc;document.documentElement.style.setProperty('--ray-opacity',String(Math.min(zone.light*.34,.34)));document.documentElement.style.setProperty('--caustic-opacity',String(Math.min(zone.caustic,.26)));const zstory=ZONE_STORY_DATABASE[zone.id];zoneDesc.textContent=`${zone.name} · ${(zstory?.oneLine)||zone.desc}`;cardTitle.textContent=`${zone.name} 버들치 관찰`;cardSub.textContent=(zstory?.observePoint)||`${zone.desc}에 맞춰 유영과 생태 레이어가 독립 적용됩니다.`;zoneStrip.querySelectorAll('.zone-btn').forEach(b=>b.classList.toggle('active',b.dataset.zone===zone.id));}
+  function applyZoneVisual(){const bgSrc=isNight?zone.night:zone.day;const bgUrl=resolveAssetUrl(bgSrc);loadBackground(bgSrc).then(ok=>{if(!ok){const fallback=fallbackBackgroundSrc(bgSrc);if(fallback){const fallbackUrl=resolveAssetUrl(fallback);loadBackground(fallback).then(fallbackOk=>{if(fallbackOk&&bg.dataset.src===bgSrc){bg.style.setProperty('--bg-img',`url("${fallbackUrl}")`);bg.style.backgroundImage=`url("${fallbackUrl}")`;bg.dataset.fallback='png'}})}else console.warn('배경 이미지 로드 실패',bgSrc,bgUrl)}});bg.style.setProperty('--bg-img',`url("${bgUrl}")`);bg.style.backgroundImage=`url("${bgUrl}")`;bg.dataset.zone=zone.id;bg.dataset.mode=isNight?'night':'day';bg.dataset.src=bgSrc;bg.dataset.fallback='';document.documentElement.style.setProperty('--ray-opacity',String(Math.min(zone.light*.34,.34)));document.documentElement.style.setProperty('--caustic-opacity',String(Math.min(zone.caustic,.26)));const zstory=ZONE_STORY_DATABASE[zone.id];zoneDesc.textContent=`${zone.name} · ${(zstory?.oneLine)||zone.desc}`;cardTitle.textContent=`${zone.name} 버들치 관찰`;cardSub.textContent=(zstory?.observePoint)||`${zone.desc}에 맞춰 유영과 생태 레이어가 독립 적용됩니다.`;zoneStrip.querySelectorAll('.zone-btn').forEach(b=>b.classList.toggle('active',b.dataset.zone===zone.id));}
   function buildEcoLayer(){ecoLayer.innerHTML='';const r=safeRect();for(let i=0;i<zone.stone;i++){const s=document.createElement('div');s.className='stone';const w=rand(24,zone.id==='gipmul'?96:64);s.style.left=`${rand(-4,98)}%`;s.style.setProperty('--w',`${w}px`);s.style.opacity=String(rand(.42,.88));s.style.setProperty('--blur',`${rand(0,.45)}px`);s.style.transform=`translateY(${rand(-8,9)}px) rotate(${rand(-8,8)}deg)`;ecoLayer.appendChild(s)}for(let i=0;i<zone.plant;i++){const p=document.createElement('div');p.className='plant';p.style.left=`${rand(2,98)}%`;p.style.setProperty('--h',`${rand(zone.id==='gipmul'?50:34,zone.id==='mulmoi'?118:88)}px`);p.style.setProperty('--dur',`${rand(3.5,7.8)/(zone.flow+.45)}s`);p.style.setProperty('--tilt',`${rand(2,8+zone.flow*6)}`);p.style.opacity=String(rand(.35,.78));ecoLayer.appendChild(p)}}
   function pickBubbleX(profile){const range=pick(profile.x);return rand(range[0],range[1])}
-  function makeParticles(){particles.innerHTML='';const profile=BUBBLE_PROFILES[zone.id]||BUBBLE_PROFILES.utmul,total=Math.max(18,Math.round(zone.particle*profile.count));for(let i=0;i<total;i++){const el=document.createElement('i'),isBubble=Math.random()<.58,isLarge=isBubble&&Math.random()<profile.large,size=isBubble?rand(profile.size[0],profile.size[1])*(isLarge?1.32:1):rand(1,3.1);el.className=`particle${isBubble?' bubble':''}${isLarge?' bubble-large':isBubble?' bubble-small':''}`;el.style.left=`${isBubble?pickBubbleX(profile):rand(0,100)}%`;el.style.top=`${isBubble?rand(profile.top[0],profile.top[1]):rand(0,110)}%`;el.style.setProperty('--s',`${size.toFixed(2)}px`);el.style.setProperty('--drift',`${rand(profile.drift[0],profile.drift[1])*(zone.flow+.48)}px`);el.style.setProperty('--dur',`${rand(profile.dur[0],profile.dur[1])/(zone.flow+.55)}s`);el.style.setProperty('--bubble-opacity',String(rand(profile.opacity[0],profile.opacity[1])));el.style.setProperty('--bubble-blur',`${isLarge?rand(0,.22):rand(0,.12)}px`);el.style.setProperty('--rise-start',`${rand(10,18)}vh`);el.style.setProperty('--rise-mid',`${rand(-58,-38)}vh`);el.style.animationDelay=`${rand(-18,0)}s`;particles.appendChild(el)}}
+  function makeParticles(){particles.innerHTML='';const profile=BUBBLE_PROFILES[zone.id]||BUBBLE_PROFILES.utmul,total=Math.max(14,Math.round(zone.particle*profile.count*PERF_STATE.particleScale));for(let i=0;i<total;i++){const el=document.createElement('i'),isBubble=Math.random()<.58,isLarge=isBubble&&Math.random()<profile.large,size=isBubble?rand(profile.size[0],profile.size[1])*(isLarge?1.32:1):rand(1,3.1);el.className=`particle${isBubble?' bubble':''}${isLarge?' bubble-large':isBubble?' bubble-small':''}`;el.style.left=`${isBubble?pickBubbleX(profile):rand(0,100)}%`;el.style.top=`${isBubble?rand(profile.top[0],profile.top[1]):rand(0,110)}%`;el.style.setProperty('--s',`${size.toFixed(2)}px`);el.style.setProperty('--drift',`${rand(profile.drift[0],profile.drift[1])*(zone.flow+.48)}px`);el.style.setProperty('--dur',`${rand(profile.dur[0],profile.dur[1])/(zone.flow+.55)}s`);el.style.setProperty('--bubble-opacity',String(rand(profile.opacity[0],profile.opacity[1])));el.style.setProperty('--bubble-blur',`${isLarge?rand(0,.22):rand(0,.12)}px`);el.style.setProperty('--rise-start',`${rand(10,18)}vh`);el.style.setProperty('--rise-mid',`${rand(-58,-38)}vh`);el.style.animationDelay=`${rand(-18,0)}s`;particles.appendChild(el)}}
   function resetZoneRuntime(id){
     const now=performance.now();
     ZONE_RUNTIME.lastZoneId=currentZoneId;
@@ -600,7 +626,8 @@
     stopAudio({hide:true});
     currentZoneId=id;
     zone=ZONES[id];
-    preloadZoneBackgrounds(id);
+    loadBackground(isNight?zone.night:zone.day);
+    queueBackground(isNight?zone.day:zone.night);
     applyZoneVisual();
     buildEcoLayer();
     makeParticles();
@@ -763,7 +790,8 @@
 
   function updateFrame(f){const src=bodyFrameFor(f);if(f.frameSrc!==src){f.el.frame.src=freshUrl(src);f.frameSrc=src}}
   function renderFish(f,now){updateFrame(f);const r=safeRect(),base=r.w<480?112:r.w<900?138:160,scale=clamp(.52+f.depth*.72,.58,1.2),opacity=clamp(.44+f.depth*.56,.48,1),blur=f.depth<.48?1.1:f.depth<.65?.38:0,z=Math.round(100+f.depth*220),t=now*.001,turnPower=f.isTurning?Math.sin(Math.PI*f.turnProgress):0,turnSign=f.desiredDir;const bodyTarget=Math.sin(t*2.05+f.phase)*(1+f.speed*1.25)+turnSign*turnPower*4.6;const tailTarget=Math.sin(t*(4.7+f.speed*3.2)+f.phase)*(3.4+f.speed*3.4+turnPower*5.6);const finTarget=Math.sin(t*3.25+f.phase*.7)*(0.72+turnPower*2.1);f.bodyRotation=lerp(f.bodyRotation,bodyTarget,.075);f.tailSwing=lerp(f.tailSwing,tailTarget,.105);f.finMotion=lerp(f.finMotion,finTarget,.07);const rootRot=turnSign*turnPower*2.0+Math.sin(t*.8+f.phase)*.38,x=Math.round((f.x-base*scale*.5)*100)/100,y=Math.round((f.y-base*scale*.28)*100)/100;f.el.root.style.setProperty('--fish-w',`${base}px`);f.el.root.style.opacity=opacity.toFixed(3);f.el.root.style.filter=`${f.clickable?'drop-shadow(0 0 12px rgba(255,236,141,.68)) drop-shadow(0 16px 16px rgba(0,0,0,.24))':'drop-shadow(0 12px 12px rgba(0,0,0,.14))'} blur(${blur.toFixed(2)}px)`;f.el.root.style.zIndex=z;f.el.root.style.transform=`translate3d(${x}px,${y}px,0) scale(${scale.toFixed(3)}) rotate(${rootRot.toFixed(2)}deg)`;f.el.core.style.transform=`rotateY(${(turnPower*6.2*f.dir).toFixed(2)}deg)`;f.el.wrap.style.transform=`translate3d(${(turnPower*.48*f.dir).toFixed(2)}px,0,0) rotate(${(f.bodyRotation*.3).toFixed(2)}deg)`;f.el.body.style.transform=`rotate(${f.bodyRotation.toFixed(2)}deg)`;f.el.tail.src=freshUrl(Math.abs(f.tailSwing)>3?(f.tailSwing>0?ASSETS.tailRight:ASSETS.tailLeft):ASSETS.tailIdle);f.el.tailWrap.style.transform=`translate3d(${(-turnPower*.62*f.dir).toFixed(2)}px,0,0) rotate(${(f.tailSwing*.42).toFixed(2)}deg)`;f.el.belly.style.transform=`translate3d(${(Math.sin(t*1.35+f.phase)*.6).toFixed(2)}px,${(turnPower*.38).toFixed(2)}px,0)`;f.el.dorsal.style.transform=`rotate(${(f.finMotion*.45+turnPower*1.35*turnSign).toFixed(2)}deg)`;f.el.pectoralL.style.transform=`rotate(${(8+f.finMotion+turnPower*2.8*turnSign).toFixed(2)}deg)`;f.el.pectoralR.style.transform=`rotate(${(28-f.finMotion*.55+turnPower*2.35*turnSign).toFixed(2)}deg)`;f.el.eye.style.opacity=(f.clickable?.56:0).toFixed(2)}
-  function tick(now){const dt=Math.min(CFG.maxDt,now-lastT||16.67);lastT=now;updateFrontSelection(now);fishes.forEach(f=>updateMotion(f,now,dt));avoidCollision();fishes.forEach(f=>updateClickable(f,now));enforceSingleActiveFish(now);fishes.forEach(f=>renderFish(f,now));const af=fishes.find(f=>f.id===activeFishId);validateZoneIsolation();debugChip.textContent=af?`v30A-1 · ${zone.name} · 관찰 #${af.id} · depth ${af.depth.toFixed(2)} · ${ZONE_RUNTIME.validation}`:`v30A-1 · ${zone.name} · 독립 생태 운영 · ${fishes.length}마리 · ${ZONE_RUNTIME.validation}`;requestAnimationFrame(tick)}
+  function trackFramePerformance(dt){PERF_STATE.frames++;PERF_STATE.avgDt=lerp(PERF_STATE.avgDt,dt,.035);if(dt>26)PERF_STATE.slowFrames++;PERF_STATE.lastFps=Math.round(1000/Math.max(1,PERF_STATE.avgDt));if(!PERF_STATE.optimized&&PERF_STATE.frames>180&&PERF_STATE.slowFrames/PERF_STATE.frames>.18){PERF_STATE.optimized=true;PERF_STATE.particleScale=.72;makeParticles()}}
+  function tick(now){const dt=Math.min(CFG.maxDt,now-lastT||16.67);lastT=now;trackFramePerformance(dt);updateFrontSelection(now);fishes.forEach(f=>updateMotion(f,now,dt));avoidCollision();fishes.forEach(f=>updateClickable(f,now));enforceSingleActiveFish(now);fishes.forEach(f=>renderFish(f,now));const af=fishes.find(f=>f.id===activeFishId);validateZoneIsolation();debugChip.textContent=af?`v30A-1 · ${zone.name} · 관찰 #${af.id} · depth ${af.depth.toFixed(2)} · ${ZONE_RUNTIME.validation}`:`v30A-1 · ${zone.name} · 독립 생태 운영 · ${fishes.length}마리 · ${ZONE_RUNTIME.validation}`;requestAnimationFrame(tick)}
 
   function getRuntimeAudit(){
     const missionIds=Object.keys(MISSION_DATABASE);
@@ -794,6 +822,7 @@
       viewport:{w:window.innerWidth,h:window.innerHeight,orientation:window.innerWidth>window.innerHeight?'landscape':'portrait'},
       fish:{count:fishes.length,activeFishId,clickableIds:clickable.map(f=>f.id),activeFrontIds:activeFront.map(f=>f.id),overlapping,outOfSafeArea},
       background:getBackgroundLoadAudit(),
+      performance:{fps:PERF_STATE.lastFps,avgDt:Number(PERF_STATE.avgDt.toFixed(2)),slowFrames:PERF_STATE.slowFrames,frames:PERF_STATE.frames,optimized:PERF_STATE.optimized,particleScale:PERF_STATE.particleScale},
       ui:{activePanel:UI_STATE.activePanel,activePopup:UI_STATE.activePopup},
       audio:{isOpen:AUDIO_STATE.isOpen,isSpeaking:AUDIO_STATE.isSpeaking,currentId:AUDIO_STATE.currentId},
       progress:{missionsCompleted:missionIds.filter(id=>MISSION_STATE[id]?.completed).length,missionsTotal:missionIds.length,discovered:discoveredIds},

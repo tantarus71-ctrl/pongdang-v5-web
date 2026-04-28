@@ -703,3 +703,21 @@
   in-app browser 자동 클릭/스크린샷 QA는 OS 접근 제한으로 실행하지 못함. 실제 화면 관찰 QA 필요.
 - 상세 문서:
   docs/QA_2026-04-28_BEODEULCHI_SWIM.md
+
+[2026-04-28 성능 최적화]
+- 범위:
+  배경 이미지 용량 최적화, 현재 존 배경 우선 로드, 나머지 배경 지연 로드, 모바일 프레임 저하 완충.
+- 적용:
+  실제 사용 중인 10개 배경 PNG의 고품질 JPG 품질 92 파생본을 추가하고 ZONES 배경 경로를 JPG 우선으로 변경.
+  원본 PNG는 fallback으로 유지.
+  index.html preload는 첫 진입 웃물 낮 JPG 1장만 high priority로 지정.
+  requestIdleCallback 기반 큐에서 반대 시간대와 다른 존 배경을 한 번에 1장씩 지연 로드.
+  performance audit과 slow frame 감지 시 물방울 입자 수 자동 완화 추가.
+- 검증:
+  app_assets/pongdang_gonjiam_v30A1_audio_stability_final/src/app.js node --check 통과.
+  로컬 서버에서 실제 사용 JPG 배경 10장 200 응답 확인.
+  실제 사용 배경 10장 합계 23,315,673 bytes에서 3,937,195 bytes로 약 83.1% 절감.
+- 보류:
+  in-app browser 자동 클릭/스크린샷 QA는 OS 접근 제한으로 실행하지 못함. 실제 모바일 화면에서 전환 속도와 프레임 확인 필요.
+- 상세 문서:
+  docs/QA_2026-04-28_PERFORMANCE_OPTIMIZATION.md
