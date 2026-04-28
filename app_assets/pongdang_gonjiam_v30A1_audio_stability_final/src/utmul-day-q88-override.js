@@ -5,6 +5,7 @@
   const Q88_PATH = 'assets/bg_optimized/upper/day_941_q88.jpg';
   const Q88_URL = `./${Q88_PATH}?cache=q88-utmul-day-${Date.now()}`;
   const DEPTH_CSS = './src/styles/aquarium-layer-depth-v1.css?v=aq-depth-v1';
+  const ZONE_TUNE_CSS = './src/styles/aquarium-zone-special-v1.css?v=aq-zone-special-v1';
   const DEPTH_JS = './src/aquarium-layer-depth-v1.js?v=aq-depth-v1';
 
   function loadOnce(tagName, attrs, marker) {
@@ -17,6 +18,7 @@
 
   function installDepthEnhancement() {
     loadOnce('link', { rel: 'stylesheet', href: DEPTH_CSS }, 'aq-depth-css-v1');
+    loadOnce('link', { rel: 'stylesheet', href: ZONE_TUNE_CSS }, 'aq-zone-special-css-v1');
     loadOnce('script', { src: DEPTH_JS, defer: 'defer' }, 'aq-depth-js-v1');
   }
 
@@ -61,7 +63,7 @@
     const observer = new MutationObserver(() => applyQ88IfNeeded());
     const app = document.getElementById('app') || document.body;
     observer.observe(app, { attributes: true, childList: true, subtree: true, characterData: true });
-    window.PondangUtmulDayQ88Override = { apply: applyQ88IfNeeded, path: Q88_PATH, depthEnhancement: true };
+    window.PondangUtmulDayQ88Override = { apply: applyQ88IfNeeded, path: Q88_PATH, depthEnhancement: true, zoneSpecial: true };
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
