@@ -9,7 +9,7 @@
       "icon": "💧",
       "description": "얕고 맑은 상류",
       "folder": "upper",
-      "dayBackground": "assets/bg/upper/day.jpg",
+      "dayBackground": "assets/bg_optimized/upper/day_941_q88.jpg",
       "nightBackground": "assets/bg/upper/night.jpg",
       "adminEditable": true,
       "active": true
