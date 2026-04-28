@@ -1,0 +1,28 @@
+{
+  "version": "draft-v1",
+  "runtimeLinked": false,
+  "assets": {
+    "backgrounds": [
+      {
+        "id": "utmul_day",
+        "zoneId": "utmul",
+        "time": "day",
+        "path": "assets/bg/upper/day.png",
+        "fallbackPath": "assets/bg/upper/day.jpg",
+        "adminEditable": true,
+        "notes": "실제 런타임 경로와 확장자를 반드시 확인해야 한다."
+      }
+    ],
+    "fish": [
+      {
+        "id": "beodeulchi_side_right",
+        "speciesId": "beodeulchi",
+        "usage": "aquarium_body_right",
+        "path": "assets/fish/beodeulchi/aquarium/beodeulchi_side_right.png",
+        "adminEditable": false,
+        "notes": "유영 엔진과 연결된 핵심 자산은 관리자 직접 수정 대상에서 제외한다."
+      }
+    ]
+  },
+  "notes": "샘플 데이터다. 현재 런타임은 app.js 내부 ASSETS/ZONES 경로를 사용한다."
+}
