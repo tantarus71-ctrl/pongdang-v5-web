@@ -1,0 +1,68 @@
+/* 퐁당퐁당 곤지암천 v30A-1 - 5존 특수성 수족관 보정 */
+/* 목적: 효과 추가보다 존별 물빛·깊이·생태 밀도를 은은하게 구분한다. */
+.aquarium.aq-zone-utmul .far-haze{opacity:.34;background:radial-gradient(ellipse at 50% 38%,rgba(190,245,255,.11),transparent 56%),linear-gradient(to bottom,rgba(255,255,255,.025),rgba(0,0,0,.045));}
+.aquarium.aq-zone-utmul .godrays{opacity:.24;}
+.aquarium.aq-zone-utmul .caustics{opacity:.18;}
+.aquarium.aq-zone-utmul .aq-depth-back{opacity:.52;}
+.aquarium.aq-zone-utmul .aq-depth-mid{opacity:.72;}
+.aquarium.aq-zone-utmul .aq-depth-front{opacity:.64;}
+.aquarium.aq-zone-utmul .aq-dust{opacity:.10;}
+.aquarium.aq-zone-utmul .aq-bubble.front{opacity:.30;}
+.aquarium.aq-zone-utmul .aq-small-shrimp{background:linear-gradient(90deg,rgba(245,210,165,.32),rgba(255,242,202,.48));}
+
+.aquarium.aq-zone-yeoul .far-haze{opacity:.30;background:radial-gradient(ellipse at 48% 42%,rgba(170,235,255,.10),transparent 54%),linear-gradient(112deg,rgba(255,255,255,.025),rgba(0,45,72,.06));}
+.aquarium.aq-zone-yeoul .godrays{opacity:.33;}
+.aquarium.aq-zone-yeoul .caustics{opacity:.30;animation-duration:6.4s;}
+.aquarium.aq-zone-yeoul .aq-depth-ambient{opacity:.28;}
+.aquarium.aq-zone-yeoul .aq-dust{opacity:.16;}
+.aquarium.aq-zone-yeoul .aq-bubble{filter:none;}
+.aquarium.aq-zone-yeoul .aq-bubble.front{opacity:.42;}
+.aquarium.aq-zone-yeoul .aq-plant{opacity:calc(var(--op,.74) * .82);}
+.aquarium.aq-zone-yeoul .aq-stone{filter:contrast(1.04) saturate(.96);}
+
+.aquarium.aq-zone-janyeoul .far-haze{opacity:.42;background:radial-gradient(ellipse at 50% 48%,rgba(158,230,204,.13),transparent 58%),linear-gradient(to bottom,rgba(210,255,230,.025),rgba(0,40,34,.075));}
+.aquarium.aq-zone-janyeoul .godrays{opacity:.20;}
+.aquarium.aq-zone-janyeoul .caustics{opacity:.16;}
+.aquarium.aq-zone-janyeoul .aq-depth-back{opacity:.66;}
+.aquarium.aq-zone-janyeoul .aq-depth-mid{opacity:.82;}
+.aquarium.aq-zone-janyeoul .aq-depth-front{opacity:.88;}
+.aquarium.aq-zone-janyeoul .aq-plant{background:linear-gradient(to top,rgba(22,72,45,.38),rgba(88,190,114,.76) 68%,rgba(170,235,165,.62));}
+.aquarium.aq-zone-janyeoul .aq-plant.front{opacity:.78;}
+.aquarium.aq-zone-janyeoul .aq-bubble{opacity:calc(var(--op,.34) * .72);}
+
+.aquarium.aq-zone-gipmul .far-haze{opacity:.60;background:radial-gradient(ellipse at 52% 55%,rgba(90,160,190,.12),transparent 54%),linear-gradient(to bottom,rgba(0,15,28,.04),rgba(0,8,20,.18));}
+.aquarium.aq-zone-gipmul .godrays{opacity:.12;filter:blur(.8px);}
+.aquarium.aq-zone-gipmul .caustics{opacity:.08;}
+.aquarium.aq-zone-gipmul .aq-depth-ambient{opacity:.10;}
+.aquarium.aq-zone-gipmul .aq-depth-back{opacity:.76;filter:saturate(.82) blur(.35px);}
+.aquarium.aq-zone-gipmul .aq-depth-mid{opacity:.66;}
+.aquarium.aq-zone-gipmul .aq-depth-front{opacity:.58;}
+.aquarium.aq-zone-gipmul .aq-plant{background:linear-gradient(to top,rgba(18,50,44,.36),rgba(66,124,92,.58) 72%,rgba(120,172,138,.42));}
+.aquarium.aq-zone-gipmul .aq-bubble{opacity:calc(var(--op,.34) * .56);animation-duration:calc(var(--dur,13s) * 1.25);}
+.aquarium.aq-zone-gipmul .aq-stone{background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.12),transparent 18%),linear-gradient(145deg,rgba(118,136,132,.62),rgba(45,59,64,.78));}
+
+.aquarium.aq-zone-mulmoi .far-haze{opacity:.40;background:radial-gradient(ellipse at 50% 46%,rgba(160,238,210,.10),transparent 56%),linear-gradient(to bottom,rgba(255,255,255,.018),rgba(0,48,40,.09));}
+.aquarium.aq-zone-mulmoi .godrays{opacity:.23;}
+.aquarium.aq-zone-mulmoi .caustics{opacity:.19;}
+.aquarium.aq-zone-mulmoi .aq-depth-ambient{opacity:.24;}
+.aquarium.aq-zone-mulmoi .aq-depth-back{opacity:.62;}
+.aquarium.aq-zone-mulmoi .aq-depth-mid{opacity:.78;}
+.aquarium.aq-zone-mulmoi .aq-depth-front{opacity:.74;}
+.aquarium.aq-zone-mulmoi .aq-dust{opacity:.18;}
+.aquarium.aq-zone-mulmoi .aq-bubble.front{opacity:.38;}
+
+.night .aquarium.aq-zone-utmul .far-haze{opacity:.28;}
+.night .aquarium.aq-zone-utmul .aq-depth-ambient{opacity:.09;}
+.night .aquarium.aq-zone-yeoul .caustics{opacity:.12;}
+.night .aquarium.aq-zone-yeoul .godrays{opacity:.13;}
+.night .aquarium.aq-zone-janyeoul .aq-plant.front{opacity:.44;}
+.night .aquarium.aq-zone-gipmul .far-haze{opacity:.50;}
+.night .aquarium.aq-zone-gipmul .aq-depth-ambient{opacity:.055;}
+.night .aquarium.aq-zone-mulmoi .aq-depth-ambient{opacity:.10;}
+
+@media (max-width:520px){
+  .aquarium.aq-zone-janyeoul .aq-depth-front{opacity:.66;}
+  .aquarium.aq-zone-mulmoi .aq-dust{opacity:.12;}
+  .aquarium.aq-zone-yeoul .aq-bubble.front{opacity:.32;}
+  .aquarium.aq-zone-gipmul .aq-depth-front{opacity:.46;}
+}
