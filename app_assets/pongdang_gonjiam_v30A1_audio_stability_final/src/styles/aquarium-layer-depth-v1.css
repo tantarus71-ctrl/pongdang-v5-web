@@ -1,0 +1,40 @@
+/* 퐁당퐁당 곤지암천 v30A-1 - 수족관 레이어·입체감 보강 */
+.aq-depth-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;contain:layout paint style;}
+.aq-depth-back{z-index:13;opacity:.66;filter:saturate(.92) blur(.15px)}
+.aq-depth-mid{z-index:18;opacity:.78;}
+.aq-depth-creature-back{z-index:22;opacity:.60;filter:blur(.18px)}
+.aq-depth-creature-front{z-index:42;opacity:.72;}
+.aq-depth-front{z-index:48;opacity:.80;}
+.aq-depth-particle-front{z-index:52;opacity:.70;}
+.aq-depth-ambient{z-index:57;mix-blend-mode:screen;opacity:var(--aq-ambient,.22);background:radial-gradient(ellipse at 50% 88%,rgba(255,255,255,.09),transparent 58%),linear-gradient(to top,rgba(255,255,255,.055),transparent 42%);animation:aqAmbientPulse 9s ease-in-out infinite alternate;}
+.night .aq-depth-ambient{opacity:var(--aq-night-ambient,.11);filter:blur(.6px)}
+@keyframes aqAmbientPulse{from{transform:translate3d(-.5%,.3%,0);opacity:calc(var(--aq-ambient,.22) * .72)}to{transform:translate3d(.6%,-.2%,0);opacity:var(--aq-ambient,.22)}}
+.aq-plant{position:absolute;bottom:calc(var(--bottom-h) + var(--safe-bottom) - 18px);left:var(--x);width:var(--w);height:var(--h);border-radius:999px 999px 12px 12px;transform-origin:50% 100%;background:linear-gradient(to top,rgba(19,63,42,.34),rgba(87,188,118,.72) 72%,rgba(164,238,171,.62));opacity:var(--op,.74);animation:aqPlantSway var(--dur,7s) ease-in-out infinite alternate;will-change:transform;}
+.aq-plant::after{content:"";position:absolute;left:45%;bottom:34%;width:140%;height:25%;border-radius:999px;background:rgba(135,224,154,.25);transform:rotate(var(--leaf,32deg));}
+.aq-plant.back{transform:scale(.74);filter:blur(.35px);opacity:.40;}
+.aq-plant.mid{transform:scale(.96);}
+.aq-plant.front{width:calc(var(--w) * 1.24);height:calc(var(--h) * 1.12);filter:saturate(1.08);opacity:.70;}
+@keyframes aqPlantSway{from{transform:translate3d(0,0,0) rotate(calc(var(--tilt,2) * -1deg)) scale(var(--scale,1))}to{transform:translate3d(var(--drift,3px),0,0) rotate(calc(var(--tilt,2) * 1deg)) scale(var(--scale,1))}}
+.aq-stone{position:absolute;bottom:calc(var(--bottom-h) + var(--safe-bottom) - 12px);left:var(--x);width:var(--w);height:calc(var(--w) * var(--ratio,.42));border-radius:52% 48% 44% 58%;background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.20),transparent 18%),linear-gradient(145deg,rgba(198,202,183,.66),rgba(78,92,84,.78));box-shadow:inset 0 3px 8px rgba(255,255,255,.12),inset 0 -7px 10px rgba(0,0,0,.22);opacity:var(--op,.78);filter:blur(var(--blur,0));}
+.aq-stone.back{transform:scale(.72);opacity:.38;filter:blur(.45px)}
+.aq-stone.mid{transform:scale(.92);}
+.aq-stone.front{z-index:49;transform:scale(1.06);opacity:.70;}
+.aq-bubble{position:absolute;left:var(--x);top:var(--top);width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.88) 0 9%,rgba(214,249,255,.42) 18%,rgba(113,211,238,.15) 60%,rgba(255,255,255,.05));border:1px solid rgba(225,250,255,.34);opacity:var(--op,.34);animation:aqBubble var(--dur,13s) ease-in infinite;will-change:transform,opacity;}
+.aq-bubble.back{filter:blur(.3px);opacity:.18;transform:scale(.72)}
+.aq-bubble.front{opacity:.45;box-shadow:0 0 8px rgba(175,237,255,.12)}
+@keyframes aqBubble{0%{transform:translate3d(0,16vh,0) scale(.75);opacity:0}18%{opacity:var(--op,.34)}76%{opacity:calc(var(--op,.34) * .8)}100%{transform:translate3d(var(--drift,12px),-112vh,0) scale(1.08);opacity:0}}
+.aq-dust{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:rgba(238,252,255,.70);opacity:var(--op,.18);animation:aqDust var(--dur,18s) linear infinite;}
+@keyframes aqDust{from{transform:translate3d(0,0,0)}to{transform:translate3d(var(--dx,22px),var(--dy,-30px),0)}}
+.aq-creature{position:absolute;left:var(--x);bottom:calc(var(--bottom-h) + var(--safe-bottom) + var(--b));width:var(--w);height:var(--h);opacity:var(--op,.66);transform:scale(var(--scale,1));animation:aqCreatureDrift var(--dur,12s) ease-in-out infinite alternate;}
+.aq-creature::before,.aq-creature::after{content:"";position:absolute;display:block;}
+.aq-small-shrimp{border-radius:60% 50% 50% 62%;background:linear-gradient(90deg,rgba(244,203,150,.38),rgba(255,238,190,.55));box-shadow:inset 0 -2px 5px rgba(108,65,35,.18)}
+.aq-small-shrimp::before{left:78%;top:26%;width:46%;height:2px;background:rgba(255,238,190,.45);transform:rotate(-18deg);transform-origin:0 50%}
+.aq-snail{border-radius:50%;background:radial-gradient(circle at 46% 48%,rgba(226,201,145,.76) 0 20%,rgba(132,112,74,.62) 21% 45%,rgba(76,72,54,.58) 46% 63%,transparent 64%);}
+.aq-small-shadow{border-radius:60% 40% 45% 60%;background:rgba(215,245,255,.34);box-shadow:6px 0 0 -3px rgba(215,245,255,.30)}
+.aq-benthic{border-radius:52% 48% 55% 45%;background:linear-gradient(90deg,rgba(119,77,48,.55),rgba(179,112,62,.48));}
+@keyframes aqCreatureDrift{from{transform:translate3d(-2px,0,0) scale(var(--scale,1)) rotate(-1deg)}to{transform:translate3d(4px,-2px,0) scale(var(--scale,1)) rotate(1.2deg)}}
+.aq-zone-utmul{--aq-ambient:.20}.aq-zone-yeoul{--aq-ambient:.30}.aq-zone-janyeoul{--aq-ambient:.22}.aq-zone-gipmul{--aq-ambient:.13}.aq-zone-mulmoi{--aq-ambient:.24}
+.aq-zone-yeoul .aq-bubble{animation-duration:calc(var(--dur,13s) * .78)}.aq-zone-gipmul .aq-depth-back{opacity:.78}.aq-zone-gipmul .aq-dust{opacity:.12}.aq-zone-janyeoul .aq-plant{filter:saturate(1.10)}
+.night .aq-plant{opacity:calc(var(--op,.74) * .56)}.night .aq-stone{opacity:calc(var(--op,.78) * .68)}.night .aq-creature{opacity:calc(var(--op,.66) * .48)}.night .aq-bubble{opacity:calc(var(--op,.34) * .62)}.night .aq-dust{opacity:calc(var(--op,.18) * .62)}
+@media (max-width:520px){.aq-plant.front{opacity:.58}.aq-depth-particle-front{opacity:.56}.aq-creature{opacity:calc(var(--op,.66) * .82)}}
+@media (prefers-reduced-motion:reduce){.aq-plant,.aq-bubble,.aq-dust,.aq-creature,.aq-depth-ambient{animation:none!important}}
