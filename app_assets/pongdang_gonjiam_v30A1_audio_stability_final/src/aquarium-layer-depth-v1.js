@@ -208,6 +208,34 @@
     }
   }
 
+  function auditAquariumDepth() {
+    renderLayer();
+    const zoneId = detectZoneId();
+    const profile = PROFILES[zoneId] || PROFILES.utmul;
+    const ids = ['aqDepthRoot', 'aqDepthBack', 'aqDepthMid', 'aqCreatureBack', 'aqCreatureFront', 'aqDepthFront', 'aqParticleFront', 'aqDepthAmbient'];
+    const layers = Object.fromEntries(ids.map((id) => [id, !!document.getElementById(id)]));
+    const counts = {
+      plants: document.querySelectorAll('.aq-plant').length,
+      stones: document.querySelectorAll('.aq-stone').length,
+      bubbles: document.querySelectorAll('.aq-bubble').length,
+      dust: document.querySelectorAll('.aq-dust').length,
+      creatures: document.querySelectorAll('.aq-creature').length,
+      creatureBack: document.querySelectorAll('#aqCreatureBack .aq-creature').length,
+      creatureFront: document.querySelectorAll('#aqCreatureFront .aq-creature').length,
+      fish: document.querySelectorAll('.fish-root').length
+    };
+    return {
+      zoneId,
+      zoneLabel: profile.label,
+      renderedKey: state.renderedKey,
+      expectedProfile: profile,
+      layers,
+      counts,
+      fishAudit: window.PondangFishDepthTuneV1?.audit ? window.PondangFishDepthTuneV1.audit() : null,
+      note: '수족관 레이어·입체감 진단값입니다. counts가 과하면 다음 감산 대상입니다.'
+    };
+  }
+
   function scheduleRender(delay = 120) {
     window.clearTimeout(state.timer);
     state.timer = window.setTimeout(renderLayer, delay);
@@ -221,7 +249,7 @@
     const target = document.getElementById('app') || document.body;
     const observer = new MutationObserver(() => scheduleRender(180));
     observer.observe(target, { childList: true, subtree: true, attributes: true, characterData: true });
-    window.PondangAquariumDepthV1 = { render: renderLayer, profiles: PROFILES };
+    window.PondangAquariumDepthV1 = { render: renderLayer, profiles: PROFILES, audit: auditAquariumDepth };
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
