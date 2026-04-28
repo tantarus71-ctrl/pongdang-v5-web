@@ -1,0 +1,20 @@
+/* 퐁당퐁당 곤지암천 v30A-1 - 버들치 입체 유영 미세 조정 */
+.fish-layer{transform-style:preserve-3d;perspective:1000px;}
+.fish-root{transition:filter .28s ease, opacity .28s ease;}
+.fish-root[data-depth-band="back"]{filter:blur(.35px) saturate(.88) brightness(.94) drop-shadow(0 8px 12px rgba(0,0,0,.18));opacity:.68;}
+.fish-root[data-depth-band="mid"]{filter:saturate(1.02) brightness(1) drop-shadow(0 12px 16px rgba(0,0,0,.20));opacity:.86;}
+.fish-root[data-depth-band="front"]{filter:saturate(1.08) brightness(1.05) drop-shadow(0 16px 18px rgba(0,0,0,.23));opacity:.96;}
+.fish-root[data-depth-band="front"] .fish-body-frame{filter:contrast(1.03)}
+.fish-root[data-depth-band="back"] .fish-fin,.fish-root[data-depth-band="back"] .fish-belly{opacity:.16;}
+.fish-root[data-depth-band="mid"] .fish-fin{opacity:.28;}
+.fish-root[data-depth-band="front"] .fish-fin{opacity:.38;}
+.fish-root[data-depth-band="front"] .fish-eye{opacity:.58;}
+.fish-root[data-depth-band="back"]::after{display:none;}
+.fish-root.clickable[data-depth-band="front"]::before{opacity:.74;}
+.fish-root.clickable[data-depth-band="back"]::before{opacity:.24;}
+.aq-fish-depth-note{position:absolute;left:12px;bottom:calc(var(--bottom-h) + var(--safe-bottom) + 104px);z-index:74;font-size:10px;color:rgba(255,255,255,.72);padding:5px 7px;border-radius:999px;background:rgba(0,20,35,.24);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);pointer-events:none;}
+.night .fish-root[data-depth-band="back"]{opacity:.54;filter:blur(.55px) saturate(.82) brightness(.76) drop-shadow(0 7px 10px rgba(0,0,0,.20));}
+.night .fish-root[data-depth-band="mid"]{opacity:.74;filter:saturate(.92) brightness(.82) drop-shadow(0 10px 14px rgba(0,0,0,.22));}
+.night .fish-root[data-depth-band="front"]{opacity:.86;filter:saturate(.96) brightness(.88) drop-shadow(0 14px 16px rgba(0,0,0,.25));}
+@media (max-width:520px){.fish-root[data-depth-band="front"]{opacity:.92}.aq-fish-depth-note{display:none}}
+@media (prefers-reduced-motion:reduce){.fish-root{transition:none!important}}
