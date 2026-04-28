@@ -159,13 +159,42 @@
     activePopup: null,       // fish | card | acquire | capture | gps | audio | null
     activeSpeciesId: null,
     activeCaptureId: null,
+    historyArmed: false,
     audioPlaying: false,
     captureInProgress: false,
     gpsChecking: false
   };
-  function setActivePanel(panel){UI_STATE.activePanel=panel||null;}
-  function setActivePopup(popupName, detail={}){UI_STATE.activePopup=popupName||null;if('speciesId' in detail)UI_STATE.activeSpeciesId=detail.speciesId||null;if('captureId' in detail)UI_STATE.activeCaptureId=detail.captureId||null;}
+  function armOverlayHistory(){
+    if(UI_STATE.historyArmed || !history?.pushState)return;
+    try{history.pushState({pongdangOverlay:true},'',location.href);UI_STATE.historyArmed=true;}catch(_){}
+  }
+  function disarmOverlayHistory(){
+    if(!UI_STATE.historyArmed || !history?.replaceState)return;
+    try{history.replaceState({pongdangOverlay:false},'',location.href);}catch(_){}
+    UI_STATE.historyArmed=false;
+  }
+  function setActivePanel(panel){UI_STATE.activePanel=panel||null;if(panel)armOverlayHistory();}
+  function setActivePopup(popupName, detail={}){UI_STATE.activePopup=popupName||null;if('speciesId' in detail)UI_STATE.activeSpeciesId=detail.speciesId||null;if('captureId' in detail)UI_STATE.activeCaptureId=detail.captureId||null;if(popupName)armOverlayHistory();}
   function clearActivePopup(popupName){if(!popupName || UI_STATE.activePopup===popupName){UI_STATE.activePopup=null;UI_STATE.activeSpeciesId=null;UI_STATE.activeCaptureId=null;}}
+  function hasVisibleOverlay(){
+    return !!(
+      AUDIO_STATE.isOpen ||
+      ACQUIRE_CARD_STATE.isOpen ||
+      popup?.classList.contains('show') ||
+      featurePanel?.classList.contains('show') ||
+      dexPanel?.classList.contains('show') ||
+      cardDetail?.classList.contains('show') ||
+      missionPanel?.classList.contains('show') ||
+      cameraPanel?.classList.contains('show') ||
+      captureGallery?.classList.contains('show') ||
+      captureDetail?.classList.contains('show') ||
+      explorePanel?.classList.contains('show') ||
+      gpsGuide?.classList.contains('show')
+    );
+  }
+  function syncOverlayHistory(){
+    if(!hasVisibleOverlay()){setActivePanel(null);clearActivePopup();disarmOverlayHistory();}
+  }
 
 
 
@@ -181,12 +210,12 @@
   function loadCaptures(){try{const raw=localStorage.getItem(CAPTURE_STORAGE_KEY);CAPTURE_DATABASE=raw?JSON.parse(raw):{captures:[]};if(!Array.isArray(CAPTURE_DATABASE.captures))CAPTURE_DATABASE={captures:[]};}catch(err){console.warn('관찰 사진 저장소를 불러오지 못했습니다.',err);CAPTURE_DATABASE={captures:[]};}}
   function saveCaptures(){try{CAPTURE_DATABASE.captures=CAPTURE_DATABASE.captures.slice(0,CAPTURE_MAX_COUNT);localStorage.setItem(CAPTURE_STORAGE_KEY,JSON.stringify(CAPTURE_DATABASE));}catch(err){console.warn('관찰 사진 저장 실패. 오래된 기록을 정리합니다.',err);CAPTURE_DATABASE.captures=CAPTURE_DATABASE.captures.slice(0,Math.max(5,CAPTURE_MAX_COUNT/2));try{localStorage.setItem(CAPTURE_STORAGE_KEY,JSON.stringify(CAPTURE_DATABASE));}catch(e){console.warn('관찰 사진 저장 fallback 실패',e)}}}
   function showCaptureToast(msg='📷 관찰 사진을 저장했어요!'){if(!captureToast)return;captureToast.textContent=msg;captureToast.classList.add('show');clearTimeout(showCaptureToast.t);showCaptureToast.t=setTimeout(()=>captureToast.classList.remove('show'),1800)}
-  function closeCameraPanels(){stopAudio({hide:true,reason:'camera-panel-close'});cameraPanel?.classList.remove('show');captureGallery?.classList.remove('show');captureDetail?.classList.remove('show');CAMERA_STATE.panelOpen=false;CAMERA_STATE.galleryOpen=false;CAMERA_STATE.detailOpen=false;CAMERA_STATE.selectedCaptureId=null;if(UI_STATE.activePanel==='camera')setActivePanel(null);if(UI_STATE.activePopup==='capture')clearActivePopup('capture');}
+  function closeCameraPanels(){stopAudio({hide:true,reason:'camera-panel-close'});cameraPanel?.classList.remove('show');captureGallery?.classList.remove('show');captureDetail?.classList.remove('show');CAMERA_STATE.panelOpen=false;CAMERA_STATE.galleryOpen=false;CAMERA_STATE.detailOpen=false;CAMERA_STATE.selectedCaptureId=null;if(UI_STATE.activePanel==='camera')setActivePanel(null);if(UI_STATE.activePopup==='capture')clearActivePopup('capture');syncOverlayHistory();}
   function openCameraPanel(){closeDexPanels();closeMissionPanel();closeExplorePanels();closeAcquiredCard();featurePanel?.classList.remove('show');popup?.classList.remove('show');cardDetail?.classList.remove('show');cameraPanel?.classList.add('show');CAMERA_STATE.panelOpen=true;setActivePanel('camera');renderCaptureGallery(false)}
   function openCaptureGalleryPanel(){cameraPanel?.classList.remove('show');captureGallery?.classList.add('show');CAMERA_STATE.panelOpen=false;CAMERA_STATE.galleryOpen=true;renderCaptureGallery(true)}
   function renderCaptureGallery(showEmpty=true){if(!captureGrid||!captureSummary)return;const items=CAPTURE_DATABASE.captures||[];captureSummary.textContent=`저장된 관찰 사진 ${items.length}장`;captureGrid.innerHTML=items.map(c=>`<button class="capture-card" data-capture-id="${c.id}" aria-label="${c.zoneName} ${c.observedSpeciesName} 관찰 사진 보기"><img src="${c.thumbData||c.imageData}" alt="${c.zoneName} 관찰 사진"><strong>${c.zoneIcon||'💧'} ${c.zoneName||'곤지암천'} · ${c.observedSpeciesName||'물고기'}</strong><span>${c.timeMode==='night'?'🌙 밤물':'☀️ 낮물'} · ${formatCaptureTime(c.createdAt)}</span></button>`).join('');captureEmpty?.classList.toggle('show',showEmpty&&items.length===0);captureGrid.querySelectorAll('[data-capture-id]').forEach(btn=>btn.addEventListener('click',()=>openCaptureDetail(btn.dataset.captureId)));}
   function openCaptureDetail(id){const c=CAPTURE_DATABASE.captures.find(x=>x.id===id);if(!c)return;CAMERA_STATE.selectedCaptureId=id;CAMERA_STATE.detailOpen=true;setActivePopup('capture',{captureId:id});captureDetailTitle.textContent='관찰 사진';captureDetailMeta.textContent=`${c.zoneIcon||''} ${c.zoneName||'곤지암천'} · ${c.observedSpeciesName||'물고기'} · ${c.timeMode==='night'?'밤물':'낮물'}`;captureDetailImage.src=c.imageData;captureDetailMemo.textContent=c.memo||`${c.zoneName||'곤지암천'}에서 ${c.observedSpeciesName||'물고기'}를 관찰했어요.`;captureDetail.classList.add('show');}
-  function closeCaptureDetail(){captureDetail?.classList.remove('show');CAMERA_STATE.detailOpen=false;CAMERA_STATE.selectedCaptureId=null;clearActivePopup('capture');}
+  function closeCaptureDetail(){captureDetail?.classList.remove('show');CAMERA_STATE.detailOpen=false;CAMERA_STATE.selectedCaptureId=null;clearActivePopup('capture');syncOverlayHistory();}
   function canvasToThumb(canvas){const t=document.createElement('canvas');const w=360,h=Math.round(w*0.72);t.width=w;t.height=h;const ctx=t.getContext('2d');ctx.fillStyle='#082b3d';ctx.fillRect(0,0,w,h);ctx.drawImage(canvas,0,0,w,h);return t.toDataURL('image/webp',.78)}
   function drawCaptureCanvas(){const rect=aquarium.getBoundingClientRect();const w=1280,h=820;const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');const grd=ctx.createLinearGradient(0,0,0,h);grd.addColorStop(0,isNight?'#09263c':'#70dbf1');grd.addColorStop(.55,isNight?'#123d54':'#b8f4ff');grd.addColorStop(1,isNight?'#17384b':'#d5f4de');ctx.fillStyle=grd;ctx.fillRect(0,0,w,h);ctx.globalAlpha=.32;for(let i=0;i<8;i++){ctx.beginPath();ctx.moveTo((i*.16+0.02)*w,0);ctx.lineTo((i*.12+0.12)*w,h*.85);ctx.lineWidth=28;ctx.strokeStyle=isNight?'rgba(130,190,255,.18)':'rgba(255,255,220,.28)';ctx.stroke()}ctx.globalAlpha=1;for(let i=0;i<90;i++){ctx.fillStyle=`rgba(255,255,255,${rand(.08,.28)})`;ctx.beginPath();ctx.arc(rand(0,w),rand(0,h),rand(1,3.4),0,Math.PI*2);ctx.fill()}for(let i=0;i<36;i++){const x=rand(-40,w+40),y=rand(h*.72,h*.98),rw=rand(24,86),rh=rand(9,30);ctx.fillStyle=`rgba(${isNight?70:125},${isNight?104:135},${isNight?120:120},${rand(.32,.68)})`;ctx.beginPath();ctx.ellipse(x,y,rw,rh,rand(-.3,.3),0,Math.PI*2);ctx.fill()}const active=fishes.find(f=>f.id===activeFishId)||fishes.reduce((a,b)=>!a||b.depth>a.depth?b:a,null);if(active){const img=active.el?.frame;const fw=300*(.7+active.depth*.45),fh=fw*.42;const x=w*.50-fw*.5,y=h*.45-fh*.5;try{ctx.save();ctx.translate(x+fw/2,y+fh/2);ctx.rotate((active.bodyRotation||0)*Math.PI/180*.25);ctx.drawImage(img,-fw/2,-fh/2,fw,fh);ctx.restore();}catch(_){ctx.font='120px serif';ctx.textAlign='center';ctx.fillText('🐟',w/2,h*.46)}}ctx.fillStyle='rgba(5,31,45,.62)';ctx.beginPath();ctx.roundRect(28,28,360,74,26);ctx.fill();ctx.fillStyle='#ffffff';ctx.font='bold 31px system-ui, sans-serif';ctx.textAlign='left';ctx.fillText(`${zone.icon} ${zone.name} 관찰 사진`,52,75);ctx.font='20px system-ui, sans-serif';ctx.fillStyle='rgba(255,255,255,.86)';ctx.fillText(`${isNight?'밤물':'낮물'} · ${SPECIES.beodeulchi.name}`,52,105);return canvas}
   async function saveCurrentAquariumCapture(){const now=performance.now();if(CAMERA_STATE.captureInProgress||now-CAMERA_STATE.lastCaptureAt<1000)return;CAMERA_STATE.captureInProgress=true;CAMERA_STATE.lastCaptureAt=now;if(captureShot)captureShot.disabled=true;try{const canvas=drawCaptureCanvas();const imageData=canvas.toDataURL('image/png');const thumbData=canvasToThumb(canvas);const active=fishes.find(f=>f.id===activeFishId);const item={id:captureId(),imageData,thumbData,createdAt:new Date().toISOString(),zoneId:currentZoneId,zoneName:zone.name,zoneIcon:zone.icon,timeMode:isNight?'night':'day',observedSpeciesId:active?.species||'beodeulchi',observedSpeciesName:SPECIES.beodeulchi.name,missionIds:[],memo:`${zone.name}에서 ${SPECIES.beodeulchi.name}를 관찰했어요!`,appVersion:'v29',deviceType:getDeviceType()};CAPTURE_DATABASE.captures.unshift(item);CAPTURE_DATABASE.captures=CAPTURE_DATABASE.captures.slice(0,CAPTURE_MAX_COUNT);saveCaptures();renderCaptureGallery(false);showCaptureToast('📷 관찰 사진을 저장했어요!');try{onCaptureSaved(item)}catch(_){}}catch(err){console.error('캡처 실패',err);showCaptureToast('사진을 저장하지 못했어요. 다시 눌러볼까요?')}finally{CAMERA_STATE.captureInProgress=false;if(captureShot)captureShot.disabled=false;}}
@@ -226,9 +255,9 @@
     if(gpsResultCard)gpsResultCard.dataset.zone=zoneId;
   }
   function openExplorePanel(){closeDexPanels();closeMissionPanel();closeCameraPanels();closeAcquiredCard();featurePanel?.classList.remove('show');popup?.classList.remove('show');cardDetail?.classList.remove('show');explorePanel?.classList.add('show');setActivePanel('explore');renderExploreLogList();updateGpsResult('default',GPS_STATE.lastApproxZoneId||currentZoneId);}
-  function closeExplorePanels(){stopAudio({hide:true,reason:'explore-panel-close'});explorePanel?.classList.remove('show');closeGpsGuide();if(UI_STATE.activePanel==='explore')setActivePanel(null);}
+  function closeExplorePanels(){stopAudio({hide:true,reason:'explore-panel-close'});explorePanel?.classList.remove('show');closeGpsGuide();if(UI_STATE.activePanel==='explore')setActivePanel(null);syncOverlayHistory();}
   function openGpsGuidePanel(){if(!GPS_STATE.supported){handleGpsError({code:'unsupported',message:'이 기기에서는 위치 확인을 사용할 수 없어요.'});return;}gpsGuideBackdrop?.classList.add('show');gpsGuide?.classList.add('show');setActivePopup('gps');}
-  function closeGpsGuide(){stopAudio({hide:true,reason:'gps-guide-close'});gpsGuideBackdrop?.classList.remove('show');gpsGuide?.classList.remove('show');clearActivePopup('gps');}
+  function closeGpsGuide(){stopAudio({hide:true,reason:'gps-guide-close'});gpsGuideBackdrop?.classList.remove('show');gpsGuide?.classList.remove('show');clearActivePopup('gps');syncOverlayHistory();}
   async function queryPermissionState(){try{if(navigator.permissions?.query){const p=await navigator.permissions.query({name:'geolocation'});GPS_STATE.permission=p.state||GPS_STATE.permission;saveGpsState();}}catch(_){}}
   function recommendZoneByLocation(position){
     // v28에서는 정확 좌표를 저장하지 않고 구조만 안정화한다. 실제 좌표 기반 계산은 후속 단계에서 확장한다.
@@ -414,7 +443,7 @@
     AUDIO_STATE.audio=null;
     AUDIO_STATE.utterance=null;
     resetAudioState(options.reason||'stop');
-    if(hide){ audioPanel?.classList.remove('show'); AUDIO_STATE.isOpen=false; clearActivePopup('audio'); }
+    if(hide){ audioPanel?.classList.remove('show'); AUDIO_STATE.isOpen=false; clearActivePopup('audio'); syncOverlayHistory(); }
   }
   function speakText(text){
     if(!text){showAudioFallbackMessage('설명 문구를 준비 중이에요.');return false;}
@@ -614,9 +643,9 @@
   }
 
 
-  function closeDexPanels(){stopAudio({hide:true,reason:'dex-close'});dexPanel.classList.remove('show');cardDetail.classList.remove('show')}
+  function closeDexPanels(){stopAudio({hide:true,reason:'dex-close'});dexPanel.classList.remove('show');cardDetail.classList.remove('show');if(UI_STATE.activePanel==='dex')setActivePanel(null);if(UI_STATE.activePopup==='card')clearActivePopup('card');syncOverlayHistory();}
 
-  function closeMissionPanel(){stopAudio({hide:true,reason:'mission-panel-close'});missionPanel.classList.remove('show');if(UI_STATE.activePanel==='mission')setActivePanel(null)}
+  function closeMissionPanel(){stopAudio({hide:true,reason:'mission-panel-close'});missionPanel.classList.remove('show');if(UI_STATE.activePanel==='mission')setActivePanel(null);syncOverlayHistory();}
   function openMissionPanel(){closeAcquiredCard();closeDexPanels();closeCameraPanels();closeExplorePanels();featurePanel.classList.remove('show');popup.classList.remove('show');renderMissionList();missionPanel.classList.add('show');setActivePanel('mission')}
   function renderMissionList(){
     const ids=Object.keys(MISSION_DATABASE);
@@ -677,6 +706,7 @@
     ACQUIRE_CARD_STATE.isOpen=false;
     acquireCard.classList.remove('show');
     acquireBackdrop.classList.remove('show');
+    syncOverlayHistory();
   }
   function goToDexFromAcquiredCard(){
     const speciesId=ACQUIRE_CARD_STATE.speciesId || 'beodeulchi';
@@ -693,7 +723,25 @@
     closeAcquiredCard();
     nextPickAt=performance.now()+900;
   }
-  function closeFloatingPanels(){featurePanel.classList.remove('show'); closeMissionPanel(); closeAcquiredCard(); closeDexPanels(); closeCameraPanels(); closeExplorePanels();}
+  function closeFishPopup(){popup?.classList.remove('show');clearActivePopup('fish');syncOverlayHistory();}
+  function closeFeaturePanel(){featurePanel?.classList.remove('show');if(UI_STATE.activePanel==='feature')setActivePanel(null);syncOverlayHistory();}
+  function closeCardDetailPanel(){cardDetail?.classList.remove('show');if(UI_STATE.activePopup==='card')clearActivePopup('card');stopAudio({hide:true,reason:'card-detail-close'});syncOverlayHistory();}
+  function closeFloatingPanels(){closeFeaturePanel(); closeMissionPanel(); closeAcquiredCard(); closeDexPanels(); closeCameraPanels(); closeExplorePanels(); closeFishPopup(); stopAudio({hide:true,reason:'close-floating'});syncOverlayHistory();}
+  function closeTopOverlay(reason='manual'){
+    if(AUDIO_STATE.isOpen){stopAudio({hide:true,reason});return true}
+    if(gpsGuide?.classList.contains('show')){closeGpsGuide();return true}
+    if(captureDetail?.classList.contains('show')){closeCaptureDetail();return true}
+    if(cardDetail?.classList.contains('show')){closeCardDetailPanel();return true}
+    if(ACQUIRE_CARD_STATE.isOpen){continueExplorationFromAcquiredCard();return true}
+    if(cameraPanel?.classList.contains('show')||captureGallery?.classList.contains('show')){closeCameraPanels();return true}
+    if(explorePanel?.classList.contains('show')){closeExplorePanels();return true}
+    if(missionPanel?.classList.contains('show')){closeMissionPanel();return true}
+    if(dexPanel?.classList.contains('show')){closeDexPanels();return true}
+    if(featurePanel?.classList.contains('show')){closeFeaturePanel();return true}
+    if(popup?.classList.contains('show')){closeFishPopup();return true}
+    syncOverlayHistory();
+    return false;
+  }
 
   function updateFrame(f){const src=bodyFrameFor(f);if(f.frameSrc!==src){f.el.frame.src=freshUrl(src);f.frameSrc=src}}
   function renderFish(f,now){updateFrame(f);const r=safeRect(),base=r.w<480?112:r.w<900?138:160,scale=clamp(.52+f.depth*.72,.58,1.2),opacity=clamp(.44+f.depth*.56,.48,1),blur=f.depth<.48?1.1:f.depth<.65?.38:0,z=Math.round(100+f.depth*220),t=now*.001,turnPower=f.isTurning?Math.sin(Math.PI*f.turnProgress):0,turnSign=f.desiredDir;const bodyTarget=Math.sin(t*2.05+f.phase)*(1+f.speed*1.4)+turnSign*turnPower*5.4;const tailTarget=Math.sin(t*(5.1+f.speed*3.8)+f.phase)*(3.8+f.speed*3.8+turnPower*7.0);const finTarget=Math.sin(t*3.5+f.phase*.7)*(0.85+turnPower*2.6);f.bodyRotation=lerp(f.bodyRotation,bodyTarget,.08);f.tailSwing=lerp(f.tailSwing,tailTarget,.12);f.finMotion=lerp(f.finMotion,finTarget,.08);const rootRot=turnSign*turnPower*2.2+Math.sin(t*.8+f.phase)*.45,x=Math.round((f.x-base*scale*.5)*100)/100,y=Math.round((f.y-base*scale*.28)*100)/100;f.el.root.style.setProperty('--fish-w',`${base}px`);f.el.root.style.opacity=opacity.toFixed(3);f.el.root.style.filter=`${f.clickable?'drop-shadow(0 0 12px rgba(255,236,141,.68)) drop-shadow(0 16px 16px rgba(0,0,0,.24))':'drop-shadow(0 12px 12px rgba(0,0,0,.14))'} blur(${blur.toFixed(2)}px)`;f.el.root.style.zIndex=z;f.el.root.style.transform=`translate3d(${x}px,${y}px,0) scale(${scale.toFixed(3)}) rotate(${rootRot.toFixed(2)}deg)`;f.el.core.style.transform=`rotateY(${(turnPower*7*f.dir).toFixed(2)}deg)`;f.el.wrap.style.transform=`translate3d(${(turnPower*.55*f.dir).toFixed(2)}px,0,0) rotate(${(f.bodyRotation*.32).toFixed(2)}deg)`;f.el.body.style.transform=`rotate(${f.bodyRotation.toFixed(2)}deg)`;f.el.tail.src=freshUrl(Math.abs(f.tailSwing)>3?(f.tailSwing>0?ASSETS.tailRight:ASSETS.tailLeft):ASSETS.tailIdle);f.el.tailWrap.style.transform=`translate3d(${(-turnPower*.7*f.dir).toFixed(2)}px,0,0) rotate(${(f.tailSwing*.46).toFixed(2)}deg)`;f.el.belly.style.transform=`translate3d(${(Math.sin(t*1.35+f.phase)*.7).toFixed(2)}px,${(turnPower*.45).toFixed(2)}px,0)`;f.el.dorsal.style.transform=`rotate(${(f.finMotion*.5+turnPower*1.6*turnSign).toFixed(2)}deg)`;f.el.pectoralL.style.transform=`rotate(${(8+f.finMotion+turnPower*3.4*turnSign).toFixed(2)}deg)`;f.el.pectoralR.style.transform=`rotate(${(28-f.finMotion*.6+turnPower*2.8*turnSign).toFixed(2)}deg)`;f.el.eye.style.opacity=(f.clickable?.56:0).toFixed(2)}
@@ -738,6 +786,17 @@
   window.PondangV30A1Debug={
     audit:getRuntimeAudit,
     debugBackground:getBackgroundLoadAudit,
+    closeTopOverlay,
+    closeFloatingPanels,
+    menuAudit(){
+      const visible=[];
+      [
+        ['feature',featurePanel],['explore',explorePanel],['dex',dexPanel],['mission',missionPanel],
+        ['camera',cameraPanel],['captureGallery',captureGallery],['captureDetail',captureDetail],
+        ['fishPopup',popup],['acquire',acquireCard],['cardDetail',cardDetail],['gps',gpsGuide],['audio',audioPanel]
+      ].forEach(([name,el])=>{if(el?.classList.contains('show'))visible.push(name)});
+      return {activePanel:UI_STATE.activePanel,activePopup:UI_STATE.activePopup,visible,visibleCount:visible.length,historyArmed:UI_STATE.historyArmed};
+    },
     freshUrl,
     reloadFresh(){location.replace(`${location.pathname}?inapp=v30A1&cache=${Date.now()}`)},
     async clearRuntimeCache(){
@@ -749,7 +808,31 @@
     }
   };
 
+  function installMenuStabilityGuards(){
+    const guardClick=(el,fn)=>el?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();fn();},{capture:true});
+    guardClick(closePopup,()=>closeFishPopup());
+    guardClick(featureClose,()=>closeFeaturePanel());
+    guardClick(dexClose,()=>closeDexPanels());
+    guardClick(detailClose,()=>closeCardDetailPanel());
+    guardClick(detailClose2,()=>closeCardDetailPanel());
+    guardClick(missionClose,()=>closeMissionPanel());
+    guardClick(cameraClose,()=>closeCameraPanels());
+    guardClick(captureGalleryClose,()=>closeCameraPanels());
+    guardClick(captureDetailClose,()=>closeCaptureDetail());
+    guardClick(captureDetailClose2,()=>closeCaptureDetail());
+    guardClick(exploreClose,()=>closeExplorePanels());
+    guardClick(gpsGuideClose,()=>closeGpsGuide());
+    guardClick(cancelGpsBtn,()=>closeGpsGuide());
+    guardClick(acquireClose,()=>continueExplorationFromAcquiredCard());
+    guardClick(acquireBackdrop,()=>continueExplorationFromAcquiredCard());
+    cardDetail?.addEventListener('click',e=>{if(e.target===cardDetail){e.stopImmediatePropagation();closeCardDetailPanel();}},{capture:true});
+    captureDetail?.addEventListener('click',e=>{if(e.target===captureDetail){e.stopImmediatePropagation();closeCaptureDetail();}},{capture:true});
+    gpsGuideBackdrop?.addEventListener('click',e=>{if(e.target===gpsGuideBackdrop){e.stopImmediatePropagation();closeGpsGuide();}},{capture:true});
+    window.addEventListener('keydown',e=>{if(e.key==='Escape'&&closeTopOverlay('escape')){e.preventDefault();e.stopImmediatePropagation();}},{capture:true});
+    window.addEventListener('popstate',()=>{if(closeTopOverlay('back')){try{history.replaceState({pongdangOverlay:false},'',location.href)}catch(_){}UI_STATE.historyArmed=false;}});
+  }
+
   modeBtn.addEventListener('click',()=>{isNight=!isNight;app.classList.toggle('night',isNight);modeBtn.textContent=isNight?'☀️':'🌙';applyZoneVisual();updateMissionProgress('time_mode_changed',{mode:isNight?'night':'day',zoneId:currentZoneId})});fullBtn.addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()});closePopup.addEventListener('click',()=>{popup.classList.remove('show');stopAudio({hide:true});});popupAudio?.addEventListener('click',()=>playAudioById('species_beodeulchi'));audioBtn?.addEventListener('click',playCurrentZoneAudio);audioClose?.addEventListener('click',()=>stopAudio({hide:true}));audioStop?.addEventListener('click',()=>stopAudio({hide:true}));audioReplay?.addEventListener('click',replayAudio);featureClose.addEventListener('click',()=>featurePanel.classList.remove('show'));missionClose.addEventListener('click',closeMissionPanel);featureAction.addEventListener('click',()=>showAcquireCard('beodeulchi', currentZoneId));saveCard.addEventListener('click',goToDexFromAcquiredCard);keepExplore.addEventListener('click',continueExplorationFromAcquiredCard);acquireClose.addEventListener('click',continueExplorationFromAcquiredCard);acquireBackdrop.addEventListener('click',continueExplorationFromAcquiredCard);dexClose.addEventListener('click',()=>dexPanel.classList.remove('show'));detailClose.addEventListener('click',()=>{cardDetail.classList.remove('show');stopAudio({hide:true});});detailClose2.addEventListener('click',()=>{cardDetail.classList.remove('show');stopAudio({hide:true});});cardDetail.addEventListener('click',e=>{if(e.target===cardDetail){cardDetail.classList.remove('show');stopAudio({hide:true,reason:'card-detail-backdrop'});}});detailListen.addEventListener('click',()=>{playAudioById(detailListen.dataset.audioId==='beodeulchi'?'species_beodeulchi':detailListen.dataset.audioId||'species_beodeulchi')});document.querySelectorAll('[data-menu]').forEach(btn=>btn.addEventListener('click',()=>openFeaturePanel(btn.dataset.menu)));cameraClose?.addEventListener('click',closeCameraPanels);captureShot?.addEventListener('click',saveCurrentAquariumCapture);openCaptureGallery?.addEventListener('click',openCaptureGalleryPanel);captureGalleryClose?.addEventListener('click',closeCameraPanels);captureDetailClose?.addEventListener('click',closeCaptureDetail);captureDetailClose2?.addEventListener('click',closeCaptureDetail);captureDetail?.addEventListener('click',e=>{if(e.target===captureDetail)closeCaptureDetail()});captureDownload?.addEventListener('click',downloadSelectedCapture);captureDelete?.addEventListener('click',deleteSelectedCapture);exploreClose?.addEventListener('click',closeExplorePanels);openGpsGuide?.addEventListener('click',openGpsGuidePanel);recommendZoneBtn?.addEventListener('click',()=>{updateGpsResult('maybe',GPS_STATE.lastApproxZoneId||currentZoneId);saveExploreLog({zoneId:GPS_STATE.lastApproxZoneId||currentZoneId,actionType:'gps_check',source:'manual',note:'가까운 탐사 구간을 추천했어요.',timeMode:isNight?'night':'day'});});openExploreLog?.addEventListener('click',renderExploreLogList);startRecommendedZone?.addEventListener('click',()=>{const zid=gpsResultCard?.dataset.zone||GPS_STATE.lastApproxZoneId||currentZoneId;loadZone(zid);closeExplorePanels();});gpsGuideClose?.addEventListener('click',closeGpsGuide);cancelGpsBtn?.addEventListener('click',closeGpsGuide);gpsGuideBackdrop?.addEventListener('click',closeGpsGuide);requestGpsBtn?.addEventListener('click',requestUserLocation);window.addEventListener('resize',()=>{buildEcoLayer();makeParticles();fishes.forEach(f=>pickNewTarget(f,performance.now()))},{passive:true});window.addEventListener('keydown',e=>{if(e.key==='Escape'){if(AUDIO_STATE.isOpen)stopAudio({hide:true});else if(ACQUIRE_CARD_STATE.isOpen)continueExplorationFromAcquiredCard();else if(cardDetail.classList.contains('show'))cardDetail.classList.remove('show');else if(captureDetail?.classList.contains('show'))closeCaptureDetail();else if(gpsGuide?.classList.contains('show'))closeGpsGuide();else if(explorePanel?.classList.contains('show'))closeExplorePanels();else if(cameraPanel?.classList.contains('show')||captureGallery?.classList.contains('show'))closeCameraPanels();else if(missionPanel.classList.contains('show'))closeMissionPanel();else if(dexPanel.classList.contains('show'))dexPanel.classList.remove('show');else popup.classList.remove('show')}});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAudio({hide:true,reason:'hidden'});});
-    loadExploreLogs();loadCaptures();initGpsState();queryPermissionState();preload();setupZoneButtons();applyMenuIconSlots();loadZone(currentZoneId);requestAnimationFrame(tick);
+    installMenuStabilityGuards();loadExploreLogs();loadCaptures();initGpsState();queryPermissionState();preload();setupZoneButtons();applyMenuIconSlots();loadZone(currentZoneId);requestAnimationFrame(tick);
 })();

@@ -668,3 +668,22 @@
   in-app browser 자동 스크린샷 QA는 OS 접근 거부로 실행하지 못함. 실제 픽셀 단위 겹침은 육안 확인 필요.
 - 상세 문서:
   docs/QA_2026-04-28_BACKGROUND_LAYER_SAFE_AREA.md
+
+[2026-04-28 메뉴 기능 안정화]
+- 범위:
+  탐사/도감/미션/카메라 버튼, 팝업 동시 노출 방지, 닫기/뒤로가기/Escape 흐름.
+- 적용:
+  UI_STATE.historyArmed 추가.
+  armOverlayHistory, disarmOverlayHistory, syncOverlayHistory, hasVisibleOverlay 추가.
+  closeTopOverlay(reason) 추가로 Escape와 모바일 뒤로가기에서 최상단 팝업부터 닫히도록 정리.
+  installMenuStabilityGuards 추가로 닫기 버튼, 배경 클릭, Escape, popstate가 공통 닫기 흐름을 타도록 보강.
+  PondangV30A1Debug.menuAudit() 추가로 현재 보이는 패널/팝업 수를 확인할 수 있게 함.
+- 검증:
+  node --check 통과.
+  index.html / src/app.js 로컬 서버 응답 200 확인.
+  data-menu explore/dex/mission/camera 연결 확인.
+  openExplorePanel/openDexPanel/openMissionPanel/openCameraPanel 함수 존재 확인.
+- 보류:
+  in-app browser 자동 클릭 QA는 OS 접근 거부로 실행하지 못함. 실제 화면 수동 확인 필요.
+- 상세 문서:
+  docs/QA_2026-04-28_MENU_STABILITY.md
