@@ -1,0 +1,22 @@
+{
+  "version": "draft-v1",
+  "runtimeLinked": false,
+  "zones": [
+    {
+      "id": "utmul",
+      "name": "웃물",
+      "icon": "💧",
+      "description": "얕고 맑은 상류",
+      "dayBackground": "assets/bg/upper/day.png",
+      "nightBackground": "assets/bg/upper/night.png",
+      "depthRange": [0.30, 0.68],
+      "observeDepth": 0.88,
+      "flow": 0.35,
+      "light": 0.92,
+      "caustic": 0.30,
+      "fishCount": [4, 6],
+      "adminEditable": true,
+      "notes": "샘플 데이터다. 현재 런타임은 app.js 내부 ZONES를 사용한다."
+    }
+  ]
+}
