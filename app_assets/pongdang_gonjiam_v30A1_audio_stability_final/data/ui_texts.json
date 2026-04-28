@@ -1,0 +1,17 @@
+{
+  "version": "v30A1-data-draft-1",
+  "runtimeLinked": true,
+  "fallbackRequired": true,
+  "uiTexts": {
+    "brandTitle": "퐁당퐁당 곤지암천",
+    "defaultZoneDescription": "웃물 · 얕고 맑은 상류",
+    "hint": "앞으로 다가온 버들치 한 마리만 눌러보세요",
+    "bottomCardTitle": "버들치 관찰 중",
+    "bottomCardSubtitle": "중층에서 부드럽게 헤엄치는 곤지암천 대표 물고기",
+    "dexTitle": "도감 카드",
+    "missionTitle": "오늘의 미션",
+    "cameraTitle": "관찰 사진",
+    "audioTitle": "설명 듣기"
+  },
+  "adminEditable": true
+}
