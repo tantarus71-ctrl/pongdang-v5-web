@@ -1,0 +1,15 @@
+/* v30A1L dex/detail responsive polish: preserve structure, improve layout only */
+.dex-panel{width:min(980px,calc(100vw - 18px))!important;max-height:82dvh!important}
+.dex-grid{grid-template-columns:repeat(auto-fit,minmax(clamp(132px,22vw,184px),1fr))!important;gap:clamp(10px,1.8vw,16px)!important;padding:clamp(10px,2vw,18px)!important}
+.dex-card{min-height:clamp(178px,28vw,238px)!important;border-radius:clamp(20px,3vw,26px)!important}
+.v30a1l-dex-img{width:100%;height:clamp(84px,16vw,126px);object-fit:contain;display:block;border-radius:16px;background:linear-gradient(135deg,rgba(232,251,255,.9),rgba(255,246,201,.82));box-shadow:inset 0 1px 0 rgba(255,255,255,.75)}
+.card-detail{padding:12px!important}
+.detail-card{width:min(880px,calc(100vw - 24px))!important;max-height:82dvh!important;border-radius:clamp(24px,3vw,34px)!important;scrollbar-width:thin;scrollbar-color:rgba(68,203,239,.75) rgba(255,255,255,.08)}
+.v30a1l-detail-img{width:100%;max-height:clamp(220px,42vh,390px);object-fit:contain;display:block;border-radius:22px;background:linear-gradient(135deg,#e9fbff,#fff6c9)}
+.v30a1l-acquire-img{width:100%;height:clamp(132px,25vh,190px);object-fit:cover;display:block;border-radius:22px;background:linear-gradient(135deg,#e9fbff,#fff6c9)}
+.dex-grid::-webkit-scrollbar,.detail-card::-webkit-scrollbar,.mission-list::-webkit-scrollbar,.capture-grid::-webkit-scrollbar{width:8px;height:8px}
+.dex-grid::-webkit-scrollbar-track,.detail-card::-webkit-scrollbar-track,.mission-list::-webkit-scrollbar-track,.capture-grid::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:999px}
+.dex-grid::-webkit-scrollbar-thumb,.detail-card::-webkit-scrollbar-thumb,.mission-list::-webkit-scrollbar-thumb,.capture-grid::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(104,224,255,.75),rgba(13,143,193,.75));border-radius:999px}
+.nav-btn{min-height:52px!important}.nav-btn i{font-size:clamp(18px,4vw,22px)!important}.nav-btn span{font-size:clamp(10.5px,2.6vw,12px)!important}
+@media(min-width:760px){.detail-card{display:grid;grid-template-columns:minmax(280px,45%) 1fr;gap:14px;align-items:start}.detail-head,.collector-detail-badges,.detail-info,.detail-actions,.collector-print-mark{grid-column:2}.detail-hero{grid-column:1;grid-row:1 / span 5;margin-top:4px!important}.dex-title strong{font-size:22px!important}}
+@media(max-width:520px){.dex-panel{top:calc(var(--safe-top) + 70px)!important;bottom:calc(var(--bottom-h) + var(--safe-bottom) + 6px)!important}.dex-grid{grid-template-columns:repeat(auto-fit,minmax(132px,1fr))!important}.detail-card{width:calc(100vw - 20px)!important}.dex-filter button{height:34px!important;font-size:12px!important}}
