@@ -1,9 +1,9 @@
-/* 퐁당퐁당 곤지암천 v30A-1 - 웃물 낮 q88 1슬롯 안전 override */
+/* 퐁당퐁당 곤지암천 v30A1J - 웃물 낮 배경 경로 안정화 + 메뉴 기능 안전가드 연결 */
 (() => {
   'use strict';
 
-  const Q88_PATH = 'assets/bg_optimized/upper/day_941_q88.jpg';
-  const Q88_URL = `./${Q88_PATH}?cache=q88-utmul-day-${Date.now()}`;
+  const Q88_PATH = 'assets/bg/upper/day.jpg';
+  const Q88_URL = `./${Q88_PATH}?cache=v30A1J-path-${Date.now()}`;
   const DEPTH_CSS = './src/styles/aquarium-layer-depth-v1.css?v=aq-depth-v1';
   const ZONE_TUNE_CSS = './src/styles/aquarium-zone-special-v1.css?v=aq-zone-special-v1';
   const MENU_SAFETY_CSS = './src/styles/menu-safety-guard-v1.css?v=menu-safety-v1';
@@ -42,13 +42,13 @@
     if (!isUtmulActive()) return;
     if (isNightMode()) return;
     bg.style.backgroundImage = `url("${Q88_URL}")`;
-    bg.dataset.optimizedOverride = 'utmul-day-q88';
+    bg.dataset.optimizedOverride = 'utmul-day-stable-v30A1J';
   }
 
   function installControls() {
     const chip = document.getElementById('debugChip');
     if (chip && !chip.dataset.q88Marked) {
-      chip.textContent = `${chip.textContent} · q88 웃물낮 · 입체수조 · 메뉴가드`;
+      chip.textContent = `${chip.textContent} · 웃물낮 안정경로 · 입체수조 · 메뉴가드`;
       chip.dataset.q88Marked = 'true';
     }
   }
@@ -67,7 +67,7 @@
     const observer = new MutationObserver(() => applyQ88IfNeeded());
     const app = document.getElementById('app') || document.body;
     observer.observe(app, { attributes: true, childList: true, subtree: true, characterData: true });
-    window.PondangUtmulDayQ88Override = { apply: applyQ88IfNeeded, path: Q88_PATH, depthEnhancement: true, zoneSpecial: true, menuSafety: true };
+    window.PondangUtmulDayQ88Override = { apply: applyQ88IfNeeded, path: Q88_PATH, depthEnhancement: true, zoneSpecial: true, menuSafety: true, version: 'v30A1J' };
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
