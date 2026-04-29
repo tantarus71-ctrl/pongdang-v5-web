@@ -1,4 +1,4 @@
-/* v30A1K safe addon loader: path fix + depth/menu/card guards */
+/* v30A1L safe addon loader: path fix + depth/menu/card/responsive guards */
 (() => {
   'use strict';
   const bgPath = 'assets/bg/upper/day.jpg';
@@ -6,9 +6,11 @@
     ['link','aq-depth-css','./src/styles/aquarium-layer-depth-v1.css?v=aq-depth-v1'],
     ['link','aq-zone-css','./src/styles/aquarium-zone-special-v1.css?v=aq-zone-special-v1'],
     ['link','menu-safety-css','./src/styles/menu-safety-guard-v1.css?v=menu-safety-v1'],
+    ['link','dex-popup-responsive-css','./src/styles/dex-popup-responsive-v30a1l.css?v=v30a1l'],
     ['script','aq-depth-js','./src/aquarium-layer-depth-v1.js?v=aq-depth-v1'],
     ['script','menu-safety-js','./src/menu-function-safety-v1.js?v=menu-safety-v1'],
-    ['script','collector-card-js','./src/collector-card-v30a1k.js?v=collector-v30a1k']
+    ['script','collector-card-js','./src/collector-card-v30a1k.js?v=collector-v30a1k'],
+    ['script','fish-card-assets-js','./src/fish-card-assets-v30a1l.js?v=v30a1l']
   ];
   function add(type,id,url){
     if(document.querySelector('[data-addon-id="'+id+'"]')) return;
@@ -26,8 +28,8 @@
   function applyBg(){
     const bg=document.getElementById('bg');
     if(bg&&activeUtmul()&&!isNight()){
-      bg.style.backgroundImage='url("./'+bgPath+'?cache=v30A1K")';
-      bg.dataset.optimizedOverride='utmul-day-stable-v30A1K';
+      bg.style.backgroundImage='url("./'+bgPath+'?cache=v30A1L")';
+      bg.dataset.optimizedOverride='utmul-day-stable-v30A1L';
     }
   }
   function boot(){
@@ -36,7 +38,7 @@
     setTimeout(applyBg,120);
     setTimeout(applyBg,500);
     document.addEventListener('click',()=>setTimeout(applyBg,80),true);
-    window.PondangV30A1KAddon={applyBg,path:bgPath,collector:true,menuSafety:true};
+    window.PondangV30A1LAddon={applyBg,path:bgPath,collector:true,menuSafety:true,responsiveDex:true};
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
 })();
